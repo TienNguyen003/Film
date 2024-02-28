@@ -1,0 +1,15 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration: 
+          google: 
+            client-id: 583217970333-3nabs5lprpnahhnvsijtmg2jj0hac1cg.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+           
+server:
+  port: 8081
+  
+  
