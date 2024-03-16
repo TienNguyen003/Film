@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Trang Vietsub và cập nhật các bộ Hoạt Hình mới nhất">
+	<meta name="keywords" content="Anime, unica, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Cập nhật biệt danh</title>
+	<link rel="shortcut icon" href="img/bg.jfif" type="image/x-icon">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+
+	<!-- Css Styles -->
+	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+	<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+	<link rel="stylesheet" href="css/plyr.css" type="text/css">
+	<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+	<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+	<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header Section Begin -->
+	<div th:replace="header :: content"></div>
+	<!-- Header End -->
+
+	<div class="updateDisplayName spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 ud_name">
+					<div class="section-title" style="margin-top: 10px">
+						<h4 class="titleGenres">Cập nhật biệt danh</h4>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 editPoint">
+							<div class="row">
+								<div class="col-md-12">
+									<center><b>
+											<font color="#33b762">Bạn còn 1 lần đổi tên miễn phí trong tháng</font>
+									</b></center>
+									<form role="form" method="post" th:action="@{/cap-nhat-biet-danh}">
+										<div class="form-group" th:with="userDetails=${#authentication.getPrincipal()}">
+											<label for="display_name">Biệt danh:</label>
+											<input maxlength="20" type="text" id="new-display-name" name="display_name"
+												class="form-control" th:value="${userDetails.getFullName}" >
+											<input type="hidden" name="point" th:value="${userDetails.getPoint}" >
+										</div>
+										<span th:text="${notification}"></span><br>
+										<button type="submit" class="btn btn-success mb-15">Cập nhật</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="thong-bao-he-thong">
+						<b>Lưu ý quan trọng:<br>
+							- Đạo hữu có 1 lần thay đổi miễn phí mỗi tháng<br>
+							- <font color="red">Những lần thay đổi kế tiếp mức phí sẽ là 50 Tu Vi</font><br>
+							- Hãy suy nghĩ kĩ trước khi thay đổi, Tu Vi đã mất không thể hoàn lại<br>
+							- Gặp lỗi nhắn ngay fanpage để Ad xử lý nhé</b><br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer Section Begin -->
+	<div th:replace="footer :: content"></div>
+	<!-- Footer Section End -->
+
+	<!-- Search model Begin -->
+	<div th:replace="search :: content"></div>
+	<!-- Search model end -->
+
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/player.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/mixitup.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>

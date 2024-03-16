@@ -16,14 +16,14 @@ import com.film.services.CategoryService;
 
 @Controller
 @RequestMapping("/admin")
-public class CategoryController {
+public class AdminCategoryController {
 	@Autowired
 	private CategoryService categoryService;
 	
 	@RequestMapping("/category")
 	public String index(Model model) {
-		List<Category> list = this.categoryService.getAll();
-		model.addAttribute("list", list);
+		List<Category> listCate = this.categoryService.getAll();;
+		model.addAttribute("list", listCate);
 		return "admin/menu";
 	}
 	

@@ -75,67 +75,10 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-8">
-					<div class="anime__details__review">
-						<div class="section-title">
-							<h5>Bình luận</h5>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-1.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Chris Curry - <span>1 Hour ago</span></h6>
-								<p>whachikan Just noticed that someone categorized this as belonging to the genre
-									"demons" LOL</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-2.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Lewis Mann - <span>5 Hour ago</span></h6>
-								<p>Finally it came out ages ago</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-3.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Louis Tyler - <span>20 Hour ago</span></h6>
-								<p>Where is the episode 15 ? Slow update! Tch</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-4.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Chris Curry - <span>1 Hour ago</span></h6>
-								<p>whachikan Just noticed that someone categorized this as belonging to the genre
-									"demons" LOL</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-5.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Lewis Mann - <span>5 Hour ago</span></h6>
-								<p>Finally it came out ages ago</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-6.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Louis Tyler - <span>20 Hour ago</span></h6>
-								<p>Where is the episode 15 ? Slow update! Tch</p>
-							</div>
-						</div>
+					<div class="section-title">
+						<h5>Bình luận</h5>
 					</div>
+					<div class="comments" style="margin-bottom: 50px"></div>					
 					<div class="anime__details__form">
 						<div class="section-title">
 							<h5>Your Comment</h5>
@@ -326,6 +269,40 @@
 		document.querySelector(".anime__video__player").style.zIndex = 999;
 		document.querySelector(".anime__video__player").style.position = "relative";
 	}	
+	const comments = document.querySelector(".comments");
+	fetch(`http://localhost:8081/api/comment/${slugFilm}`)
+		.then(res => res.json())
+		.then((data) => {
+			let html = "";
+			data.map(item => {
+				html += `<div class="anime__details__review">
+                                <div class="anime__review__item">
+                                    <div class="anime__review__item__pic">
+                                        <img src=${item.image} alt="">
+                                        <img src="img/avatar/khung.gif" alt="" class="frame_avatar">
+                                    </div>
+                                    <div class="anime__review__item__text">
+                                        <div class="comment_header">
+                                            <div class="comment_author">
+                                                <span class="pbbm" data-tooltip="Đạo Tông"><img
+                                                        src="https://hoathinh3d.vip/wp-content/uploads/2024/02/dao-tong.gif"
+                                                        class="pbbm" alt="Đạo Tông" width="30px"></span>
+                                                ${item.name}
+                                                <span class="clan" data-tooltip="Đệ Tử">🏯Tiêu Dao⚔︎</span>
+                                            </div>
+                                            <div class="mycred-wrap">
+                                                <img alt="" src="img/avatar/vo-thien-tan.webp">
+                                            </div>
+                                            <span>${item.createAt}</span>
+                                        </div>
+                                        <p>${item.content}</p>
+                                    </div>
+                                </div>
+                            </div>`
+			})
+			if (html == "") html = "<h5 style='color: #ffffff;font-family: 'Oswald', sans-serif;'>Chưa có bình luận nào</5>";
+			comments.innerHTML = html;
+		})
 </script>
 
 </html>

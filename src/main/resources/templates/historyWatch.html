@@ -43,7 +43,7 @@
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
 						<a href="/"><i class="fa fa-home"></i> Home</a>
-						<span>Yêu thích</span>
+						<span>Lịch Sử</span>
 					</div>
 				</div>
 			</div>
@@ -62,7 +62,7 @@
 							<div class="row">
 								<div class="col-lg-8 col-md-8 col-sm-6">
 									<div class="section-title">
-										<h4 class="titleGenres">Yêu thích</h4>
+										<h4 class="titleGenres">Lịch Sử</h4>
 									</div>
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6">
@@ -78,7 +78,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-12 col-md-8 col-sm-6">
+							<div class="col-lg-12 col-md-8 col-sm-6" style="margin-bottom: 30px">
 								<div class="section-title">
 									<div th:if="${checkLogin}" class="alert alert-danger" th:utext="${checkLogin}">
 									</div>
@@ -86,20 +86,20 @@
 							</div>
 						</div>
 						<div class="row genres">
-							<div class="col-lg-3 col-md-6 col-sm-6" th:each="list : ${listFavMovie}">
+							<div class="col-lg-3 col-md-6 col-sm-6" th:each="list : ${listHistoryWatch}">
 								<div class="product__item">
 									<div class="product__item__pic"
 										th:style="'background: url(\'' + ${list.img_movie} + '\') no-repeat; background-size:cover'">
-										<div class="ep" th:text="${list.episode}"></div>
+										<div class="ep" th:text="'Đang xem tập: ' + ${list.episode}"></div>
 										<div class="comment"><i class="fa fa-comments"></i></div>
 										<div class="view" th:text="${list.view_movie}"><i class="fa fa-eye"></i></div>
 									</div>
 									<div class="product__item__text">
-										<h5><a th:href="@{/detail-film(slug=${list.slug})}"
+										<h5><a class="nameMovie" th:href="@{/detail-film(slug=${list.slug})}"
 												th:text="${list.name_movie}"></a></h5>
 									</div>
 								</div>
-								<a th:href="@{'/favmovie/delete/'+${list.id}}" class="deleteHsFilm"><i class="fa fa-times-circle fa-2x"></i></i></a>
+								<a th:href="@{'/historyFilm/delete/'+${list.id}}" class="deleteHsFilm"><i class="fa fa-times-circle fa-2x"></i></i></a>
 							</div>
 						</div>
 					</div>
@@ -140,7 +140,6 @@
 	<script src="js/jquery.slicknav.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 </body>
-
 </html>

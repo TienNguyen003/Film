@@ -20,17 +20,27 @@ public class HistoryWatch {
 	private int user_watch;
 	@Column(name = "slug")
 	private String slug;
+	@Column(name = "name_movie")
+	private String name_movie;
+	@Column(name = "img_movie")
+	private String img_movie;
+	@Column(name = "view_movie")
+	private int view_movie;
 	
 	public HistoryWatch() {
 		super();
-	}
+	}	
 
-	public HistoryWatch(Integer id, int episode, int user_watch, String slug) {
+	public HistoryWatch(Integer id, int episode, int user_watch, String slug, String name_movie, String img_movie,
+			int view_movie) {
 		super();
 		this.id = id;
 		this.episode = episode;
 		this.user_watch = user_watch;
 		this.slug = slug;
+		this.name_movie = name_movie;
+		this.img_movie = img_movie;
+		this.view_movie = view_movie;
 	}
 
 	public Integer getId() {
@@ -63,5 +73,29 @@ public class HistoryWatch {
 
 	public void setSlug(String slug) {
 		this.slug = slug;
-	}	
+	}
+
+	public String getName_movie() {
+		return name_movie;
+	}
+
+	public void setName_movie(String name_movie) {
+		this.name_movie = name_movie;
+	}
+
+	public String getImg_movie() {
+		return img_movie;
+	}
+
+	public void setImg_movie(String img_movie) {
+		this.img_movie = img_movie;
+	}
+
+	public int getView_movie() {
+		return view_movie;
+	}
+
+	public void setView_movie(int view_movie) {
+		this.view_movie = view_movie;
+	}		
 }

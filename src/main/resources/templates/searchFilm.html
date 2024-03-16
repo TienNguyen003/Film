@@ -103,7 +103,7 @@
 	fetch(`https://ophim1.com/v1/api/tim-kiem?keyword=${slugFilm}&page=${indexOfFilm}`)
 		.then(res => res.json())
 		.then(data => {
-			data = data.data;
+			data = data.data;			
 			let html = "";
 			data.items.map(item => {
 				let arrCategory = [];
@@ -134,30 +134,34 @@
 			let currentPage = data.params.pagination.currentPage;
 			let breakpointPage = currentPage + 5;
 			let lastPage = Math.ceil(data.params.pagination.totalItems/24);
-			if (currentPage >= lastPage-4) {
+			
+			if(lastPage != 0) {
+				if (currentPage >= lastPage-4) {
 				if (currentPage == lastPage) breakpointPage -= 4;
 				else breakpointPage -= 3;
-				currentPage -= 4;
-			}
-			console.log(lastPage)
-			if(indexOfFilm > lastPage) {
-				indexOfFilm = lastPage;
-				breakpointPage = lastPage + 1;
-				currentPage = breakpointPage - 4;
-				document.querySelector(".search-film").innerHTML = '<div class="alert alert-danger">Mọe tìm vừa thôi chứ</div>';
-			}
-			if (currentPage != 1) currentPage = currentPage-1;
-			for (let i = currentPage; i < breakpointPage; i++){
-				htmlPanigation += `<a href="${currentURL}&page=${i}"
-									class=${(indexOfFilm == i) ? "current-page" : ""}>${i}</a>`
-			}
+					currentPage -= 4;
+				}			
+				if(indexOfFilm > lastPage) {
+					indexOfFilm = lastPage;
+					breakpointPage = lastPage + 1;
+					currentPage = breakpointPage - 4;
+					document.querySelector(".search-film").innerHTML = '<div class="alert alert-danger">Mọe tìm vừa thôi chứ</div>';
+				}
+				if (currentPage != 1) currentPage = currentPage-1;
+				for (let i = currentPage; i < breakpointPage; i++){
+					htmlPanigation += `<a href="${currentURL}&page=${i}"
+										class=${(indexOfFilm == i) ? "current-page" : ""}>${i}</a>`
+				}
+			}			
 			document.querySelector('.product__pagination').innerHTML = 
 				`${(indexOfFilm!=1 && indexOfFilm != "")?`<a href='${currentURL}&page=${1}'><i class='fa fa-angle-double-left'></i></a>`+
 								  `<a href='${currentURL}&page=${indexOfFilm-1}'><i class='fa fa-angle-left'></i></a>`:""}`
 						+htmlPanigation+
 				`${indexOfFilm<lastPage?`<a href='${currentURL}&page=${+indexOfFilm+1}'><i class='fa fa-angle-right'></i></a>`+
 								  `<a href='${currentURL}&page=${lastPage}'><i class='fa fa-angle-double-right'></i></a>`:""}`
-			
+			if (data.items.length == 0){
+				document.querySelector(".search-film").innerHTML = '<div class="alert alert-danger">Không có phim phù hợp</div>';
+			}
 		})
 </script>
 </html>

@@ -11,9 +11,12 @@ import com.film.models.UserGoogle;
 @RestController
 public class LoginOauth2Controller {
 	@GetMapping("/login-google")
-	public String loginGoogle() {
-		return "tine";
-	}
+//	 public Principal loginGoogle(Principal principal) {
+//        return principal;
+//    }
+	public Map<String, Object> currentUser(OAuth2AuthenticationToken auth2AuthenticationToken){
+		return auth2AuthenticationToken.getPrincipal().getAttributes();
+	} 
 	
 	public UserGoogle toPerson(Map<String, Object> map) {
 		if(map==null) return null;

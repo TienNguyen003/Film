@@ -1,7 +1,5 @@
 package com.film.models;
 
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,45 +8,38 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "comments")
 public class Comments {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "slugFilm")
+	@Column(name = "slug_film")
 	private String slugFilm;
-	@Column(name = "createAt")
-	private Date createAt;
-	@Column(name = "nameFilm")
-	private String nameFilm;
-	@Column(name = "idUser")
+	@Column(name = "create_at")
+	private String createAt;
+	@Column(name = "id_user")
 	private int idUser;
-	@Column(name = "name")
+	@Column(name = "name_user")
 	private String name;
-	@Column(name = "email")
-	private String email;
 	@Column(name = "image")
 	private String image;
-	@Column(name = "emailVerified")
-	private int emailVerified;
+	@Column(name = "content_comment")
+	private String content;
 	
 	public Comments() {
 		super();
 	}
 
-	public Comments(int id, String slugFilm, Date createAt, String nameFilm, int idUser, String name, String email,
-			String image, int emailVerified) {
+	public Comments(int id, String slugFilm, String createAt, int idUser, String name, String image, String content) {
 		super();
 		this.id = id;
 		this.slugFilm = slugFilm;
 		this.createAt = createAt;
-		this.nameFilm = nameFilm;
 		this.idUser = idUser;
 		this.name = name;
-		this.email = email;
 		this.image = image;
-		this.emailVerified = emailVerified;
+		this.content = content;
 	}
 
 	public int getId() {
@@ -67,20 +58,12 @@ public class Comments {
 		this.slugFilm = slugFilm;
 	}
 
-	public Date getCreateAt() {
+	public String getCreateAt() {
 		return createAt;
 	}
 
-	public void setCreateAt(Date createAt) {
+	public void setCreateAt(String createAt) {
 		this.createAt = createAt;
-	}
-
-	public String getNameFilm() {
-		return nameFilm;
-	}
-
-	public void setNameFilm(String nameFilm) {
-		this.nameFilm = nameFilm;
 	}
 
 	public int getIdUser() {
@@ -99,14 +82,6 @@ public class Comments {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getImage() {
 		return image;
 	}
@@ -115,11 +90,11 @@ public class Comments {
 		this.image = image;
 	}
 
-	public int getEmailVerified() {
-		return emailVerified;
+	public String getContent() {
+		return content;
 	}
 
-	public void setEmailVerified(int emailVerified) {
-		this.emailVerified = emailVerified;
+	public void setContent(String content) {
+		this.content = content;
 	}	
 }

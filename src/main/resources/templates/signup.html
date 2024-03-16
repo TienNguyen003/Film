@@ -72,21 +72,22 @@
                 <div class="col-lg-6">
                     <div class="login__form">
                         <h3>Sign Up</h3>
-                        <form action="#">
+                        <form method="post" th:action="@{/signup}" th:object="${user}">
                             <div class="input__item">
-                                <input type="text" placeholder="Email address">
+                                <input type="text" placeholder="Email" th:field="*{email}">
                                 <span class="icon_mail"></span>
                             </div>
                             <div class="input__item">
-                                <input type="text" placeholder="Your Name">
+                                <input type="text" placeholder="Tên đăng nhập" th:field="*{userName}">
                                 <span class="icon_profile"></span>
                             </div>
                             <div class="input__item">
-                                <input type="text" placeholder="Password">
+                                <input type="password" placeholder="Mật khẩu" th:field="*{passWord}">
                                 <span class="icon_lock"></span>
                             </div>
+                            <h5 style="color: red" th:utext="${notification}"></h5>
                             <div id="example3"></div><br>
-                            <button type="submit" class="site-btn">Login Now</button>
+                            <button type="submit" class="site-btn">Signup Now</button>
                         </form>
 
                         <h5>Already have an account? <a href="/login">Log In!</a></h5>
@@ -126,19 +127,19 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
-	<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+	<!-- <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
 	        async defer>
-    </script>
+    </script> -->
 </body>
 <script>
-	let btnSubmit = document.querySelector(".site-btn");
-	btnSubmit.onclick = (event) => {
-		if(token != "")
-			console.log(token)
-		else {
-			alert("Bạn cần phải xác minh");
-			event.preventDefault();
-		}
-	}
+	//let btnSubmit = document.querySelector(".site-btn");
+	//btnSubmit.onclick = (event) => {
+	//	if(token != "")
+	//		console.log(token)
+	//	else {
+	//		alert("Bạn cần phải xác minh");
+	//		event.preventDefault();
+	//	}
+	//}
 </script>
 </html>

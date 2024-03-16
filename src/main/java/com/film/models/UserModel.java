@@ -1,6 +1,5 @@
 package com.film.models;
 
-import java.util.Date;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -30,13 +29,17 @@ public class UserModel {
 	@Column(name = "gender")
 	private Boolean gender;
 	@Column(name = "birthday")
-	private Date birthday;
-	@Column(name = "address")
-	private String address;
+	private String birthday;
 	@Column(name = "email")
 	private String email;
-	@Column(name = "telephone")
-	private String telephone;
+	@Column(name = "maxim")
+	private String maxim;
+	@Column(name = "image")
+	private String img;
+	@Column(name = "create_at")
+	private String createAt;
+	@Column(name = "point")
+	private int point;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<User_Role> userRoles;
@@ -47,7 +50,7 @@ public class UserModel {
 	}
 
 	public UserModel(Long id, String userName, String passWord, Boolean enabled, String fullName, Boolean gender,
-			Date birthday, String address, String email, String telephone, Set<User_Role> userRoles) {
+			String birthday, String email, String maxim, Set<User_Role> userRoles, String img, String createAt, int point) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -56,10 +59,12 @@ public class UserModel {
 		this.fullName = fullName;
 		this.gender = gender;
 		this.birthday = birthday;
-		this.address = address;
 		this.email = email;
-		this.telephone = telephone;
+		this.maxim = maxim;
 		this.userRoles = userRoles;
+		this.img = img;
+		this.createAt = createAt;
+		this.point = point;
 	}
 
 	public Long getId() {
@@ -110,20 +115,12 @@ public class UserModel {
 		this.gender = gender;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	public String getEmail() {
@@ -134,12 +131,12 @@ public class UserModel {
 		this.email = email;
 	}
 
-	public String getTelephone() {
-		return telephone;
+	public String getMaxim() {
+		return maxim;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setMaxim(String maxim) {
+		this.maxim = maxim;
 	}
 
 	public Set<User_Role> getUserRoles() {
@@ -148,5 +145,30 @@ public class UserModel {
 
 	public void setUserRoles(Set<User_Role> userRoles) {
 		this.userRoles = userRoles;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+	
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(String createAt) {
+		this.createAt = createAt;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
 	}	
+	
 }

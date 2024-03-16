@@ -1,5 +1,7 @@
 package com.film.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +38,9 @@ public class HistoryWatchIplm implements HistoryWatchService{
 		return false;
 	}
 
+	@Override
+	public List<HistoryWatch> findByUser_watch(Long userId) {
+		// TODO Auto-generated method stub
+		return this.historyWatchRepository.findByUser_watch(userId);
+	}
 }

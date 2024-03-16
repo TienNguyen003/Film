@@ -22,6 +22,18 @@ body {
 	-webkit-font-smoothing: antialiased;
 	background: #0b0c2a;
 }
+body::-webkit-scrollbar{
+	width: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #fd9dff;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+}
 
 ::selection {
 	background-color: #fd9dff;
@@ -95,6 +107,17 @@ ul,
 ol {
 	padding: 0;
 	margin: 0;
+}
+blockquote {
+	padding-top: 1rem;
+    font-size: 14px;
+    font-style: italic;
+    color: #555555;
+    border-left: 5px solid #00b38f;
+    line-height: 1.6;
+    position: relative;
+    background: #333;
+    text-align: left !important;
 }
 
 /*---------------------
@@ -412,15 +435,16 @@ ol {
 }
 
 .header__right {
-	text-align: right;
+	display: flex;
 	padding: 20px 0 15px;
+	text-align: right;
 }
 
 .header__right a {
 	display: inline-block;
 	font-size: 18px;
 	color: #ffffff;
-	margin-right: 30px;
+	margin-right: 20px;
 }
 
 .header__right a:last-child {
@@ -1101,7 +1125,7 @@ ol {
 
 .anime__review__item__pic {
 	float: left;
-	margin-right: 20px;
+	margin: 5px 20px 0 5px;
 	position: relative;
 }
 
@@ -1121,6 +1145,7 @@ ol {
 	height: 50px;
 	width: 50px;
 	border-radius: 50%;
+	object-fit: cover;
 }
 
 .anime__review__item__text {
@@ -1257,6 +1282,23 @@ ol {
 .anime__video__player .plyr__control--overlaid svg {
 	height: 60px;
 	width: 50px;
+}
+
+.episodes{
+	max-height: 300px;
+	overflow-y: scroll; 
+}
+.episodes::-webkit-scrollbar{
+	width: 10px;
+}
+.episodes::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #fd9dff;
+}
+
+.episodes::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
 }
 
 .anime__details__episodes {
@@ -1923,6 +1965,123 @@ ol {
 }
 
 /*---------------------
+  My Account
+-----------------------*/
+
+.myAccount, .updateDisplayName {
+	padding-top: 130px;
+	padding-bottom: 150px;
+}
+.ud_name{
+	padding: 8px 15px 20px;
+	color: #fff;
+}
+.editPoint{
+	margin-left: 25%;
+}
+.edit-account .card{
+	padding: 8px 15px 20px;
+	color: #fff;
+	background-color: #15151573;
+	
+}
+.infoAccount{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	background-color: #15151573;
+}
+.infoAccount span{
+	font-size: 9px;
+    color: #ffffff;
+    background: #e53637;
+    text-transform: uppercase;
+    padding: 6px 8px;
+    border-radius: 4px;
+}
+.img__myAccount{
+	margin-bottom: 15px;
+	padding: 2px;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+	background: url(/img/avatar/hop_the.gif);
+}
+.infoAccount .name__myAccount{
+	all: unset;
+	margin: 15px 0;
+	font-size: 18px;
+	font-weight: 900;
+	background: url(/img/avatar/hop_the.gif);
+    background-size: auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-position: center;
+}
+.infoAccount .level__myAccount{
+	all: unset;
+	margin-bottom: 10px;
+	font-size: 14px;
+	font-weight: 900;
+	background: url(/img/avatar/hop_the.gif);
+    background-size: auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-position: center;
+}
+.mycred-users-badges{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 0 10px;
+}
+.mycred-users-badges .the-badge img{
+	margin: 10px 5px;
+	width: 60px;
+	height: 60px;
+}
+.maxim{
+	padding: 0 10px;
+	color: #fff !important;
+}
+.button-group{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+.button-group .btn-danger{
+	margin: 5px;
+}
+.button-group .btn-danger i{
+	width: 20px;
+}
+.card .form-group{
+	position: relative;
+}
+.card .form-group a{
+	position: absolute;
+    right: 3px;
+    top: 72%;
+    padding: 3px 6px;
+	font-size: 14px;
+    transform: translateY(-50%);
+}
+.card .form-group input:focus{
+	box-shadow: none;
+}
+.card .form-group input[readonly]{
+	color: #fff;
+	background-color: #000;
+	border: none;
+}
+.thong-bao-he-thong{
+	margin-top: 20px;
+}
+
+/*---------------------
   Footer
 -----------------------*/
 
@@ -2280,6 +2439,17 @@ ol {
 	.search-model-form input {
 		width: 100%;
 	}
+	.arrow_carrot-down{
+		display: none;
+	}
+	.editPoint{
+		margin-left : 0 !important;
+	}
+	.marqueeNoti{
+		left: 0 !important;
+		width: unset !important;
+		color: #fff;
+	}
 }
 
 /* Small Device = 320px */
@@ -2348,4 +2518,96 @@ ol {
 	.anime__review__item__text {
 		padding: 18px 20px 20px;
 	}
+}
+
+.deleteHsFilm{
+	width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -8px;
+    right: 8px;
+}
+.logoutUser{
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	left: 33%;
+    padding: 5px;    
+	width: 160px;
+    background: #070720;
+    transition: all, 0.3s;
+    text-align: left;
+    z-index: 100;
+}
+.infoUser:hover .logoutUser{
+	display: flex !important;
+}
+.logoutUser a, .logoutUser span{
+	color: #fff;
+}
+.basicInfo{
+	display: flex;
+}
+.imgUser{
+	margin: 10px 5px;
+	width: 105px;
+	height: 105px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+.listFcInfo{
+	list-style-type: none;
+}
+.listFcInfo li{
+	width: 120px;
+	color: #fff;
+}
+.listFcInfo li a{
+	padding: 15px 0 15px 5px;
+	font-size: 16px;
+}
+.listFcInfo li i{
+	width: 30px;
+}
+
+.marqueeNoti{
+	position: relative;
+	left: 153px;
+	width: 1140px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+}
+.anime__review__item__pic .frame_avatar{
+	    position: absolute;
+    left: -5px;
+    top: -7px;
+    max-width: unset;
+    width: 60px;
+    height: 61px;
+}
+
+.comment_header{
+	display:flex;
+}
+.comment_author{
+	background: url(/img/avatar/hop_the.gif);
+	background-size: auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-position: center;
+    font-weight: 800;
+    margin-right: 10px;
+}
+.clan{
+	color: #fff;
+    background: url(https://hoathinh3d.vip/wp-content/themes/halimmovies-child/assets/image/gif/top1-tong.gif);
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 0px 2px;
+    text-shadow: 1px 1px 5px #000000;
+}
+.mycred-wrap img{
+	height: 30px;
 }

@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class CustomUserDetails implements UserDetails{
 	private UserModel user;
 	private Collection<? extends GrantedAuthority> authorities;
+	String userImg, fullName, maxim, birthday, createAt, email;
+	int point;	
 	
 	public CustomUserDetails() {
 		// TODO Auto-generated constructor stub
@@ -18,7 +20,6 @@ public class CustomUserDetails implements UserDetails{
 		this.user = user;
 		this.authorities = authorities;
 	}
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -42,6 +43,63 @@ public class CustomUserDetails implements UserDetails{
 		return user.getId();
 	}
 	
+	public String getImg() {
+		return user.getImg();
+	}
+	
+	public void setImg(String img) {
+		this.userImg = img;
+	}
+	
+	public String getFullName() {
+		return user.getFullName();
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getMaxim() {
+		return user.getMaxim();
+	}
+
+	public void setMaxim(String maxim) {
+		this.maxim = maxim;
+	}
+
+	public String getBirthday() {
+		return user.getBirthday();
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getCreateAt() {
+		return user.getCreateAt();
+	}
+
+	public void setCreateAt(String createAt) {
+		this.createAt = createAt;
+	}
+
+	public int getPoint() {
+		return user.getPoint();
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	
+
+	public String getEmail() {
+		return user.getEmail();
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
@@ -64,6 +122,14 @@ public class CustomUserDetails implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public UserModel getUser() {
+		return user;
+	}
+
+	public void setUser(UserModel user) {
+		this.user = user;
 	}
 
 }

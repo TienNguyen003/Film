@@ -22,7 +22,6 @@ public class CustomUserDetailService implements UserDetailsService {
 	@Autowired
 	private UserService userService;
 	
-	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		UserModel user = userService.findByUserName(username);

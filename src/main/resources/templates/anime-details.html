@@ -77,71 +77,23 @@
 						<div class="section-title">
 							<h5>Bình luận</h5>
 						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-1.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Chris Curry - <span>1 Hour ago</span></h6>
-								<p>whachikan Just noticed that someone categorized this as belonging to the genre
-									"demons" LOL</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-2.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Lewis Mann - <span>5 Hour ago</span></h6>
-								<p>Finally it came out ages ago</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-3.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Louis Tyler - <span>20 Hour ago</span></h6>
-								<p>Where is the episode 15 ? Slow update! Tch</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-4.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Chris Curry - <span>1 Hour ago</span></h6>
-								<p>whachikan Just noticed that someone categorized this as belonging to the genre
-									"demons" LOL</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-5.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Lewis Mann - <span>5 Hour ago</span></h6>
-								<p>Finally it came out ages ago</p>
-							</div>
-						</div>
-						<div class="anime__review__item">
-							<div class="anime__review__item__pic">
-								<img src="img/anime/review-6.jpg" alt="">
-							</div>
-							<div class="anime__review__item__text">
-								<h6>Louis Tyler - <span>20 Hour ago</span></h6>
-								<p>Where is the episode 15 ? Slow update! Tch</p>
-							</div>
-						</div>
+						<div class="comments"></div>
 					</div>
-					<div class="anime__details__form">
-						<div class="section-title">
-							<h5>Your Comment</h5>
+					<div th:with="userDetails=${#authentication.getPrincipal()}" class="infoUser">
+						<div th:if="${userDetails != 'anonymousUser'}">
+							<div class="anime__details__form">
+								<div class="section-title">
+									<h5>Your Comment</h5>
+								</div>
+								<form action="#">
+									<textarea placeholder="Your Comment"></textarea>
+									<button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+								</form>
+							</div>
 						</div>
-						<form action="#">
-							<textarea placeholder="Your Comment"></textarea>
-							<button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
-						</form>
+						<div th:if="${userDetails == 'anonymousUser'}" class="anime__details__btn">
+							<a href="/login" class="watch-btn"><span style="border-radius: 4px">Đăng nhập</span></a>
+						</div>					
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-4">
@@ -174,7 +126,7 @@
 			</div>
 		</div>
 	</section>
-	<!-- Anime Section End -->	
+	<!-- Anime Section End -->
 
 	<!-- Footer Section Begin -->
 	<div th:replace="footer :: content"></div>
@@ -196,6 +148,7 @@
 
 	<script src="js/hls.min.js"></script>
 	<script src="js/DPlayer.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 </body>
 <script>
 	function convertDate(date) {
@@ -212,10 +165,17 @@
 	let watched_episode = document.querySelector(".watched_episode");
 	if (watched_episode == null) watched_episode = 1;
 	else watched_episode = watched_episode.innerHTML.replace("Lần trước bạn xem đến tập ", "")
+
 	fetch(`https://ophim1.com/phim/${slugFilm}`)
 		.then(res => res.json())
 		.then(data => {
-			data = (data.movie)
+			data = (data.movie);
+
+			// Lịch sử xem
+			document.cookie = "name_movie=" + btoa(encodeURIComponent(data.name)) + "; expires=Thu, 18 Dec 2024 12:00:00 UTC";
+			document.cookie = "img_movie=" + data.thumb_url + "; expires=Thu, 18 Dec 2024 12:00:00 UTC";
+			document.cookie = "view_movie=" + data.view + "; expires=Thu, 18 Dec 2024 12:00:00 UTC";
+
 			document.querySelector(".filmName").innerHTML = data.name;
 			document.querySelector(".anime__details__content").innerHTML = `
 			<div class="row">
@@ -271,17 +231,52 @@
                             		<input type="hidden" name="episode" value="${data.episode_current}">
                             		<input type="hidden" name="view_movie" value="${data.view}">
                             		${(checkFav != null && checkFav.innerHTML == "Thêm thành công") || checkMsFav.value == "Đã có" ?
-									'<input style="height:48.5px" type="submit" class="follow-btn" value="UnFollow 🤍">'
-									: '<input style="height:48.5px" type="submit" class="follow-btn" value="Follow 🤍">'}
+					'<input style="height:48.5px" type="submit" class="follow-btn" value="Hủy Theo Dõi 🤍">'
+					: '<input style="height:48.5px" type="submit" class="follow-btn" value="Theo Dõi 🤍">'}
                             		
                             	</form>
-                                <a href="/watch-film?slug=${data.slug}&episodes=${watched_episode}" class="watch-btn"><span>Watch Now</span> <i
-                                        class="fa fa-angle-right"></i></a>
+                                <a href="/watch-film?slug=${data.slug}&episodes=${watched_episode}" class="watch-btn">
+                                	<span>Xem Ngay</span> <i class="fa fa-angle-right"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>`
-		})		
+		})
+	const comments = document.querySelector(".comments");
+	fetch(`http://localhost:8081/api/comment/${slugFilm}`)
+		.then(res => res.json())
+		.then((data) => {
+			let html = "";
+			data.map(item => {
+				html += `<div class="anime__details__review">
+                                <div class="anime__review__item">
+                                    <div class="anime__review__item__pic">
+                                        <img src=${item.image} alt="">
+                                        <img src="img/avatar/khung.gif" alt="" class="frame_avatar">
+                                    </div>
+                                    <div class="anime__review__item__text">
+                                        <div class="comment_header">
+                                            <div class="comment_author">
+                                                <span class="pbbm" data-tooltip="Đạo Tông"><img
+                                                        src="https://hoathinh3d.vip/wp-content/uploads/2024/02/dao-tong.gif"
+                                                        class="pbbm" alt="Đạo Tông" width="30px"></span>
+                                                ${item.name}
+                                                <span class="clan" data-tooltip="Đệ Tử">🏯Tiêu Dao⚔︎</span>
+                                            </div>
+                                            <div class="mycred-wrap">
+                                                <img alt="" src="img/avatar/vo-thien-tan.webp">
+                                            </div>
+                                            <span>${item.createAt}</span>
+                                        </div>
+                                        <p>${item.content}</p>
+                                    </div>
+                                </div>
+                            </div>`
+			})
+			if (html == "") html = "<h5 style='color: #ffffff;font-family: 'Oswald', sans-serif;'>Chưa có bình luận nào</5>";
+			comments.innerHTML = html;
+		})
 </script>
 
 </html>

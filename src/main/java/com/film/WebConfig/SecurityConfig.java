@@ -1,22 +1,12 @@
-package com.film;
+package com.film.WebConfig;
 
-import java.io.IOException;
-
-import org.hibernate.cfg.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -30,13 +20,15 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		// TODO Auto-generated method stub
-		httpSecurity.authorizeRequests((auth) -> auth.
+		httpSecurity
+			.csrf(csrf -> csrf.disable())
+			.authorizeHttpRequests((auth) -> auth.
+				requestMatchers("/my-account").authenticated().
+				requestMatchers("/cap-nhat-biet-danh").authenticated().
 				requestMatchers("/*").permitAll().
+				requestMatchers("/api/comment/**").permitAll().
 				requestMatchers("/admin/**").hasAuthority("ADMIN").
 				anyRequest().authenticated())
-			.csrf(csrf -> csrf.disable())
-//			.oauth2Login(oauth2Customize->oauth2Customize
-//				.loginPage("/login-google"))
 			.formLogin(login -> login.
 				loginPage("/login").
 				loginProcessingUrl("/login").
@@ -46,26 +38,15 @@ public class SecurityConfig {
 				logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))
 			.exceptionHandling(exceptionHandling -> exceptionHandling
 				.accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect("/"))								
-			)
+			)		
 			.oauth2Login(oauth2Customize->oauth2Customize
-					.loginProcessingUrl("/login-google")
-	                .loginPage("/oauth2/authorization/google")
-	                .successHandler(new AuthenticationSuccessHandler() {
-						
-						@Override
-						public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-								Authentication authentication) throws IOException, ServletException {
-							// TODO Auto-generated method stub
-							request.authenticate(response);
-						}
-					})
-	        )
+				.loginPage("/login-google"))
 		;
 		return httpSecurity.build();
 	}
 	
 	@Bean
 	WebSecurityCustomizer customizer() {
-		return (web) -> web.ignoring().requestMatchers("/resources/**", "/templates/**", "/static/**", "/css/**", "/js/**", "/img/**", "/sass/**", "/fonts/**");
+		return (web) -> web.ignoring().requestMatchers("/resources/**", "/templates/*", "/static/**", "/css/**", "/js/**", "/img/**", "/sass/**", "/fonts/**");
 	}
 }

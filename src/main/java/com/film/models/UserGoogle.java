@@ -2,7 +2,6 @@ package com.film.models;
 
 import java.util.ArrayList;
 
-import com.google.cloud.Date;
 
 public class UserGoogle {
 	public String at_hash;
@@ -16,9 +15,9 @@ public class UserGoogle {
     public ArrayList<String> aud;
     public String azp;
     public String name;
-    public Date exp;
+    public String exp;
     public String family_name;
-    public Date iat;
+    public String iat;
     public String email;
     
 	public UserGoogle() {
@@ -26,8 +25,8 @@ public class UserGoogle {
 	}
 
 	public UserGoogle(String at_hash, String sub, boolean email_verified, String iss, String given_name, String locale,
-			String nonce, String picture, ArrayList<String> aud, String azp, String name, Date exp, String family_name,
-			Date iat, String email) {
+			String nonce, String picture, ArrayList<String> aud, String azp, String name, String exp, String family_name,
+			String iat, String email) {
 		super();
 		this.at_hash = at_hash;
 		this.sub = sub;
@@ -134,11 +133,11 @@ public class UserGoogle {
 		this.name = name;
 	}
 
-	public Date getExp() {
+	public String getExp() {
 		return exp;
 	}
 
-	public void setExp(Date exp) {
+	public void setExp(String exp) {
 		this.exp = exp;
 	}
 
@@ -150,11 +149,11 @@ public class UserGoogle {
 		this.family_name = family_name;
 	}
 
-	public Date getIat() {
+	public String getIat() {
 		return iat;
 	}
 
-	public void setIat(Date iat) {
+	public void setIat(String iat) {
 		this.iat = iat;
 	}
 

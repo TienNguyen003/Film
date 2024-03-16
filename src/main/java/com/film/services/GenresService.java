@@ -6,8 +6,8 @@ import com.film.models.Genres;
 
 public interface GenresService {
 	List<Genres> getAll();
-	Boolean create(Genres category);
+	Boolean create(Genres genres);
 	Genres findById(Integer id);
-	Boolean update(Genres category);
+	Boolean update(Genres genres);
 	Boolean delete(Integer id);
 }
