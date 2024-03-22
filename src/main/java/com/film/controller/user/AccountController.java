@@ -1,8 +1,6 @@
 package com.film.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.film.models.CustomUserDetails;
 import com.film.services.UserService;
 
 @Controller
@@ -20,7 +17,7 @@ public class AccountController {
 	@Autowired
 	private UserService userService;
 	
-	public AccountController(LoadController loadController) {
+	private AccountController(LoadController loadController) {
         this.loadController = loadController;
     }
 	
@@ -52,8 +49,8 @@ public class AccountController {
 			else {
 				if(!userModel[0][1].equals(display_name)) {
 					userService.updateFullName(display_name, (point - 50), idUser);
-					csUser().getUser().setFullName(display_name);
-					csUser().getUser().setPoint(point-50);
+					loadController.csUser().getUser().setFullName(display_name);
+					loadController.csUser().getUser().setPoint(point-50);
 					redirectAttributes.addFlashAttribute("notification", "");
 				} else 
 					redirectAttributes.addFlashAttribute("notification", "Biệt danh mới trùng với biệt danh hiện tại");
@@ -69,16 +66,10 @@ public class AccountController {
 			Object[][] userModel = userService.queryByPoint(idUser);
 			if(!userModel[0][2].equals(user_bio)) {			
 				userService.updateMaxim(user_bio, idUser);
-				csUser().getUser().setMaxim(user_bio);
+				loadController.csUser().getUser().setMaxim(user_bio);
 				redirectAttributes.addFlashAttribute("notification", "Cập nhật thành công");
 			}
 		}
 		return "redirect:/my-account";
-	}
-	
-	private CustomUserDetails csUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		return userDetails;
 	}
 }

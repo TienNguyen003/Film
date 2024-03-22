@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class BlogController {	
 	LoadController loadController = new LoadController();
 	
-	public BlogController(LoadController loadController) {
+	private BlogController(LoadController loadController) {
         this.loadController = loadController;
     }
 	

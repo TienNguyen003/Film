@@ -58,12 +58,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="anime__video__player" style="width:1140px;height:640px">
+					<div class="anime__video__player" style="width:1140px;height:660px">
 						<div id="dplayer" style="height:100%;object-fit:cover"></div>
 						<a href="#" id="iconFilm" class="prevEps"><i class="fa fa-angle-double-left"></i> Tập trước</a>
 						<a href="#" id="iconFilm" class="nextEsp">Tập tiếp theo <i
 								class="fa fa-angle-double-right"></i></a>
 						<a id="iconFilm" class="lightToggle"><i class="fa fa-eye"></i>Tắt đèn</a>
+					</div>
+					<div class="section-title">
+						<h5>Nếu phim load chậm vui lòng tải lại trang</h5>
 					</div>
 					<div class="anime__details__episodes">
 						<div class="section-title">
@@ -78,15 +81,23 @@
 					<div class="section-title">
 						<h5>Bình luận</h5>
 					</div>
-					<div class="comments" style="margin-bottom: 50px"></div>					
-					<div class="anime__details__form">
-						<div class="section-title">
-							<h5>Your Comment</h5>
+					<div class="comments" id="comments" style="margin-bottom: 50px"></div>
+					<div th:with="userDetails=${#authentication.getPrincipal()}" class="infoUser">
+						<div th:if="${userDetails != 'anonymousUser'}">
+							<div class="anime__details__form">
+								<div class="section-title">
+									<h5>Your Comment</h5>
+								</div>
+								<form class="formNoClick">
+									<textarea placeholder="Your Comment" id="contentCm"></textarea>
+									<button type="submit" onclick="addCommentAjax()"><i
+											class="fa fa-location-arrow"></i> Bình Luận</button>
+								</form>
+							</div>
 						</div>
-						<form action="#">
-							<textarea placeholder="Your Comment"></textarea>
-							<button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
-						</form>
+						<div th:if="${userDetails == 'anonymousUser'}" class="anime__details__btn">
+							<a href="/login" class="watch-btn"><span style="border-radius: 4px">Đăng nhập</span></a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -149,8 +160,12 @@
 				episodes.sort(function (a, b) {
 					return parseInt(a.name) - parseInt(b.name);
 				});
-			}
+			}	
 			data = data.movie;
+			if (data.status == "trailer") {
+				alert("Phim mới chỉ có trailer");
+				window.open(`${data.trailer_url}`, 'popup', 'width=600,height=400');
+			}
 			if (indexOfFilm > episodes.length) {
 				indexOfFilm = episodes.length;
 				alert(`Phim có ${episodes.length} tập thôi bớt nghịch lại`);
@@ -268,41 +283,7 @@
 		document.querySelector(".search-model").classList.toggle("unHiddenEl");
 		document.querySelector(".anime__video__player").style.zIndex = 999;
 		document.querySelector(".anime__video__player").style.position = "relative";
-	}	
-	const comments = document.querySelector(".comments");
-	fetch(`http://localhost:8081/api/comment/${slugFilm}`)
-		.then(res => res.json())
-		.then((data) => {
-			let html = "";
-			data.map(item => {
-				html += `<div class="anime__details__review">
-                                <div class="anime__review__item">
-                                    <div class="anime__review__item__pic">
-                                        <img src=${item.image} alt="">
-                                        <img src="img/avatar/khung.gif" alt="" class="frame_avatar">
-                                    </div>
-                                    <div class="anime__review__item__text">
-                                        <div class="comment_header">
-                                            <div class="comment_author">
-                                                <span class="pbbm" data-tooltip="Đạo Tông"><img
-                                                        src="https://hoathinh3d.vip/wp-content/uploads/2024/02/dao-tong.gif"
-                                                        class="pbbm" alt="Đạo Tông" width="30px"></span>
-                                                ${item.name}
-                                                <span class="clan" data-tooltip="Đệ Tử">🏯Tiêu Dao⚔︎</span>
-                                            </div>
-                                            <div class="mycred-wrap">
-                                                <img alt="" src="img/avatar/vo-thien-tan.webp">
-                                            </div>
-                                            <span>${item.createAt}</span>
-                                        </div>
-                                        <p>${item.content}</p>
-                                    </div>
-                                </div>
-                            </div>`
-			})
-			if (html == "") html = "<h5 style='color: #ffffff;font-family: 'Oswald', sans-serif;'>Chưa có bình luận nào</5>";
-			comments.innerHTML = html;
-		})
+	}
 </script>
 
 </html>

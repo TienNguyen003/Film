@@ -1,5 +1,7 @@
 package com.film.controller.user;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
 
@@ -53,5 +55,18 @@ public class LoadController {
 	public static String decodeBase64(String base64EncodedString) {
         byte[] decodedBytes = Base64.getDecoder().decode(base64EncodedString);
         return new String(decodedBytes);
+    }
+	
+	public CustomUserDetails csUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		return userDetails;
+	}
+	
+	public static String dateTime() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ssa dd/M/yyyy");
+        String formattedDateTime = currentDateTime.format(formatter);
+        return formattedDateTime;
     }
 }

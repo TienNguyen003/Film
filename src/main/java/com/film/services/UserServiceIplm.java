@@ -23,7 +23,7 @@ public class UserServiceIplm implements UserService {
 			this.userRP.save(userModel);
 			return true;
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -44,7 +44,7 @@ public class UserServiceIplm implements UserService {
 			this.userRP.updateFullName(name, point, id);
 			return true;
 		} catch (Exception e) {
-			System.out.println("không được");
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -60,7 +60,7 @@ public class UserServiceIplm implements UserService {
 			this.userRP.updateMaxim(maxim, id);
 			return true;
 		} catch (Exception e) {
-			System.out.println("không được");
+			e.printStackTrace();
 		}
 		return false;
 	}

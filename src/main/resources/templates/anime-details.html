@@ -25,6 +25,7 @@
 	<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script th:inline="javascript" th:if="${successMessageFav}">
 		setTimeout(function () {
 			document.getElementById('successMessage').style.display = 'none';
@@ -58,8 +59,6 @@
 	<!-- Breadcrumb End -->
 
 	<input type="hidden" th:value="${checkMessageFav}" class="checkMsFav">
-	<span id="successMessage" th:if="${successMessageFav}" class="alert alert-success"
-		style="margin-top: 50px;margin-left: 190px;display: inline-block;" th:utext="${successMessageFav}"></span>
 
 	<!-- Anime Section Begin -->
 	<section class="anime-details spad">
@@ -77,23 +76,25 @@
 						<div class="section-title">
 							<h5>Bình luận</h5>
 						</div>
-						<div class="comments"></div>
+						<div class="comments" id="comments"></div>
 					</div>
 					<div th:with="userDetails=${#authentication.getPrincipal()}" class="infoUser">
 						<div th:if="${userDetails != 'anonymousUser'}">
+							<p style="display:none" class="idUserCmt" th:text="${userDetails.id}"></p>
 							<div class="anime__details__form">
 								<div class="section-title">
 									<h5>Your Comment</h5>
 								</div>
-								<form action="#">
-									<textarea placeholder="Your Comment"></textarea>
-									<button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+								<form class="formNoClick">
+									<textarea placeholder="Your Comment" id="contentCm"></textarea>
+									<button type="submit" onclick="addCommentAjax()"><i
+											class="fa fa-location-arrow"></i> Bình Luận</button>
 								</form>
 							</div>
 						</div>
 						<div th:if="${userDetails == 'anonymousUser'}" class="anime__details__btn">
 							<a href="/login" class="watch-btn"><span style="border-radius: 4px">Đăng nhập</span></a>
-						</div>					
+						</div>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-4">
@@ -144,11 +145,11 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/jquery.slicknav.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/main.js"></script>
 
 	<script src="js/hls.min.js"></script>
 	<script src="js/DPlayer.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 <script>
 	function convertDate(date) {
@@ -225,14 +226,14 @@
                                 </div>
                             </div>
                             <div class="anime__details__btn" style="display:flex">
-                            	<form th:action="@{/detail-film}" method="post">
-                            		<input type="hidden" name="name_movie" value="${data.name}">
-                            		<input type="hidden" name="img_movie" value="${data.thumb_url}">
-                            		<input type="hidden" name="episode" value="${data.episode_current}">
-                            		<input type="hidden" name="view_movie" value="${data.view}">
-                            		${(checkFav != null && checkFav.innerHTML == "Thêm thành công") || checkMsFav.value == "Đã có" ?
-					'<input style="height:48.5px" type="submit" class="follow-btn" value="Hủy Theo Dõi 🤍">'
-					: '<input style="height:48.5px" type="submit" class="follow-btn" value="Theo Dõi 🤍">'}
+                            	<form class="formNoClickFav">
+                            		<input type="hidden" class="name_movie" value="${data.name}">
+                            		<input type="hidden" class="img_movie" value="${data.thumb_url}">
+                            		<input type="hidden" class="episode" value="${data.episode_current}">
+                            		<input type="hidden" class="view_movie" value="${data.view}">
+                            		
+									<input style="height:48.5px" type="submit" onclick="addFavMove()" class="follow-btn showFl" 
+									value="${(checkFav != null && checkFav.innerHTML == 'Thêm thành công') || checkMsFav.value == 'Đã có' ? 'Hủy Theo Dõi 🤍' : 'Theo Dõi 🤍'}">
                             		
                             	</form>
                                 <a href="/watch-film?slug=${data.slug}&episodes=${watched_episode}" class="watch-btn">
@@ -242,41 +243,11 @@
                         </div>
                     </div>
                 </div>`
+			document.querySelector(".formNoClickFav").addEventListener("submit", function (event) {
+				event.preventDefault();
+			});
 		})
-	const comments = document.querySelector(".comments");
-	fetch(`http://localhost:8081/api/comment/${slugFilm}`)
-		.then(res => res.json())
-		.then((data) => {
-			let html = "";
-			data.map(item => {
-				html += `<div class="anime__details__review">
-                                <div class="anime__review__item">
-                                    <div class="anime__review__item__pic">
-                                        <img src=${item.image} alt="">
-                                        <img src="img/avatar/khung.gif" alt="" class="frame_avatar">
-                                    </div>
-                                    <div class="anime__review__item__text">
-                                        <div class="comment_header">
-                                            <div class="comment_author">
-                                                <span class="pbbm" data-tooltip="Đạo Tông"><img
-                                                        src="https://hoathinh3d.vip/wp-content/uploads/2024/02/dao-tong.gif"
-                                                        class="pbbm" alt="Đạo Tông" width="30px"></span>
-                                                ${item.name}
-                                                <span class="clan" data-tooltip="Đệ Tử">🏯Tiêu Dao⚔︎</span>
-                                            </div>
-                                            <div class="mycred-wrap">
-                                                <img alt="" src="img/avatar/vo-thien-tan.webp">
-                                            </div>
-                                            <span>${item.createAt}</span>
-                                        </div>
-                                        <p>${item.content}</p>
-                                    </div>
-                                </div>
-                            </div>`
-			})
-			if (html == "") html = "<h5 style='color: #ffffff;font-family: 'Oswald', sans-serif;'>Chưa có bình luận nào</5>";
-			comments.innerHTML = html;
-		})
+		
 </script>
 
 </html>

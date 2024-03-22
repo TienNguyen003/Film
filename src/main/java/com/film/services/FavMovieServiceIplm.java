@@ -27,6 +27,7 @@ public class FavMovieServiceIplm implements FavMovieService {
 			this.favMovieRepository.save(favMovie);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -42,6 +43,7 @@ public class FavMovieServiceIplm implements FavMovieService {
 			this.favMovieRepository.deleteById(id);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

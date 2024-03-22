@@ -26,7 +26,7 @@ public class GenresServiceIplm implements GenresService{
 			this.genresRepository.save(genres);
 			return true;
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -44,7 +44,7 @@ public class GenresServiceIplm implements GenresService{
 			this.genresRepository.deleteById(id);
 			return true;
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return false;
 	}

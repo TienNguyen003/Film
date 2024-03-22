@@ -22,17 +22,19 @@ body {
 	-webkit-font-smoothing: antialiased;
 	background: #0b0c2a;
 }
-body::-webkit-scrollbar{
+
+body::-webkit-scrollbar {
 	width: 10px;
 }
+
 body::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-  background-color: #fd9dff;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	background-color: #fd9dff;
 }
 
 body::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  background-color: #F5F5F5;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: #F5F5F5;
 }
 
 ::selection {
@@ -108,16 +110,17 @@ ol {
 	padding: 0;
 	margin: 0;
 }
+
 blockquote {
 	padding-top: 1rem;
-    font-size: 14px;
-    font-style: italic;
-    color: #555555;
-    border-left: 5px solid #00b38f;
-    line-height: 1.6;
-    position: relative;
-    background: #333;
-    text-align: left !important;
+	font-size: 14px;
+	font-style: italic;
+	color: #555555;
+	border-left: 5px solid #00b38f;
+	line-height: 1.6;
+	position: relative;
+	background: #333;
+	text-align: left !important;
 }
 
 /*---------------------
@@ -237,12 +240,14 @@ blockquote {
 		border: 4px solid #f44336;
 		border-left-color: transparent;
 	}
+
 	50% {
 		-webkit-transform: rotate(180deg);
 		transform: rotate(180deg);
 		border: 4px solid #673ab7;
 		border-left-color: transparent;
 	}
+
 	100% {
 		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
@@ -257,11 +262,13 @@ blockquote {
 		border: 4px solid #f44336;
 		border-left-color: transparent;
 	}
+
 	50% {
 		-webkit-transform: rotate(180deg);
 		border: 4px solid #673ab7;
 		border-left-color: transparent;
 	}
+
 	100% {
 		-webkit-transform: rotate(360deg);
 		border: 4px solid #f44336;
@@ -341,10 +348,10 @@ blockquote {
 
 .header {
 	position: fixed;
-    right: 0;
-    left: 0;
+	right: 0;
+	left: 0;
 	background: #070720;
-    z-index: 1000;
+	z-index: 1000;
 }
 
 .header__logo {
@@ -673,6 +680,7 @@ blockquote {
 	height: 325px;
 	position: relative;
 	border-radius: 5px;
+	loading: lazy;
 }
 
 .product__item__pic .ep {
@@ -1115,7 +1123,7 @@ blockquote {
 }
 
 .anime__details__review {
-	margin-bottom: 55px;
+	margin-bottom: 15px;
 }
 
 .anime__review__item {
@@ -1149,9 +1157,10 @@ blockquote {
 }
 
 .anime__review__item__text {
+	position: relative;
+	padding: 18px 30px 16px 20px;
 	overflow: hidden;
 	background: #1d1e39;
-	padding: 18px 30px 16px 20px;
 	border-radius: 10px;
 }
 
@@ -1195,6 +1204,53 @@ blockquote {
 	border: none;
 	padding: 10px 15px;
 	border-radius: 2px;
+}
+
+.contentComment {
+	background: #1d1e39;
+	color: #fff;
+	border: none;
+	width: 100%;
+}
+
+.anime__review__item__text:hover .settingComment {
+	display: inline;
+}
+
+.settingComment {
+	display: none;
+	position: absolute;
+	bottom: 10px;
+    right: 10px;
+	color: #fff;
+	z-index: 100;
+}
+
+.settingComment:hover .list-group {
+	display: inline-block;
+}
+
+.listSettingCm {
+	position: absolute;
+    left: -125px;
+    top: -50px;
+	display: none;
+	width: 120px;
+	color: #000;
+	cursor: pointer;
+}
+.listSettingCm::before{
+	content: "";
+	position: absolute;
+	right: -15px;
+    width: 15px;
+    height: 100%;	
+}
+.listSettingCm .list-group-item{
+	padding: 8px 1.25rem;
+}
+.updateCm{
+	display: none;
 }
 
 /*---------------------
@@ -1284,21 +1340,23 @@ blockquote {
 	width: 50px;
 }
 
-.episodes{
+.episodes {
 	max-height: 300px;
-	overflow-y: scroll; 
+	overflow-y: scroll;
 }
-.episodes::-webkit-scrollbar{
+
+.episodes::-webkit-scrollbar {
 	width: 10px;
 }
+
 .episodes::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-  background-color: #fd9dff;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	background-color: #fd9dff;
 }
 
 .episodes::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  background-color: #F5F5F5;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: #F5F5F5;
 }
 
 .anime__details__episodes {
@@ -1968,39 +2026,46 @@ blockquote {
   My Account
 -----------------------*/
 
-.myAccount, .updateDisplayName {
+.myAccount,
+.updateDisplayName {
 	padding-top: 130px;
 	padding-bottom: 150px;
 }
-.ud_name{
+
+.ud_name {
 	padding: 8px 15px 20px;
 	color: #fff;
 }
-.editPoint{
+
+.editPoint {
 	margin-left: 25%;
 }
-.edit-account .card{
+
+.edit-account .card {
 	padding: 8px 15px 20px;
 	color: #fff;
 	background-color: #15151573;
-	
+
 }
-.infoAccount{
+
+.infoAccount {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	height: 100%;
 	background-color: #15151573;
 }
-.infoAccount span{
+
+.infoAccount span {
 	font-size: 9px;
-    color: #ffffff;
-    background: #e53637;
-    text-transform: uppercase;
-    padding: 6px 8px;
-    border-radius: 4px;
+	color: #ffffff;
+	background: #e53637;
+	text-transform: uppercase;
+	padding: 6px 8px;
+	border-radius: 4px;
 }
-.img__myAccount{
+
+.img__myAccount {
 	margin-bottom: 15px;
 	padding: 2px;
 	width: 100px;
@@ -2009,75 +2074,88 @@ blockquote {
 	object-fit: cover;
 	background: url(/img/avatar/hop_the.gif);
 }
-.infoAccount .name__myAccount{
+
+.infoAccount .name__myAccount {
 	all: unset;
 	margin: 15px 0;
 	font-size: 18px;
 	font-weight: 900;
 	background: url(/img/avatar/hop_the.gif);
-    background-size: auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-position: center;
+	background-size: auto;
+	color: transparent;
+	-webkit-background-clip: text;
+	background-position: center;
 }
-.infoAccount .level__myAccount{
+
+.infoAccount .level__myAccount {
 	all: unset;
 	margin-bottom: 10px;
 	font-size: 14px;
 	font-weight: 900;
 	background: url(/img/avatar/hop_the.gif);
-    background-size: auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-position: center;
+	background-size: auto;
+	color: transparent;
+	-webkit-background-clip: text;
+	background-position: center;
 }
-.mycred-users-badges{
+
+.mycred-users-badges {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	padding: 0 10px;
 }
-.mycred-users-badges .the-badge img{
+
+.mycred-users-badges .the-badge img {
 	margin: 10px 5px;
 	width: 60px;
 	height: 60px;
 }
-.maxim{
+
+.maxim {
 	padding: 0 10px;
 	color: #fff !important;
 }
-.button-group{
+
+.button-group {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	margin-bottom: 10px;
 }
-.button-group .btn-danger{
+
+.button-group .btn-danger {
 	margin: 5px;
 }
-.button-group .btn-danger i{
+
+.button-group .btn-danger i {
 	width: 20px;
 }
-.card .form-group{
+
+.card .form-group {
 	position: relative;
 }
-.card .form-group a{
+
+.card .form-group a {
 	position: absolute;
-    right: 3px;
-    top: 72%;
-    padding: 3px 6px;
+	right: 3px;
+	top: 72%;
+	padding: 3px 6px;
 	font-size: 14px;
-    transform: translateY(-50%);
+	transform: translateY(-50%);
 }
-.card .form-group input:focus{
+
+.card .form-group input:focus {
 	box-shadow: none;
 }
-.card .form-group input[readonly]{
+
+.card .form-group input[readonly] {
 	color: #fff;
 	background-color: #000;
 	border: none;
 }
-.thong-bao-he-thong{
+
+.thong-bao-he-thong {
 	margin-top: 20px;
 }
 
@@ -2150,17 +2228,17 @@ blockquote {
 }
 
 #iconFilm {
-	border-radius: 3px!important;
-    padding: 4px 5px;
-    background: #25354c;
+	border-radius: 3px !important;
+	padding: 4px 5px;
+	background: #25354c;
 	color: #fff;
-    text-shadow: 0 1px 0 rgba(0,0,0,.5);
-    box-shadow: inset 0 1px 1px rgba(255,255,255,.07), 0 1px 3px rgba(0,0,0,.29);
+	text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
+	box-shadow: inset 0 1px 1px rgba(255, 255, 255, .07), 0 1px 3px rgba(0, 0, 0, .29);
 	cursor: pointer;
 }
 
-.unHiddenEl{
-	display:block;
+.unHiddenEl {
+	display: block;
 }
 
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
@@ -2183,13 +2261,16 @@ blockquote {
 	.hero {
 		overflow: hidden;
 	}
+
 	.login__form {
 		position: relative;
 		padding-left: 32px;
 	}
+
 	.login__social__links ul li a {
 		width: 380px;
 	}
+
 	.blog__item__text {
 		padding: 0 50px;
 	}
@@ -2201,26 +2282,32 @@ blockquote {
 	.hero {
 		overflow: hidden;
 	}
+
 	.header {
 		position: relative;
 	}
+
 	.header .container {
 		position: relative;
 	}
+
 	.header__right {
 		position: absolute;
 		right: 120px;
 		top: -42px;
 		padding: 0;
 	}
+
 	.header__menu {
 		display: none;
 	}
+
 	.slicknav_menu {
 		background: transparent;
 		padding: 0;
 		display: block;
 	}
+
 	.slicknav_nav {
 		position: absolute;
 		left: 0;
@@ -2230,9 +2317,11 @@ blockquote {
 		padding: 15px 30px;
 		z-index: 9;
 	}
+
 	.slicknav_nav ul {
 		margin: 0;
 	}
+
 	.slicknav_nav .slicknav_row,
 	.slicknav_nav a {
 		padding: 7px 0;
@@ -2240,6 +2329,7 @@ blockquote {
 		color: #111111;
 		font-weight: 600;
 	}
+
 	.slicknav_btn {
 		border-radius: 0;
 		background-color: #222;
@@ -2247,54 +2337,69 @@ blockquote {
 		right: 0;
 		top: 9px;
 	}
+
 	.slicknav_nav .slicknav_arrow {
 		color: #111111;
 	}
+
 	.slicknav_nav .slicknav_row:hover {
 		border-radius: 0;
 		background: transparent;
 		color: #111111;
 	}
+
 	.slicknav_nav a:hover {
 		border-radius: 0;
 		background: transparent;
 		color: #111111;
 	}
+
 	.product__sidebar {
 		padding-top: 50px;
 	}
+
 	.footer__logo {
 		text-align: center;
 		margin-bottom: 20px;
 	}
+
 	.footer__nav {
 		margin-bottom: 15px;
 	}
+
 	.footer__copyright__text {
 		text-align: center;
 	}
+
 	.anime__details__widget ul li span {
 		width: 90px;
 	}
+
 	.anime__details__pic {
 		margin-bottom: 40px;
 	}
+
 	.anime__details__sidebar {
 		padding-top: 50px;
 	}
+
 	.login__form {
 		padding-left: 0;
 		margin-bottom: 40px;
 	}
+
 	.login__form:after {
 		display: none;
 	}
+
 	.login__form form .input__item {
 		width: auto;
 	}
+
 	.login__register {
 		padding-left: 0;
 	}
+
 	.signup .login__social__links {
 		padding-left: 0;
 	}
@@ -2306,26 +2411,32 @@ blockquote {
 	.hero {
 		overflow: hidden;
 	}
+
 	.header {
 		position: relative;
 	}
+
 	.header .container {
 		position: relative;
 	}
+
 	.header__right {
 		position: absolute;
 		right: 120px;
 		top: -42px;
 		padding: 0;
 	}
+
 	.header__menu {
 		display: none;
 	}
+
 	.slicknav_menu {
 		background: transparent;
 		padding: 0;
 		display: block;
 	}
+
 	.slicknav_nav {
 		position: absolute;
 		left: 0;
@@ -2335,9 +2446,11 @@ blockquote {
 		padding: 15px 30px;
 		z-index: 9;
 	}
+
 	.slicknav_nav ul {
 		margin: 0;
 	}
+
 	.slicknav_nav .slicknav_row,
 	.slicknav_nav a {
 		padding: 7px 0;
@@ -2345,6 +2458,7 @@ blockquote {
 		color: #111111;
 		font-weight: 600;
 	}
+
 	.slicknav_btn {
 		border-radius: 0;
 		background-color: #222;
@@ -2352,100 +2466,128 @@ blockquote {
 		right: 0;
 		top: 9px;
 	}
+
 	.slicknav_nav .slicknav_arrow {
 		color: #111111;
 	}
+
 	.slicknav_nav .slicknav_row:hover {
 		border-radius: 0;
 		background: transparent;
 		color: #111111;
 	}
+
 	.slicknav_nav a:hover {
 		border-radius: 0;
 		background: transparent;
 		color: #111111;
 	}
+
 	.product__sidebar {
 		padding-top: 50px;
 	}
+
 	.footer__logo {
 		text-align: center;
 		margin-bottom: 20px;
 	}
+
 	.footer__nav {
 		margin-bottom: 15px;
 	}
+
 	.footer__copyright__text {
 		text-align: center;
 	}
+
 	.blog__details__title h2 {
 		font-size: 34px;
 		line-height: normal;
 	}
+
 	.anime__details__pic {
 		margin-bottom: 40px;
 	}
+
 	.anime__details__sidebar {
 		padding-top: 50px;
 	}
+
 	.btn__all {
 		text-align: left;
 	}
+
 	.product__page__title .section-title {
 		margin-bottom: 30px;
 	}
+
 	.product__page__title .product__page__filter {
 		text-align: left;
 	}
+
 	.anime__details__rating {
 		text-align: left;
 		position: relative;
 		margin-bottom: 20px;
 	}
+
 	.blog__details__social {
 		overflow: hidden;
 	}
+
 	.blog__details__title .blog__details__social a {
 		margin-right: 10px;
 		margin-bottom: 10px;
 		width: calc(50% - 10px);
 		float: left;
 	}
+
 	.login__form {
 		padding-left: 0;
 		margin-bottom: 40px;
 	}
+
 	.login__form:after {
 		display: none;
 	}
+
 	.login__form form .input__item {
 		width: auto;
 	}
+
 	.signup .login__social__links {
 		padding-left: 0;
 	}
+
 	.login__social__links ul li a {
 		width: auto;
 	}
+
 	.blog__item__text {
 		padding: 0 30px;
 	}
+
 	.login__register {
 		padding-left: 0;
 	}
+
 	.product__sidebar__view .filter__controls li {
 		margin-right: 2px;
 	}
+
 	.search-model-form input {
 		width: 100%;
 	}
-	.arrow_carrot-down{
+
+	.arrow_carrot-down {
 		display: none;
 	}
-	.editPoint{
-		margin-left : 0 !important;
+
+	.editPoint {
+		margin-left: 0 !important;
 	}
-	.marqueeNoti{
+
+	.marqueeNoti {
 		left: 0 !important;
 		width: unset !important;
 		color: #fff;
@@ -2458,120 +2600,148 @@ blockquote {
 	.hero__slider.owl-carousel .owl-nav {
 		display: none;
 	}
+
 	.hero__items {
 		padding: 250px 0 42px 15px;
 	}
+
 	.hero__text h2 {
 		font-size: 32px;
 	}
+
 	.footer__nav ul li {
 		margin-right: 10px;
 	}
+
 	.anime__details__btn .follow-btn {
 		padding: 14px 26px;
 		margin-right: 11px;
 		margin-bottom: 25px;
 	}
+
 	.anime__details__widget ul li span {
 		width: 85px;
 	}
+
 	.anime__video__player .plyr__volume {
 		left: 65px;
 	}
+
 	.anime__video__player .plyr__controls .plyr__controls__item.plyr__time {
 		left: 95px;
 	}
+
 	.anime__video__player .plyr__menu {
 		margin-right: 60px;
 	}
+
 	.blog__details__title h2 {
 		font-size: 30px;
 		line-height: normal;
 	}
+
 	.blog__details__title .blog__details__social a {
 		padding: 16px 25px 14px 20px;
 	}
+
 	.blog__details__comment__item.blog__details__comment__item--reply {
 		padding-left: 0;
 	}
+
 	.blog__details__comment__item__pic {
 		margin-right: 25px;
 	}
+
 	.blog__details__comment__item__text a {
 		margin-right: 6px;
 	}
+
 	.login__social__links ul li a i {
 		left: 20px;
 	}
+
 	.login__form .forget_pass {
 		position: relative;
 		left: 0;
 		bottom: 0;
 		margin-top: 25px;
 	}
+
 	.header__right a {
 		margin-right: 10px;
 	}
+
 	.anime__review__item__text h6 span {
 		font-size: 12px;
 	}
+
 	.anime__review__item__text {
 		padding: 18px 20px 20px;
 	}
 }
 
-.deleteHsFilm{
+.deleteHsFilm {
 	width: 30px;
-    height: 30px;
-    position: absolute;
-    top: -8px;
-    right: 8px;
+	height: 30px;
+	position: absolute;
+	top: -8px;
+	right: 8px;
 }
-.logoutUser{
+
+.logoutUser {
 	display: none;
 	flex-direction: column;
 	align-items: center;
 	position: absolute;
 	left: 33%;
-    padding: 5px;    
+	padding: 5px;
 	width: 160px;
-    background: #070720;
-    transition: all, 0.3s;
-    text-align: left;
-    z-index: 100;
+	background: #070720;
+	transition: all, 0.3s;
+	text-align: left;
+	z-index: 100;
 }
-.infoUser:hover .logoutUser{
+
+.infoUser:hover .logoutUser {
 	display: flex !important;
 }
-.logoutUser a, .logoutUser span{
+
+.logoutUser a,
+.logoutUser span {
 	color: #fff;
 }
-.basicInfo{
+
+.basicInfo {
 	display: flex;
 }
-.imgUser{
+
+.imgUser {
 	margin: 10px 5px;
 	width: 105px;
 	height: 105px;
 	object-fit: cover;
 	border-radius: 50%;
 }
-.listFcInfo{
+
+.listFcInfo {
 	list-style-type: none;
 }
-.listFcInfo li{
+
+.listFcInfo li {
 	width: 120px;
 	color: #fff;
 }
-.listFcInfo li a{
+
+.listFcInfo li a {
 	padding: 15px 0 15px 5px;
 	font-size: 16px;
 }
-.listFcInfo li i{
+
+.listFcInfo li i {
 	width: 30px;
 }
 
-.marqueeNoti{
+.marqueeNoti {
 	position: relative;
 	left: 153px;
 	width: 1140px;
@@ -2579,35 +2749,39 @@ blockquote {
 	line-height: 30px;
 	color: #fff;
 }
-.anime__review__item__pic .frame_avatar{
-	    position: absolute;
-    left: -5px;
-    top: -7px;
-    max-width: unset;
-    width: 60px;
-    height: 61px;
+
+.anime__review__item__pic .frame_avatar {
+	position: absolute;
+	left: -5px;
+	top: -7px;
+	max-width: unset;
+	width: 60px;
+	height: 61px;
 }
 
-.comment_header{
-	display:flex;
+.comment_header {
+	display: flex;
 }
-.comment_author{
+
+.comment_author {
 	background: url(/img/avatar/hop_the.gif);
 	background-size: auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-position: center;
-    font-weight: 800;
-    margin-right: 10px;
+	color: transparent;
+	-webkit-background-clip: text;
+	background-position: center;
+	font-weight: 800;
+	margin-right: 10px;
 }
-.clan{
+
+.clan {
 	color: #fff;
-    background: url(https://hoathinh3d.vip/wp-content/themes/halimmovies-child/assets/image/gif/top1-tong.gif);
-    font-weight: bold;
-    border-radius: 3px;
-    padding: 0px 2px;
-    text-shadow: 1px 1px 5px #000000;
+	background: url(https://hoathinh3d.tube/wp-content/themes/halimmovies-child/assets/image/gif/top1-tong.gif);
+	font-weight: bold;
+	border-radius: 3px;
+	padding: 0px 2px;
+	text-shadow: 1px 1px 5px #000000;
 }
-.mycred-wrap img{
+
+.mycred-wrap img {
 	height: 30px;
 }

@@ -24,6 +24,7 @@ public class HistoryWatchIplm implements HistoryWatchService{
 			this.historyWatchRepository.save(historyWatch);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -34,6 +35,7 @@ public class HistoryWatchIplm implements HistoryWatchService{
 			this.historyWatchRepository.deleteById(id);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
