@@ -33,7 +33,7 @@ public class CommentController {
 	 
 	 @PostMapping("/save")
 	 public ResponseEntity<Comments> createComment(
-			@RequestParam(required = false, defaultValue = "") int id,
+			@RequestParam(required = false, defaultValue = "") String id,
 			@RequestParam(required = false, defaultValue = "") String slug,
 			@RequestParam(required = false, defaultValue = "") String contentCm) {
 		 int idUser = loadController.getUserIdFromUserDetails().intValue();
@@ -43,9 +43,13 @@ public class CommentController {
 				String name = loadController.csUser().getUser().getFullName();
 				String createAt = loadController.dateTime();
 				Comments newComments = new Comments();
-				if(id > 0) newComments.setId(id);
+				if(!id.isEmpty()) {
+					newComments.setId(Integer.parseInt(id));
+					newComments.setEdit_comment("1");
+				}
+				else newComments.setEdit_comment("0");
 			 	newComments.setSlugFilm(slug);
-			 	newComments.setContent(contentCm);
+			 	newComments.setContent(contentCm.trim());
 			 	newComments.setCreateAt(createAt);
 			 	newComments.setImage(img);
 			 	newComments.setName(name);

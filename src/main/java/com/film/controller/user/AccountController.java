@@ -64,7 +64,7 @@ public class AccountController {
 		int idUser = loadController.getUserIdFromUserDetails().intValue();
 		if(idUser > 0) {
 			Object[][] userModel = userService.queryByPoint(idUser);
-			if(!userModel[0][2].equals(user_bio)) {			
+			if(!userModel[0][2].equals(user_bio.trim())) {			
 				userService.updateMaxim(user_bio, idUser);
 				loadController.csUser().getUser().setMaxim(user_bio);
 				redirectAttributes.addFlashAttribute("notification", "Cập nhật thành công");

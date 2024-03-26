@@ -26,12 +26,14 @@ public class Comments {
 	private String image;
 	@Column(name = "content_comment")
 	private String content;
+	@Column(name = "edit_comment")
+	private String edit_comment;
 	
 	public Comments() {
 		super();
 	}
 
-	public Comments(int id, String slugFilm, String createAt, int idUser, String name, String image, String content) {
+	public Comments(int id, String slugFilm, String createAt, int idUser, String name, String image, String content, String edit_comment) {
 		super();
 		this.id = id;
 		this.slugFilm = slugFilm;
@@ -40,6 +42,7 @@ public class Comments {
 		this.name = name;
 		this.image = image;
 		this.content = content;
+		this.edit_comment = edit_comment;
 	}
 
 	public int getId() {
@@ -96,5 +99,13 @@ public class Comments {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getEdit_comment() {
+		return edit_comment;
+	}
+
+	public void setEdit_comment(String edit_comment) {
+		this.edit_comment = edit_comment;
 	}	
 }

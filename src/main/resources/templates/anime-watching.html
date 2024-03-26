@@ -84,6 +84,7 @@
 					<div class="comments" id="comments" style="margin-bottom: 50px"></div>
 					<div th:with="userDetails=${#authentication.getPrincipal()}" class="infoUser">
 						<div th:if="${userDetails != 'anonymousUser'}">
+							<p style="display:none" class="idUserCmt" th:text="${userDetails.id}"></p>
 							<div class="anime__details__form">
 								<div class="section-title">
 									<h5>Your Comment</h5>
@@ -122,6 +123,7 @@
 	<script src="js/jquery.slicknav.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="myJs/main.js"></script>
 
 	<script src="js/hls.min.js"></script>
 	<script src="js/DPlayer.min.js"></script>
