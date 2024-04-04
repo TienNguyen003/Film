@@ -30,4 +30,14 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	@Transactional
 	@Query(value = "UPDATE users SET maxim = :maxim WHERE id = :id", nativeQuery = true)
 	public void updateMaxim(@Param("maxim") String maxim, @Param("id") int id);	
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE users SET is_activity = :isActivity, last_active = :lastActive WHERE id = :id", nativeQuery = true)
+	public void updateIsActivity(@Param("isActivity") int isActivity, @Param("lastActive") String lastActive, @Param("id") int id);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE users SET image = :image WHERE id = :id", nativeQuery = true)
+	public void updateAvatar(@Param("image") String image, @Param("id") int id);
 }

@@ -2026,9 +2026,12 @@ blockquote {
   My Account
 -----------------------*/
 
-.myAccount,
+.myAccount{
+	padding-top: 150px;
+	padding-bottom: 150px;
+}
 .updateDisplayName {
-	padding-top: 130px;
+	padding-top: 50px;
 	padding-bottom: 150px;
 }
 
@@ -2775,7 +2778,7 @@ blockquote {
 
 .clan {
 	color: #fff;
-	background: url(https://hoathinh3d.tube/wp-content/themes/halimmovies-child/assets/image/gif/top1-tong.gif);
+	background: url(https://hoathinh3d.io/wp-content/themes/halimmovies-child/assets/image/gif/top1-tong.gif);
 	font-weight: bold;
 	border-radius: 3px;
 	padding: 0px 2px;

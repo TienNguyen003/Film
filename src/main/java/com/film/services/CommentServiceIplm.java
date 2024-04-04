@@ -3,10 +3,12 @@ package com.film.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.film.models.Comments;
 import com.film.repository.CommentsRespository;
 
+@Service
 public class CommentServiceIplm implements CommentService{
 	@Autowired
 	private CommentsRespository commentsRespository;
@@ -25,5 +27,23 @@ public class CommentServiceIplm implements CommentService{
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public Boolean delete(int id) {
+		try {
+			this.commentsRespository.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public String findCreateById(String slug, int id) {
+		// TODO Auto-generated method stub
+		System.out.println(slug + " " + id);
+		return this.commentsRespository.findCreateById(slug, id);
 	}
 }

@@ -168,9 +168,9 @@
 				alert("Phim mới chỉ có trailer");
 				window.open(`${data.trailer_url}`, 'popup', 'width=600,height=400');
 			}
-			if (indexOfFilm > episodes.length) {
+			if (parseInt(episodes[episodes.length-1].name) < indexOfFilm) {
 				indexOfFilm = episodes.length;
-				alert(`Phim có ${episodes.length} tập thôi bớt nghịch lại`);
+				alert(`Phim có ${episodes[episodes.length-1].name} tập thôi bớt nghịch lại`);
 			}
 			var art = new Artplayer({
 				container: '#dplayer',
@@ -269,12 +269,13 @@
 			document.querySelector(".filmName").innerHTML = data.name;
 
 			episodes.map(item => {
-				episodesCurent = (item.slug == "" ? item.name.replace(/\b0+(\d+)\b/g, '$1') : item.slug)
+				episodesCurent = (item.slug != "" ? item.name.replace(/\b0+(\d+)\b/g, '$1') : item.slug)
+				if(episodesCurent.includes("tap-")) episodesCurent = episodesCurent.replace("tap-", "")
 				if (episodesCurent == "Full" || episodesCurent == "full") episodesCurent = "1";
 				document.querySelector(".episodes").innerHTML += `
 					<a style=${indexOfFilm == episodesCurent ? "background-color:orange" : "background-color:none"} 
 						href="${currentURL}&episodes=${episodesCurent}">
-						${item.name}</a>`
+						${episodesCurent}</a>`
 			});
 
 			document.querySelector(".prevEps").href = `${currentURL}&episodes=${(indexOfFilm == 1) ? indexOfFilm : indexOfFilm - 1}`;

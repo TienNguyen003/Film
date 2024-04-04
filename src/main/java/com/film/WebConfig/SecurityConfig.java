@@ -1,5 +1,6 @@
 package com.film.WebConfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,9 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.film.controller.user.LoadController;
+import com.film.models.CustomUserDetails;
+import com.film.services.UserService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	@Autowired
+	private UserService userService;
+	
+	LoadController loadController = new LoadController();
 	
 	@Bean
 	BCryptPasswordEncoder passwordEncoder() {
@@ -23,19 +32,30 @@ public class SecurityConfig {
 		httpSecurity
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests((auth) -> auth.
-				requestMatchers("/my-account").authenticated().
-				requestMatchers("/cap-nhat-biet-danh").authenticated().
+				requestMatchers("/my-account/**").authenticated().
 				requestMatchers("/*").permitAll().
 				requestMatchers("/api/comment/**").permitAll().
 				requestMatchers("/admin/**").hasAuthority("ADMIN").
 				anyRequest().authenticated())
-			.formLogin(login -> login.
-				loginPage("/login").
-				loginProcessingUrl("/login").
-				usernameParameter("username").
-				passwordParameter("password").
-				defaultSuccessUrl("/admin/", true)).logout(logout->logout.logoutUrl("/logout").logoutSuccessUrl("/login")).
-				logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))
+			.formLogin(login -> login
+				.loginPage("/login")
+				.successHandler((request, response, authentication) -> {
+					response.sendRedirect("/");
+					CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+					int id = customUserDetails.getId().intValue();
+					userService.updateIsActivity(1, "", id);
+				})
+                .failureHandler((request, response, exception) -> response.sendRedirect("/login?error=true"))
+				.usernameParameter("username")
+				.passwordParameter("password")).
+			logout(logout -> logout
+					.logoutUrl("/logout")
+					.logoutSuccessHandler((request, response, authentication) -> {
+						CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+						int id = customUserDetails.getId().intValue();
+						userService.updateIsActivity(0, loadController.dateTime(), id);
+			            response.sendRedirect("/login");
+			        }))
 			.exceptionHandling(exceptionHandling -> exceptionHandling
 				.accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect("/"))								
 			)		

@@ -29,7 +29,7 @@ if (comments != null) {
                                         <div class="comment_header">
                                             <div class="comment_author">
                                                 <span class="pbbm" data-tooltip="Đạo Tông"><img
-                                                        src="https://hoathinh3d.tube/wp-content/uploads/2024/02/dao-tong.gif"
+                                                        src="https://hoathinh3d.io/wp-content/uploads/2024/02/dao-tong.gif"
                                                         class="pbbm" alt="Đạo Tông" width="30px"></span>
                                                 ${item.name}
                                                 <span class="clan" data-tooltip="Đệ Tử">🏯Tiêu Dao⚔︎</span>
@@ -46,7 +46,7 @@ if (comments != null) {
                                         <button type="submit" class="btnClose">Hủy</button></div>
                                         ${item.idUser == idUser ? `<span class="settingComment"><i class="fa fa-cog"></i><ul class="list-group listSettingCm">  
                                         	<li class="list-group-item clickEditComment" id="${item.id}">Chỉnh sửa</li>
-                                        	<li class="list-group-item">Xóa</li></ul></span>` : ''}
+                                        	<li class="list-group-item clickDeleteComment" id="${item.id}">Xóa</li></ul></span>` : ''}
                                         ${item.edit_comment == "1" ? '<div class="isCheckEditCM" style="color: #fff; font-size: 10px"><i class="fa fa-pencil-square-o"></i> Đã chỉnh sửa</div>' : ''}
                                     </div>
                                 </div>
@@ -80,6 +80,13 @@ if (comments != null) {
 						updateCm.style.display = "none";
 						contentComment.readOnly = true;
 					}
+				}
+			}
+			
+			const clickDeleteComment = document.querySelectorAll(".clickDeleteComment");
+			for (let i = 0; i < clickDeleteComment.length; i++) {
+				clickDeleteComment[i].onclick = (e) => {
+					deleteComment(e.target.getAttribute("id"));
 				}
 			}
 		})
@@ -167,7 +174,6 @@ function addCommentAjax() {
 		timeout: 100000,
 		success: function(data) {
 			var commentsArray = JSON.parse(data);
-			console.log(commentsArray)
 			const idUserCmt = document.querySelector(".idUserCmt");
 			let idUser = -1;
 			if (idUserCmt != null) idUser = parseInt(idUserCmt.innerHTML);
@@ -187,7 +193,7 @@ function addCommentAjax() {
 				+ '<div class="anime__review__item__text">'
 				+ '<div class="comment_header">'
 				+ '<div class="comment_author">'
-				+ '<span class="pbbm" data-tooltip="Đạo Tông"><img src="https://hoathinh3d.tube/wp-content/uploads/2024/02/dao-tong.gif" class="pbbm" alt="Đạo Tông" width="30px"></span>'
+				+ '<span class="pbbm" data-tooltip="Đạo Tông"><img src="https://hoathinh3d.io/wp-content/uploads/2024/02/dao-tong.gif" class="pbbm" alt="Đạo Tông" width="30px"></span>'
 				+ commentsArray.name
 				+ '<span class="clan" data-tooltip="Đệ Tử">🏯Tiêu Dao⚔︎</span>'
 				+ '</div>'
@@ -202,7 +208,7 @@ function addCommentAjax() {
 				+ '<button type="submit" class="btnClose">Hủy</button></div>'
 				+ `${commentsArray.idUser == idUser ? `<span class="settingComment"><i class="fa fa-cog"></i><ul class="list-group listSettingCm">
                                         	<li class="list-group-item clickEditComment" id="${commentsArray.id}">Chỉnh sửa</li>
-                                        	<li class="list-group-item">Xóa</li></ul></span>` : ''}`
+                                        	<li class="list-group-item clickDeleteComment" id="${commentsArray.id}">Xóa</li></ul></span>` : ''}`
 				+ `${commentsArray.edit_comment == "1" ? '<div class="isCheckEditCM" style="color: #fff; font-size: 10px"><i class="fa fa-pencil-square-o"></i> Đã chỉnh sửa</div>' : ''}`
 				+ '</div>'
 				+ '</div>'
@@ -227,6 +233,10 @@ function addCommentAjax() {
 					updateCm.style.display = "none";
 					contentComment.readOnly = true;
 				}
+			}
+			
+			document.querySelector(".clickDeleteComment").onclick = (e) => {
+					deleteComment(e.target.getAttribute("id"));
 			}
 
 			document.querySelector("#contentCm").value = "";
@@ -281,6 +291,29 @@ function editComment(contentCm, slugFilmS, idCm) {
 		timeout: 100000,
 		success: function(data) {
 			console.log("Tiến đẹp zai");
+		},
+		error: function(e) {
+			console.log("ERROR: ", e);
+		}
+	})
+}
+
+function deleteComment(idCm) {
+	$.ajax({
+		type: "POST",
+		url: "/api/comment/delete",
+		data: {
+			id: idCm,
+		},
+		dataType: 'html',
+		timeout: 100000,
+		success: function(data) {
+			const clickDeleteComment = document.querySelectorAll(".clickDeleteComment");
+			for (let i = 0; i < clickDeleteComment.length; i++) {
+				if(clickDeleteComment[i].getAttribute("id") == data){
+					clickDeleteComment[i].parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
+				}
+			}
 		},
 		error: function(e) {
 			console.log("ERROR: ", e);

@@ -40,38 +40,40 @@
 		<div class="container">
 			<div class="row" th:with="userDetails=${#authentication.getPrincipal()}">
 				<div class="col-lg-4 infoAccount" th:object="${user}">
-					<img th:src="${userDetails.getImg() != null ? userDetails.getImg() : 'https://i.pinimg.com/564x/a2/2d/1d/a22d1d8a789a904187dba0f5240a5907.jpg'}" class="img__myAccount">		
-					<a href="#"><span>Thay đổi avatar</span></a>
-					<span class="name__myAccount" th:text="${userDetails.getFullName() != null ? userDetails.getFullName() : userDetails.username}"></span>
+					<img th:src="${userDetails.getImg() != null ? userDetails.getImg() : 'https://i.pinimg.com/564x/a2/2d/1d/a22d1d8a789a904187dba0f5240a5907.jpg'}"
+						class="img__myAccount">
+					<label for="avatarInput" style="cursor: pointer;"><span>Thay đổi avatar</span></label>
+					<input type="file" id="avatarInput" style="display: none;" onchange="uploadImage()" />
+					<span class="name__myAccount"
+						th:text="${userDetails.getFullName() != null ? userDetails.getFullName() : userDetails.username}"></span>
 					<div class="mycred-users-badges">
 						<div class="the-badge"><img
-								src="https://hoathinh3d.tube/wp-content/uploads/2024/02/can-co-vung-chac-level-4.gif"
+								src="https://hoathinh3d.io/wp-content/uploads/2024/02/can-co-vung-chac-level-4.gif"
 								class="mycred-badge-image badge-level3" title="Căn Cơ Vững Chắc" alt="Căn Cơ Vững Chắc"
 								width="100" height="100"></div>
 						<div class="the-badge"><img
-								src="https://hoathinh3d.tube/wp-content/uploads/2024/02/nap-gioi-do.gif"
+								src="https://hoathinh3d.io/wp-content/uploads/2024/02/nap-gioi-do.gif"
 								class="mycred-badge-image badge-level4" title="Tinh Thông Bí Pháp"
 								alt="Tinh Thông Bí Pháp" width="100" height="100"></div>
 						<div class="the-badge"><img
-								src="https://hoathinh3d.tube/wp-content/uploads/2023/12/guong-chieu-yeu.gif"
+								src="https://hoathinh3d.io/wp-content/uploads/2023/12/guong-chieu-yeu.gif"
 								class="mycred-badge-image badge-level5" title="Tầm Bảo Sư" alt="Tầm Bảo Sư" width="100"
 								height="100"></div>
-						<div class="the-badge"><img
-								src="https://hoathinh3d.tube/wp-content/uploads/2023/11/tieu-thap.gif"
+						<div class="the-badge"><img src="https://hoathinh3d.io/wp-content/uploads/2023/11/tieu-thap.gif"
 								class="mycred-badge-image badge-levelnone" title="Tiểu Tháp" alt="Tiểu Tháp" width="100"
 								height="100"></div>
 						<div class="the-badge"><img
-								src="https://hoathinh3d.tube/wp-content/uploads/2023/12/huyet-kiem.gif"
+								src="https://hoathinh3d.io/wp-content/uploads/2023/12/huyet-kiem.gif"
 								class="mycred-badge-image badge-levelnone" title="Huyết Kiếm" alt="Huyết Kiếm"
 								width="100" height="100"></div>
 						<div class="the-badge"><img
-								src="https://hoathinh3d.tube/wp-content/uploads/2024/01/ma-van-dang-tptk.gif"
+								src="https://hoathinh3d.io/wp-content/uploads/2024/01/ma-van-dang-tptk.gif"
 								class="mycred-badge-image badge-levelnone" title="Ma Vân Đằng" alt="Ma Vân Đằng"
 								width="100" height="100"></div>
-						<div class="the-badge"><img src="https://hoathinh3d.tube/wp-content/uploads/2024/01/to-phu.gif"
+						<div class="the-badge"><img src="https://hoathinh3d.io/wp-content/uploads/2024/01/to-phu.gif"
 								class="mycred-badge-image badge-levelnone" title="Thôn Phệ Tổ Phù" alt="Thôn Phệ Tổ Phù"
 								width="100" height="100"></div>
-						<div class="the-badge"><img src="https://hoathinh3d.tube/wp-content/uploads/2024/02/icon-tet.gif"
+						<div class="the-badge"><img src="https://hoathinh3d.io/wp-content/uploads/2024/02/icon-tet.gif"
 								class="mycred-badge-image badge-levelnone" title="Tết Nguyên Đán 2024"
 								alt="Tết Nguyên Đán 2024" width="100" height="100"></div>
 					</div>
@@ -85,17 +87,17 @@
 						<a href="/phong-chat-version-2-0" class="btn btn-danger"><i class="fa fa-comments"></i>Phòng
 							Chat</a>
 						<a href="/gop-y" class="btn btn-danger"><i class="fa fa-comment"></i> Góp Ý</a>
-						<a href="/my-account/edit-password" class="btn btn-danger"><i class="fa fa-lock"></i>Thay Đổi
+						<a href="/my-account/edit-pass" class="btn btn-danger"><i class="fa fa-lock"></i>Thay Đổi
 							Mật Khẩu</a>
 					</div>
 				</div>
 				<div class="col-lg-8 edit-account">
 					<div class="card">
-						<form method="post" action="/update-maxim">
+						<form method="post" action="/my-account/update-maxim">
 							<div class="form-group">
 								<label for="new_display_name">Biệt danh:</label>
 								<input type="text" class="form-control" th:value="${userDetails.getFullName}" readonly>
-								<a href="/cap-nhat-biet-danh" class="btn btn-info">Đổi Biệt Danh</a>
+								<a href="/my-account/cap-nhat-biet-danh" class="btn btn-info">Đổi Biệt Danh</a>
 							</div>
 							<div class="form-group">
 								<label for="tu_vi">Tu vi: </label>
@@ -103,7 +105,8 @@
 							</div>
 							<div class="form-group">
 								<label for="user_bio">Châm ngôn:</label>
-								<textarea maxlength="300" name="user_bio" class="form-control" rows="3" th:text="${userDetails.getMaxim}"></textarea>
+								<textarea maxlength="300" name="user_bio" class="form-control" rows="3"
+									th:text="${userDetails.getMaxim}"></textarea>
 							</div>
 							<div class="form-group">
 								<label for="user_dob">Ngày sinh:</label>
@@ -148,11 +151,79 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
 
+	<!-- cloudinary -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.28.0/js/vendor/jquery.ui.widget.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.28.0/js/jquery.iframe-transport.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.28.0/js/jquery.fileupload.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-core/2.9.0/cloudinary-core-shrinkwrap.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-jquery-file-upload/1.0.23/cloudinary-jquery-file-upload.min.js"></script>
 </body>
 <script th:inline="javascript">
-    var notification = /*[[${notification}]]*/ null;
-    if (notification) {
-        alert(notification);
-    }
+	var notification = /*[[${notification}]]*/ null;
+	if (notification) {
+		alert(notification);
+	}
+
+	// Thay thế bằng cloud name của bạn
+	var cloudName = 'dwn20guz0';
+
+	// Hàm tải lên ảnh lên Cloudinary
+	function uploadImage() {
+		var fileInput = document.getElementById('avatarInput');
+		var file = fileInput.files[0];
+
+		if (file) {
+			// Khởi tạo FormData để gửi dữ liệu tệp lên
+			var formData = new FormData();
+			formData.append('file', file);
+			formData.append('upload_preset', 'cgklkmau');
+
+			// Gửi yêu cầu POST để tải lên ảnh lên Cloudinary
+			fetch('https://api.cloudinary.com/v1_1/' + cloudName + '/image/upload', {
+				method: 'POST',
+				body: formData
+			})
+				.then(response => response.json())
+				.then(data => {
+					// Lấy URL của ảnh đã tải lên từ kết quả trả về
+					var imageUrl = data.url;
+
+					// Hiển thị URL của ảnh đã tải lên
+					updateAvatar(parseInt(document.querySelector(".idUserLogin").innerHTML), imageUrl);
+					document.querySelector(".img__myAccount").src = imageUrl;
+					document.querySelector(".imgUser").src = imageUrl;					
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		} else {
+			alert('Please select an image file.');
+		}
+	}
+
+	function updateAvatar(id, img) {
+		$.ajax({
+			type: "POST",
+			url: "/my-account/upload-image",
+			data: {
+				id: id,
+				img: img
+			},
+			dataType: 'html',
+			timeout: 100000,
+			success: function (data) {
+				console.log("Tiến đẹp zai")
+			},
+			error: function (e) {
+				console.log("ERROR: ", e);
+			}
+		})
+	}
 </script>
+
 </html>

@@ -1,5 +1,7 @@
 'use strict';
 
+console.warn("Làm chức năng bài viết, đề xuất, có thể bạn cũng thích, chức năng về tài khoản(tăng tu vi, bxh, góp ý, chatroom, đổi mật khẩu, api film(tự viết))");
+
 (function($) {
 
 	/*------------------
@@ -100,3 +102,55 @@
 
 
 })(jQuery);
+
+
+let idUserActivity = document.querySelector(".idUserActivity");
+if (idUserActivity != null) {
+	const TIMEOUT_INACTIVE = 600000;
+	let lastActivityTime = Date.now();
+	let timeOut;
+	let isCheckingTimeout = false;
+
+	function updateLastActivityTime() {
+		lastActivityTime = Date.now();
+		startTimeout();
+	}
+
+	function checkSessionTimeout() {
+		if (isCheckingTimeout) {
+			return;
+		}
+		isCheckingTimeout = true;
+		const currentTime = Date.now();
+		const timeSinceLastActivity = currentTime - lastActivityTime;
+
+		const idUser = document.querySelector(".idUserLogin");
+		if (idUser != null) {
+			fetch('/updateIsActivity', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ id: parseInt(idUser.innerHTML), notifical: timeSinceLastActivity >= TIMEOUT_INACTIVE ? 0 : 1 })
+			});
+		}
+	}
+
+
+	function startTimeout() {
+		// Xóa bỏ setTimeout hiện tại (nếu có)
+		clearTimeout(timeOut);
+		// Khởi tạo setTimeout mới
+		timeOut = setTimeout(checkSessionTimeout, TIMEOUT_INACTIVE);
+	}
+
+	// Kiểm tra và bắt đầu setTimeout ban đầu
+	if (idUserActivity.innerHTML == 1) {
+		startTimeout();
+	}
+
+	// Cập nhật thời gian lần cuối hoạt động khi có hành động của người dùng
+	document.addEventListener('mousemove', updateLastActivityTime);
+	document.addEventListener('mousedown', updateLastActivityTime);
+	document.addEventListener('keypress', updateLastActivityTime);
+}

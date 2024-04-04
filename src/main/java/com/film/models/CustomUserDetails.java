@@ -9,7 +9,7 @@ public class CustomUserDetails implements UserDetails{
 	private UserModel user;
 	private Collection<? extends GrantedAuthority> authorities;
 	String userImg, fullName, maxim, birthday, createAt, email;
-	int point;	
+	int point, isActivity;	
 	
 	public CustomUserDetails() {
 		// TODO Auto-generated constructor stub
@@ -98,6 +98,14 @@ public class CustomUserDetails implements UserDetails{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getIsActivity() {
+		return user.getIsActivity();
+	}
+
+	public void setIsActivity(int isActivity) {
+		this.isActivity = isActivity;
 	}
 
 	@Override

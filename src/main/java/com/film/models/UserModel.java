@@ -40,6 +40,10 @@ public class UserModel {
 	private String createAt;
 	@Column(name = "point")
 	private int point;
+	@Column(name = "is_activity")
+	private int is_activity;
+	@Column(name = "last_active")
+	private String last_active;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<User_Role> userRoles;
@@ -50,7 +54,8 @@ public class UserModel {
 	}
 
 	public UserModel(Long id, String userName, String passWord, Boolean enabled, String fullName, Boolean gender,
-			String birthday, String email, String maxim, Set<User_Role> userRoles, String img, String createAt, int point) {
+			String birthday, String email, String maxim, Set<User_Role> userRoles, String img, String createAt, int point,
+			int isActivity, String lastActive) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -65,6 +70,8 @@ public class UserModel {
 		this.img = img;
 		this.createAt = createAt;
 		this.point = point;
+		this.is_activity = isActivity;
+		this.last_active = lastActive;
 	}
 
 	public Long getId() {
@@ -169,6 +176,22 @@ public class UserModel {
 
 	public void setPoint(int point) {
 		this.point = point;
+	}
+
+	public int getIsActivity() {
+		return is_activity;
+	}
+
+	public void setIsActivity(int isActivity) {
+		this.is_activity = isActivity;
+	}
+
+	public String getLastActive() {
+		return last_active;
+	}
+
+	public void setLastActive(String lastActive) {
+		this.last_active = lastActive;
 	}	
 	
 }

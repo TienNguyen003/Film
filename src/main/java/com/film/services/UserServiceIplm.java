@@ -64,5 +64,27 @@ public class UserServiceIplm implements UserService {
 		}
 		return false;
 	}
+
+	@Override
+	public Boolean updateIsActivity(int isActivity, String lastActive, int id) {
+		try {
+			this.userRP.updateIsActivity(isActivity, lastActive, id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean updateAvatar(String img, int id) {
+		try {
+			this.userRP.updateAvatar(img, id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.film.models.Comments;
-import com.film.repository.CommentsRespository;
+import com.film.services.CommentService;
 
 @RestController
 @RequestMapping("/api/comment")
@@ -24,11 +24,11 @@ public class CommentController {
     }
 	
 	 @Autowired
-	 private CommentsRespository commentRepository;
+	 private CommentService commentService;
 
 	 @GetMapping("/{slug}")
 	 public List<Comments> getCommentsSlug(@PathVariable String slug) {
-	    return commentRepository.findBySlug(slug);
+	    return commentService.findBySlug(slug);
 	 }
 	 
 	 @PostMapping("/save")
@@ -43,19 +43,36 @@ public class CommentController {
 				String name = loadController.csUser().getUser().getFullName();
 				String createAt = loadController.dateTime();
 				Comments newComments = new Comments();
-				if(!id.isEmpty()) {
-					newComments.setId(Integer.parseInt(id));
-					newComments.setEdit_comment("1");
+				if(!contentCm.equals("")) {
+					if(!id.isEmpty()) {
+						String getCreate = commentService.findCreateById(slug, Integer.parseInt(id));
+						newComments.setId(Integer.parseInt(id));
+						newComments.setEdit_comment("1");
+						newComments.setCreateAt(getCreate);
+					}
+					else {
+						newComments.setEdit_comment("0");
+						newComments.setCreateAt(createAt);
+					}
+			 		newComments.setSlugFilm(slug);
+			 		newComments.setContent(contentCm.trim());
+			 		newComments.setImage(img);
+			 		newComments.setName(name);
+			 		newComments.setIdUser(idUser);
+			 		commentService.save(newComments);
+			 		return ResponseEntity.ok(newComments);
 				}
-				else newComments.setEdit_comment("0");
-			 	newComments.setSlugFilm(slug);
-			 	newComments.setContent(contentCm.trim());
-			 	newComments.setCreateAt(createAt);
-			 	newComments.setImage(img);
-			 	newComments.setName(name);
-			 	newComments.setIdUser(idUser);
-			 	commentRepository.save(newComments);
-		 	return ResponseEntity.ok(newComments);
+		 }
+		 return null;
+	 }
+	 
+	 @PostMapping("/delete")
+	 public ResponseEntity<String> deleteComment(
+			 @RequestParam(required = false, defaultValue = "") String id){
+		 int idUser = loadController.getUserIdFromUserDetails().intValue();
+		 if(idUser > 0) {
+			 commentService.delete(Integer.parseInt(id));
+			 return ResponseEntity.ok(id);
 		 }
 		 return null;
 	 }
