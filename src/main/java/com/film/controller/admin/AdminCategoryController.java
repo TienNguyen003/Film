@@ -24,14 +24,14 @@ public class AdminCategoryController {
 	public String index(Model model) {
 		List<Category> listCate = this.categoryService.getAll();;
 		model.addAttribute("list", listCate);
-		return "admin/menu";
+		return "admin/category";
 	}
 	
 	@GetMapping("/add-category")
 	public String add(Model model) {
 		Category category = new Category();
 		model.addAttribute("category", category);
-		return "admin/add-menu";
+		return "admin/add-category";
 	}	
 	
 	@PostMapping("/add-category")
@@ -39,7 +39,7 @@ public class AdminCategoryController {
 		if(this.categoryService.create(category)) {
 			return "redirect:/admin/category";			
 		} else {
-			return "admin/add-menu";
+			return "admin/add-category";
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class AdminCategoryController {
 	public String edit(Model model, @PathVariable(name="id") int id) {
 		Category category = categoryService.findById(id);
 		model.addAttribute("category", category);
-		return "/admin/edit-menu";
+		return "/admin/edit-category";
 	}
 	
 	@PostMapping("/updateCategory")

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Admin | Edit Category</title>
+	<title>Admin | Edit Film</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.7 -->
@@ -25,27 +25,17 @@
 
 		<div th:replace="admin/header :: content"></div>
 
-		<!-- =============================================== -->
-
-		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>Edit</h1>
 			</section>
 
-			<!-- Main content -->
 			<section class="content">
-
-				<!-- Default box -->
 				<div class="col-md-8">
-					<!-- general form elements -->
 					<div class="box box-primary">
 						<div class="box-header with-border">
 							<h3 class="box-title">Cập nhật menu</h3>
 						</div>
-						<!-- /.box-header -->
-						<!-- form start -->
 						<form role="form" method="post" th:action="@{/admin/updateCategory}" th:object="${category}">
 							<div class="box-body">
 								<input type="hidden" class="form-control" th:field="*{id}">
@@ -80,9 +70,6 @@
 			</section>
 		</div>
 	</div>
-	<!-- ./wrapper -->
-
-	<!-- jQuery 3 -->
 
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/jquery-ui.js"></script>

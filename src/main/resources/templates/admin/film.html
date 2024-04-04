@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AdminLTE 2 | Blank Page</title>
+	<title>Admin | Category</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.7 -->
@@ -31,26 +31,15 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>
-					Quản lý menu trang giao diện
-
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li><a href="#">Examples</a></li>
-					<li class="active">Blank page</li>
-				</ol>
+				<h1>Category</h1>				
 			</section>
 
 			<!-- Main content -->
 			<section class="content">
-
-				<!-- Default box -->
 				<div class="col-xs-12">
 					<div class="box">
 						<div class="box-header">
-							<a href="add-menu.html" class="btn btn-success">+Thêm mới banner</a>
-
+							<a th:href="@{add-film}" class="btn btn-success">+ New</a>
 							<div class="box-tools">
 								<div class="input-group input-group-sm" style="width: 150px;">
 									<input type="text" name="table_search" class="form-control pull-right"
@@ -65,53 +54,42 @@
 						</div>
 						<!-- /.box-header -->
 						<div class="box-body table-responsive no-padding">
-							<table class="table table-hover">
-								<tbody>
+							<table class="table table-hover" style="text-align:center">
+								<thead>
 									<tr>
-										<th></th>
-										<th>Kiểu banner</th>
-										<th>Ngày tạo</th>
-										<th>Trạng thái</th>
-										<th>Tùy chọn</th>
+										<th>Name</th>
+										<th>Origin Name</th>
+										<th>Content</th>
+										<th>Created</th>
+										<th>Status</th>
+										<th>Thumb Url</th>
+										<th>Time</th>
+										<th>Episode Current</th>
+										<th>Episode Total</th>
+										<th>Category</th>
+										<th>Genres</th>
+										<th>Country</th>
 									</tr>
-									<tr>
-										<td><img src="https://bachkhoa-aptech.edu.vn/upload/image/banner-web(1).jpg"
-												alt="" width="250px"></td>
-										<td>Banner video</td>
-										<td>10-10-2018</td>
-										<td><span class="label label-success">Hiển thị</span></td>
+								</thead>
+								<tbody>									
+									<tr th:each="film: ${list}">
+										<td th:text="${film.name}"></td>
+										<td th:text="${film.origin_name}"></td>
+										<td th:text="${film.content}"></td>
+										<td th:text="${film.created}"></td>
+										<td th:text="${film.status}"></td>
+										<td th:text="${film.thumb_url}"></td>
+										<td th:text="${film.time}"></td>
+										<td th:text="${film.episode_current}"></td>
+										<td th:text="${film.episode_total}"></td>
+										<td th:text="${film.category}"></td>
+										<td th:text="${film.genres}"></td>
+										<td th:text="${film.country}"></td>
 										<td>
-											<a href="edit-menu.html" class="btn btn-success">Sửa</a>
-											<a href="" class="btn btn-danger">Xóa</a>
-
+											<a th:href="@{'/admin/editFilm/'+${category.id}}"><button type="button" class="btn btn-warning">Edit</button></a>
+											<a th:href="@{'/admin/deleteFilm/'+${category.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
 										</td>
 									</tr>
-									<tr>
-										<td><img src="https://bachkhoa-aptech.edu.vn/upload/image/banner-connect-web-chv.jpg"
-												alt="" width="250px"></td>
-										<td>Banner ảnh</td>
-										<td>10-10-2018</td>
-										<td><span class="label label-success">Hiển thị</span></td>
-										<td>
-											<a href="edit-menu.html" class="btn btn-success">Sửa</a>
-											<a href="" class="btn btn-danger">Xóa</a>
-
-										</td>
-									</tr>
-
-									<tr>
-										<td><img src="https://bachkhoa-aptech.edu.vn/upload/image/banner-connect-web-chv.jpg"
-												alt="" width="250px"></td>
-										<td>Banner Chữ</td>
-										<td>10-10-2018</td>
-										<td><span class="label label-danger"> ẩn hiển thị</span></td>
-										<td>
-											<a href="edit-menu.html" class="btn btn-success">Sửa</a>
-											<a href="" class="btn btn-danger">Xóa</a>
-
-										</td>
-									</tr>
-
 								</tbody>
 							</table>
 						</div>

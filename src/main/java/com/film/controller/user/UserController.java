@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.film.models.UserGoogle;
 import com.film.models.UserModel;
 import com.film.services.FavMovieService;
 import com.film.services.UserService;
@@ -125,16 +124,5 @@ public class UserController {
 			userService.save(user);
 		}
 		return "redirect:/login";
-	}	
-	
-	private UserGoogle toPerson(Map<String, Object> map) {
-		if(map==null) return null;
-		UserGoogle userGoogle = new UserGoogle();
-		userGoogle.setEmail((String) map.get("email"));
-		userGoogle.setName((String) map.get("name"));
-		userGoogle.setPicture((String) map.get("picture"));
-		userGoogle.setEmail_verified((Boolean) map.get("email_verified"));
-		userGoogle.setFamily_name((String) map.get("family_name"));
-		return userGoogle;
 	}
 }
