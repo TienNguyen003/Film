@@ -60,7 +60,7 @@ public class SecurityConfig {
 				.accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect("/"))								
 			)		
 			.oauth2Login(oauth2Customize->oauth2Customize
-				.loginPage("/login-google"))
+				.loginPage("/"))
 		;
 		return httpSecurity.build();
 	}

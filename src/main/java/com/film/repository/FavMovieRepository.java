@@ -19,5 +19,8 @@ public interface FavMovieRepository extends JpaRepository<FavMovie, Integer>{
 	@Query(value = "select * from favmovie f where f.user_fav = :user_fav", nativeQuery = true)
 	List<FavMovie> findByUserFav(@Param("user_fav") Integer user_fav);
 	
+	@Query(value = "SELECT category FROM favmovie where user_fav = :user_fav", nativeQuery = true)
+	List<String> findCategoryById(@Param("user_fav") int user_fav);
+	
 	Page<FavMovie> findMovieByUser(int user_fav, Pageable pageable);
 }

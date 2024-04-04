@@ -224,10 +224,14 @@
 	<script src="js/main.js"></script>
 
 </body>
-<script>
+<script th:inline="javascript">
+	var genersP = /*[[${geners}]]*/ '';
+	var geners = "/the-loai/" + /*[[${geners}]]*/ '';
+	console.log(genersP)
+	if(genersP == null) geners = "/danh-sach/phim-moi";
 	let arr = [];
 	let arrTitle = [];
-	fetch(`https://ophim1.com/v1/api/danh-sach/phim-moi`)
+	fetch(`https://ophim1.com/v1/api/${geners}`)
 		.then(res => res.json())
 		.then(data => {
 			data.data.items.map(item => {
@@ -257,12 +261,12 @@
 				`<div class="row">
 									<div class="col-lg-8 col-md-8 col-sm-8">
 										<div class="section-title">
-											<h4>Phim mới</h4>
+											<h4>${data.data.titlePage}</h4>
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 col-sm-4">
 										<div class="btn__all">
-											<a href="/genres?phim-moi-cap-nhat" class="primary-btn">View All <span class="arrow_right"></span></a>
+											<a href="/genres?${genersP != null ? genersP : "phim-moi-cap-nhat"}" class="primary-btn">View All <span class="arrow_right"></span></a>
 										</div>
 									</div>
 									<div class="row"> ${arr}</div>

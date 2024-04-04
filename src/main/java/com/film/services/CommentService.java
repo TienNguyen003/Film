@@ -9,4 +9,5 @@ public interface CommentService {
 	String findCreateById(String slug, int id);
 	Boolean save(Comments comments);
 	Boolean delete(int id);
+	Boolean updateImage(String image, int id);
 }

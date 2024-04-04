@@ -27,9 +27,11 @@ public class FavMovie {
 	private String view_movie;
 	@Column(name = "episode")
 	private String episode;	
+	@Column(name = "category")
+	private String category;	
 	
 	public FavMovie(int id, String slug, int user_fav, String name_movie, String img_movie, String view_movie,
-			String episode) {
+			String episode, String category) {
 		super();
 		this.id = id;
 		this.slug = slug;
@@ -38,6 +40,7 @@ public class FavMovie {
 		this.img_movie = img_movie;
 		this.view_movie = view_movie;
 		this.episode = episode;
+		this.category = category;
 	}
 
 	public FavMovie() {
@@ -99,6 +102,13 @@ public class FavMovie {
 	public void setEpisode(String episode) {
 		this.episode = episode;
 	}
-	
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	
 }

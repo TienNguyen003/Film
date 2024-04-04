@@ -91,7 +91,8 @@ public class FilmController {
 			@RequestParam(required = false, defaultValue = "") String name_movie,
             @RequestParam(required = false, defaultValue = "") String img_movie,
             @RequestParam(required = false, defaultValue = "") String episode,
-            @RequestParam(required = false, defaultValue = "") String view_movie) {
+            @RequestParam(required = false, defaultValue = "") String view_movie,
+            @RequestParam(required = false, defaultValue = "") String category_movie) {
 		
 		Long idWatch = loadController.getUserIdFromUserDetails();
 		String notification = "";
@@ -103,6 +104,7 @@ public class FilmController {
 			favMovie.setName_movie(name_movie);
 			favMovie.setView_movie(view_movie);
 			favMovie.setSlug(slug);
+			favMovie.setCategory(category_movie);
     		FavMovie returnFavMovie = favMovieService.findBySlugAndUser_fav(slug, idWatch.intValue());    		
     		if (returnFavMovie == null) {
     			if (favMovieService.update(favMovie)) {

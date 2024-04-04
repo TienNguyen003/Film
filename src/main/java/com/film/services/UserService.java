@@ -10,6 +10,7 @@ public interface UserService {
 	Boolean save(UserModel userModel);
 	int findByUser(String name);
 	int findByEmail(String email);
+	int findByEmailRtId(String email);
 	Object[][] queryByPoint(int id);
 	Boolean updateFullName(String display_name, int point, int id);
 	Boolean updateMaxim(String maxim, int id);

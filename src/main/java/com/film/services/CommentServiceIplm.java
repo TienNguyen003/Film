@@ -46,4 +46,16 @@ public class CommentServiceIplm implements CommentService{
 		System.out.println(slug + " " + id);
 		return this.commentsRespository.findCreateById(slug, id);
 	}
+
+	@Override
+	public Boolean updateImage(String image, int id) {
+		try {
+			System.out.println(image + " " + id);
+			this.commentsRespository.updateImage(image, id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

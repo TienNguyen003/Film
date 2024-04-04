@@ -54,4 +54,9 @@ public class FavMovieServiceIplm implements FavMovieService {
 	    return this.favMovieRepository.findMovieByUser(id, pageable);
 	}
 
+	@Override
+	public List<String> findCategoryById(int user_fav) {
+		return this.favMovieRepository.findCategoryById(user_fav);
+	}
+
 }

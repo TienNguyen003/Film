@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.film.services.CommentService;
 import com.film.services.UserService;
 
 @Controller
@@ -20,6 +21,8 @@ public class AccountController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CommentService commentService;
 	
 	private AccountController(LoadController loadController) {
         this.loadController = loadController;
@@ -38,6 +41,7 @@ public class AccountController {
 	public String uploadImg(@RequestParam String img, @RequestParam int id) {
 		if(id > 0 && img != null && !img.isEmpty()) {
 			userService.updateAvatar(img, id);
+			commentService.updateImage(img, id);
 			loadController.csUser().getUser().setImg(img);
 		}
 		return "myAccount";

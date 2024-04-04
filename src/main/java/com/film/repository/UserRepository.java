@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	int findByUser(@Param("name") String name);
 	@Query(value = "SELECT count(*) FROM users u WHERE u.email = :email", nativeQuery = true)
 	int findByEmail(@Param("email") String email);
+	@Query(value = "SELECT id FROM users u WHERE u.email = :email", nativeQuery = true)
+	int findByEmailRtId(@Param("email") String email);
 	@Query(value = "SELECT point, fullname, maxim FROM users u WHERE u.id = :point", nativeQuery = true)
 	Object[][] queryByPoint(@Param("point") int point);
 	

@@ -253,6 +253,7 @@ function addFavMove() {
 	let img_movie = $(".img_movie").val();
 	let episode = $(".episode").val();
 	let view_movie = $(".view_movie").val();
+	let category_movie = document.querySelector(".categoryMv").innerHTML;
 
 	$.ajax({
 		type: "POST",
@@ -263,6 +264,7 @@ function addFavMove() {
 			img_movie: img_movie,
 			episode: episode,
 			view_movie: view_movie,
+			category_movie: category_movie
 		},
 		dataType: 'html',
 		timeout: 100000,

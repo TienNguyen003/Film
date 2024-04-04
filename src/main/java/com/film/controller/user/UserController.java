@@ -7,18 +7,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.film.models.UserGoogle;
 import com.film.models.UserModel;
+import com.film.services.FavMovieService;
 import com.film.services.UserService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
 	LoadController loadController = new LoadController();
 
 	@Autowired
-	private UserService userService;	
+	private UserService userService;
+	@Autowired
+	private FavMovieService favMovieService;	
 	
 	private UserController(LoadController loadController) {
 		this.loadController = loadController;
@@ -28,8 +35,38 @@ public class UserController {
 	public String category(Model model) {
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
+		int idUser = loadController.getUserIdFromUserDetails().intValue();
+		if(idUser > 0) {
+			List<String> geners = (favMovieService.findCategoryById(idUser));
+
+	        Map<String, Integer> genreCount = new HashMap<>();
+	        for (String genre : geners) {
+	            String[] splitGenres = genre.split(",");
+	            for (String splitGenre : splitGenres) {
+	                String cleanedGenre = splitGenre.trim();
+	                if (genreCount.containsKey(cleanedGenre)) {
+	                    genreCount.put(cleanedGenre, genreCount.get(cleanedGenre) + 1);
+	                } else {
+	                    genreCount.put(cleanedGenre, 1);
+	                }
+	            }
+	        }
+
+	        int maxFrequency = 0;
+	        for (int frequency : genreCount.values()) {
+	            if (frequency > maxFrequency) {
+	                maxFrequency = frequency;
+	            }
+	        }
+	        for (Map.Entry<String, Integer> entry : genreCount.entrySet()) {
+	            if (entry.getValue() == maxFrequency) {
+	            	if(entry.getValue() > 3)
+	            		model.addAttribute("geners", entry.getKey());
+	            }
+	        }
+		}
 		return "index";
-	}
+	}	
 	
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -89,4 +126,15 @@ public class UserController {
 		}
 		return "redirect:/login";
 	}	
+	
+	private UserGoogle toPerson(Map<String, Object> map) {
+		if(map==null) return null;
+		UserGoogle userGoogle = new UserGoogle();
+		userGoogle.setEmail((String) map.get("email"));
+		userGoogle.setName((String) map.get("name"));
+		userGoogle.setPicture((String) map.get("picture"));
+		userGoogle.setEmail_verified((Boolean) map.get("email_verified"));
+		userGoogle.setFamily_name((String) map.get("family_name"));
+		return userGoogle;
+	}
 }

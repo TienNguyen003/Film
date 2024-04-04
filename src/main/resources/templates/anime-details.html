@@ -171,16 +171,12 @@
 	fetch(`https://ophim1.com/phim/${slugFilm}`)
 		.then(res => res.json())
 		.then(data => {
-			data = (data.movie);
-
-			// Lịch sử xem
-			document.cookie = "name_movie=" + btoa(encodeURIComponent(data.name)) + "; expires=Thu, 18 Dec 2024 12:00:00 UTC";
-			document.cookie = "img_movie=" + data.thumb_url + "; expires=Thu, 18 Dec 2024 12:00:00 UTC";
-			document.cookie = "view_movie=" + data.view + "; expires=Thu, 18 Dec 2024 12:00:00 UTC";
+			data = (data.movie);			
 
 			document.querySelector(".filmName").innerHTML = data.name;
 			document.querySelector(".anime__details__content").innerHTML = `
 			<div class="row">
+					<div class="categoryMv" style="display: none">${data.category.map(item => item.slug)}</div>
                     <div class="col-lg-3">
                         <div class="anime__details__pic set-bg" style="background-image:url(${data.thumb_url})">
                             <div class="comment"><i class="fa fa-comments"></i> 11</div>
@@ -212,7 +208,7 @@
                                             <li><span>Produced:</span> ${data.year}</li>
                                             <li><span>Date update:</span> ${convertDate(data.modified.time)}</li>
                                             <li><span>Status:</span> ${data.status}</li>
-                                            <li><span>Genre:</span> ${data.category.map(item => item.name)}</li>
+                                            <li><span>Genre:</span> ${data.category.map(item => `<button style="padding: 3px 10px" type="button" class="btn btn-secondary">${item.name}</button>&nbsp;`).join('')}</li>
                                         </ul>
                                     </div>
                                     <div class="col-lg-6 col-md-6">

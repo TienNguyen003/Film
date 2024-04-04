@@ -86,5 +86,10 @@ public class UserServiceIplm implements UserService {
 		}
 		return false;
 	}
+
+	@Override
+	public int findByEmailRtId(String email) {
+		return this.userRP.findByEmailRtId(email);
+	}
 	
 }
