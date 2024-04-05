@@ -18,7 +18,19 @@
 	<script src="/js/app.js"></script>
 	<link rel="shortcut icon" href="/img/bg.jfif" type="image/x-icon">
 </head>
-
+<style>
+	.table td{
+		vertical-align: middle;
+		padding: 0;
+	}
+	.table .contents{
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 6;
+		-webkit-box-orient: vertical;
+	}
+</style>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
 	<div class="wrapper">
@@ -58,36 +70,26 @@
 								<thead>
 									<tr>
 										<th>Name</th>
-										<th>Origin Name</th>
 										<th>Content</th>
-										<th>Created</th>
-										<th>Status</th>
 										<th>Thumb Url</th>
 										<th>Time</th>
 										<th>Episode Current</th>
-										<th>Episode Total</th>
-										<th>Category</th>
 										<th>Genres</th>
 										<th>Country</th>
 									</tr>
 								</thead>
 								<tbody>									
 									<tr th:each="film: ${list}">
-										<td th:text="${film.name}"></td>
-										<td th:text="${film.origin_name}"></td>
-										<td th:text="${film.content}"></td>
-										<td th:text="${film.created}"></td>
-										<td th:text="${film.status}"></td>
-										<td th:text="${film.thumb_url}"></td>
+										<td style="width: 200px" th:text="${film.name}"></td>
+										<td class="contents" style="width: 200px" th:text="${film.content}"></td>
+										<td><img style="width: 100px" th:src="${film.thumb_url}"></td>
 										<td th:text="${film.time}"></td>
 										<td th:text="${film.episode_current}"></td>
-										<td th:text="${film.episode_total}"></td>
-										<td th:text="${film.category}"></td>
 										<td th:text="${film.genres}"></td>
 										<td th:text="${film.country}"></td>
 										<td>
-											<a th:href="@{'/admin/editFilm/'+${category.id}}"><button type="button" class="btn btn-warning">Edit</button></a>
-											<a th:href="@{'/admin/deleteFilm/'+${category.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
+											<a th:href="@{'/admin/edit-film/'+${film.id}}"><button type="button" class="btn btn-warning">Edit</button></a>
+											<a th:href="@{'/admin/deleteFilm/'+${film.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
 										</td>
 									</tr>
 								</tbody>

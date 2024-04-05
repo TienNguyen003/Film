@@ -1,6 +1,6 @@
 'use strict';
 
-console.warn("Làm chức năng bài viết, đề xuất, có thể bạn cũng thích, chức năng về tài khoản(tăng tu vi, bxh, góp ý, chatroom, đổi mật khẩu, api film(tự viết))");
+console.warn("Làm chức năng bài viết, đề xuất, có thể bạn cũng thích, chức năng về tài khoản(tăng tu vi, bxh, góp ý, chatroom, đổi mật khẩu(xác nhận qua eamil))");
 
 (function($) {
 

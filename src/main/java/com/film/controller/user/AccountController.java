@@ -37,6 +37,13 @@ public class AccountController {
 		return "myAccount";
 	}
 	
+	@GetMapping("/my-account/diem-danh")
+	public String diemDanh(Model model) {
+		loadController.categoryShow(model);
+		loadController.genresShow(model);
+		return "diem-danh";
+	}
+	
 	@PostMapping("/my-account/upload-image")
 	public String uploadImg(@RequestParam String img, @RequestParam int id) {
 		if(id > 0 && img != null && !img.isEmpty()) {

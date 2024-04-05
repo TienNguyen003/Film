@@ -1221,7 +1221,7 @@ blockquote {
 	display: none;
 	position: absolute;
 	bottom: 10px;
-    right: 10px;
+	right: 10px;
 	color: #fff;
 	z-index: 100;
 }
@@ -1232,24 +1232,27 @@ blockquote {
 
 .listSettingCm {
 	position: absolute;
-    left: -125px;
-    top: -50px;
+	left: -125px;
+	top: -50px;
 	display: none;
 	width: 120px;
 	color: #000;
 	cursor: pointer;
 }
-.listSettingCm::before{
+
+.listSettingCm::before {
 	content: "";
 	position: absolute;
 	right: -15px;
-    width: 15px;
-    height: 100%;	
+	width: 15px;
+	height: 100%;
 }
-.listSettingCm .list-group-item{
+
+.listSettingCm .list-group-item {
 	padding: 8px 1.25rem;
 }
-.updateCm{
+
+.updateCm {
 	display: none;
 }
 
@@ -2026,10 +2029,11 @@ blockquote {
   My Account
 -----------------------*/
 
-.myAccount{
+.myAccount {
 	padding-top: 150px;
 	padding-bottom: 150px;
 }
+
 .updateDisplayName {
 	padding-top: 50px;
 	padding-bottom: 150px;
@@ -2160,6 +2164,79 @@ blockquote {
 
 .thong-bao-he-thong {
 	margin-top: 20px;
+}
+
+.check-in-grid {
+	display: flex;
+	flex-wrap: wrap;
+	background-image: url(https://res.cloudinary.com/dwn20guz0/image/upload/v1712325161/jaylvv552i052zy74gkp.jpg);
+	padding: 10px;
+	border-radius: 10px;
+	margin: auto;
+	justify-content: center;
+}
+
+.day-ddanh {
+	position: relative;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: rgba(255, 255, 255, .15);
+	margin: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.special-day {
+	background: url(https://hoathinh3d.io/wp-content/themes/halimmovies-child/assets/image/special-day.gif);
+	background-size: auto;
+	color: transparent;
+	-webkit-background-clip: text;
+	background-position: center;
+	font-weight: 800;
+	z-index: 1;
+}
+
+.color-number {
+	background: url(https://hoathinh3d.io/wp-content/themes/halimmovies-child/assets/image/number-checkin.gif);
+	background-size: auto;
+	color: transparent;
+	-webkit-background-clip: text;
+	background-position: center;
+	font-weight: 800;
+	z-index: 1;
+}
+
+.thong-bao-diem-danh {
+	background-color: #1e1e1e;
+	border-left: 5px solid red;
+	padding: 10px 20px;
+	margin: 10px 0;
+	box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+	font-size: 16px;
+	line-height: 1.5;
+	border-radius: 5px;
+	text-align: left;
+}
+
+.thong-bao-diem-danh p {
+	color: #fff;
+}
+
+button.flambutt-on.flambutt-on,
+button.flambutt-on:hover {
+	background: repeating-linear-gradient(76deg, rgba(255, 0, 0, 0.5) 0%, rgba(119, 0, 0, 0.75) 21%, rgba(66, 0, 0, 0.35) 51%, rgba(159, 69, 0, 0.85) 75%, rgba(255, 0, 0, 0.5) 100%);
+	color: #fff;
+}
+.img-dd{
+	position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
 
 /*---------------------

@@ -4,19 +4,25 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "film")
 public class FilmModel {
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 	@Column(name = "created")
 	private String created;
 	@Column(name = "modified")
-	private String modified;
-    @Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+	private String modified;    
     @Column(name = "name")
     private String name;
     @Column(name = "slug")
@@ -47,17 +53,19 @@ public class FilmModel {
     private int year;
     @Column(name = "view")
     private int view;
-    @Column(name = "category")
-    private Set<Category> category;
-    @Column(name = "genres")
-    private ArrayList<Genres> genres;
+    @Column(name = "id_category")
+    private String id_category;
+    @Column(name = "id_genres")
+    private String id_genres;
     @Column(name = "country")
     private String country;	
+    
+    public FilmModel() {}
 
-	public FilmModel(String created, String modified, String id, String name, String slug, String origin_name,
+	public FilmModel(String created, String modified, Integer id, String name, String slug, String origin_name,
 			String content, String type, String status, String thumb_url, String poster_url, String trailer_url,
 			String time, String episode_current, String episode_total, String quality, int year, int view,
-			Set<Category> category, ArrayList<Genres> genres, String country) {
+			String category, String genres, String country) {
 		super();
 		this.created = created;
 		this.modified = modified;
@@ -77,8 +85,8 @@ public class FilmModel {
 		this.quality = quality;
 		this.year = year;
 		this.view = view;
-		this.category = category;
-		this.genres = genres;
+		this.id_category = category;
+		this.id_genres = genres;
 		this.country = country;
 	}
 
@@ -98,11 +106,11 @@ public class FilmModel {
 		this.modified = modified;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -224,22 +232,22 @@ public class FilmModel {
 
 	public void setView(int view) {
 		this.view = view;
+	}	
+
+	public String getCategory() {
+		return id_category;
 	}
 
-	public Set<Category> getCategory() {
-		return category;
+	public void setCategory(String category) {
+		this.id_category = category;
 	}
 
-	public void setCategory(Set<Category> category) {
-		this.category = category;
+	public String getGenres() {
+		return id_genres;
 	}
 
-	public ArrayList<Genres> getGenres() {
-		return genres;
-	}
-
-	public void setGenres(ArrayList<Genres> genres) {
-		this.genres = genres;
+	public void setGenres(String genres) {
+		this.id_genres = genres;
 	}
 
 	public String getCountry() {

@@ -33,22 +33,23 @@
 						<div class="box-header with-border">
 							<h3 class="box-title">New</h3>
 						</div>
-						<form role="form" method="post" th:action="@{/admin/add-film}" th:object="${category}">
+						<form role="form" method="post" th:action="@{/admin/add-film}" th:object="${film}">
 							<div class="box-body">
+								<input type="hidden" class="form-control" th:if="${id != null}" th:field="*{id}">
 								<div class="form-group">
 									<label for="exampleInputEmail1">Name</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Title" th:field="*{name}">
+										placeholder="Name" th:field="*{name}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Origin Name</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Description" th:field="*{origin_name}">
+										placeholder="Origin Name" th:field="*{origin_name}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Content</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Description" th:field="*{content}">
+										placeholder="Content" th:field="*{content}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Slug</label>
@@ -58,82 +59,72 @@
 								<div class="form-group">
 									<label for="exampleInputEmail1">Created</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Status" th:field="*{created}">
-								</div>
-								<div class="form-group">
-									<label for="exampleInputEmail1">Modified</label>
-									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Title" th:field="*{modified}">
+										placeholder="11:11:11AM 04:04:4444" th:field="*{created}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Type</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Description" th:field="*{type}">
+										placeholder="Type" th:field="*{type}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Thumb Url</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Slug" th:field="*{thumb_url}">
+										placeholder="Thumb Url" th:field="*{thumb_url}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Poster Url</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Status" th:field="*{poster_url}">
+										placeholder="Poster Url" th:field="*{poster_url}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Trailer Url</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Title" th:field="*{trailer_url}">
+										placeholder="Trailer Url" th:field="*{trailer_url}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Time</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Description" th:field="*{time}">
+										placeholder="Time" th:field="*{time}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Episode Current</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Slug" th:field="*{episode_current}">
+										placeholder="Episode Current" th:field="*{episode_current}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Episode Total</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Status" th:field="*{episode_total}">
+										placeholder="Episode Total" th:field="*{episode_total}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Quality</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Title" th:field="*{quality}">
+										placeholder="Quality" th:field="*{quality}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Year</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Description" th:field="*{year}">
+										placeholder="Year" th:field="*{year}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">View</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Slug" th:field="*{view}">
-								</div>
-								<div class="form-group">
-									<label for="exampleInputEmail1">Category</label>
-									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Status" th:field="*{category}">
+										placeholder="View" th:field="*{view}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Genres</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Title" th:field="*{genres}">
+										placeholder="Genres" th:field="*{genres}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Country</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Description" th:field="*{country}">
+										placeholder="Country" th:field="*{country}">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Status</label>
 									<input type="text" class="form-control" id="exampleInputEmail1"
-										placeholder="Description" th:field="*{status}">
+										placeholder="Status" th:field="*{status}">
 								</div>
 							</div>
 							<div class="box-footer">
