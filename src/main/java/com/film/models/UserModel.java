@@ -44,6 +44,10 @@ public class UserModel {
 	private int is_activity;
 	@Column(name = "last_active")
 	private String last_active;
+	@Column(name = "attendance")
+	private String attendance;
+	@Column(name = "users_badges")
+	private String users_badges;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<User_Role> userRoles;
@@ -54,8 +58,8 @@ public class UserModel {
 	}
 
 	public UserModel(Long id, String userName, String passWord, Boolean enabled, String fullName, Boolean gender,
-			String birthday, String email, String maxim, Set<User_Role> userRoles, String img, String createAt, int point,
-			int isActivity, String lastActive) {
+			String birthday, String email, String maxim, String img, String createAt, int point, int is_activity,
+			String last_active, String attendance, String users_badges, Set<User_Role> userRoles) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -66,12 +70,14 @@ public class UserModel {
 		this.birthday = birthday;
 		this.email = email;
 		this.maxim = maxim;
-		this.userRoles = userRoles;
 		this.img = img;
 		this.createAt = createAt;
 		this.point = point;
-		this.is_activity = isActivity;
-		this.last_active = lastActive;
+		this.is_activity = is_activity;
+		this.last_active = last_active;
+		this.attendance = attendance;
+		this.users_badges = users_badges;
+		this.userRoles = userRoles;
 	}
 
 	public Long getId() {
@@ -192,6 +198,38 @@ public class UserModel {
 
 	public void setLastActive(String lastActive) {
 		this.last_active = lastActive;
+	}
+
+	public int getIs_activity() {
+		return is_activity;
+	}
+
+	public void setIs_activity(int is_activity) {
+		this.is_activity = is_activity;
+	}
+
+	public String getLast_active() {
+		return last_active;
+	}
+
+	public void setLast_active(String last_active) {
+		this.last_active = last_active;
+	}
+
+	public String getAttendance() {
+		return attendance;
+	}
+
+	public void setAttendance(String attendance) {
+		this.attendance = attendance;
+	}
+
+	public String getUsers_badges() {
+		return users_badges;
+	}
+
+	public void setUsers_badges(String users_badges) {
+		this.users_badges = users_badges;
 	}	
 	
 }
