@@ -1,6 +1,9 @@
 package com.film.controller.user;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.film.models.Comments;
+import com.film.services.BadgesService;
 import com.film.services.CommentService;
+import com.film.services.UserService;
 
 @RestController
 @RequestMapping("/api/comment")
@@ -23,16 +28,34 @@ public class CommentController {
         this.loadController = loadController;
     }
 	
-	 @Autowired
-	 private CommentService commentService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private CommentService commentService;
+	@Autowired
+	private BadgesService badgesService;
 
-	 @GetMapping("/{slug}")
-	 public List<Comments> getCommentsSlug(@PathVariable String slug) {
-	    return commentService.findBySlug(slug);
-	 }
+	@GetMapping("/{slug}")
+	public List<Map<String, Object>> getCommentsSlug(@PathVariable String slug) {	    
+	    List<Map<String, Object>> resultList = new ArrayList<>();
+	    
+	    List<Comments> comments = commentService.findBySlug(slug);
+	    for (Comments comment : comments) {
+	        String user_badges = userService.findBadgesById(comment.getIdUser());
+	        List<String> images = badgesService.findImageById(user_badges);
+	        
+	        Map<String, Object> commentData = new HashMap<>();
+	        commentData.put("comment", comment);
+	        commentData.put("images", images);
+	        
+	        resultList.add(commentData);
+	    }
+	    
+	    return resultList;
+	}
 	 
-	 @PostMapping("/save")
-	 public ResponseEntity<Comments> createComment(
+	@PostMapping("/save")
+	public ResponseEntity<Comments> createComment(
 			@RequestParam(required = false, defaultValue = "") String id,
 			@RequestParam(required = false, defaultValue = "") String slug,
 			@RequestParam(required = false, defaultValue = "") String contentCm) {
@@ -62,9 +85,9 @@ public class CommentController {
 			 		commentService.save(newComments);
 			 		return ResponseEntity.ok(newComments);
 				}
-		 }
-		 return null;
-	 }
+		}
+		return null;
+	}
 	 
 	 @PostMapping("/delete")
 	 public ResponseEntity<String> deleteComment(

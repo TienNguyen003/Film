@@ -50,8 +50,18 @@ public class CommentServiceIplm implements CommentService{
 	@Override
 	public Boolean updateImage(String image, int id) {
 		try {
-			System.out.println(image + " " + id);
 			this.commentsRespository.updateImage(image, id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean updateNameUser(String name, int id) {
+		try {
+			this.commentsRespository.updateNameUser(name, id);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

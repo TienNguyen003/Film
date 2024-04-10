@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class CustomUserDetails implements UserDetails{
 	private UserModel user;
 	private Collection<? extends GrantedAuthority> authorities;
-	String userImg, fullName, maxim, birthday, createAt, email;
+	String userImg, fullName, maxim, birthday, createAt, email, attendance_day;
 	int point, isActivity;	
 	
 	public CustomUserDetails() {
@@ -106,6 +106,14 @@ public class CustomUserDetails implements UserDetails{
 
 	public void setIsActivity(int isActivity) {
 		this.isActivity = isActivity;
+	}	
+
+	public String getAttendance_day() {
+		return user.getAttendance_day();
+	}
+
+	public void setAttendance_day(String attendance_day) {
+		this.attendance_day = attendance_day;
 	}
 
 	@Override

@@ -22,4 +22,9 @@ public interface CommentsRespository extends JpaRepository<Comments, Integer>{
 	@Transactional
 	@Query(value = "UPDATE comments SET image = :image WHERE id_user = :id", nativeQuery = true)
 	public void updateImage(@Param("image") String image, @Param("id") int id);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE comments SET name_user = :name WHERE id_user = :id", nativeQuery = true)
+	public void updateNameUser(@Param("name") String name, @Param("id") int id);
 }

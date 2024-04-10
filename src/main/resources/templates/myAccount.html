@@ -47,42 +47,17 @@
 					<span class="name__myAccount"
 						th:text="${userDetails.getFullName() != null ? userDetails.getFullName() : userDetails.username}"></span>
 					<div class="mycred-users-badges">
-						<div class="the-badge"><img
-								src="https://hoathinh3d.io/wp-content/uploads/2024/02/can-co-vung-chac-level-4.gif"
-								class="mycred-badge-image badge-level3" title="Căn Cơ Vững Chắc" alt="Căn Cơ Vững Chắc"
-								width="100" height="100"></div>
-						<div class="the-badge"><img
-								src="https://hoathinh3d.io/wp-content/uploads/2024/02/nap-gioi-do.gif"
-								class="mycred-badge-image badge-level4" title="Tinh Thông Bí Pháp"
-								alt="Tinh Thông Bí Pháp" width="100" height="100"></div>
-						<div class="the-badge"><img
-								src="https://hoathinh3d.io/wp-content/uploads/2023/12/guong-chieu-yeu.gif"
-								class="mycred-badge-image badge-level5" title="Tầm Bảo Sư" alt="Tầm Bảo Sư" width="100"
-								height="100"></div>
-						<div class="the-badge"><img src="https://hoathinh3d.io/wp-content/uploads/2023/11/tieu-thap.gif"
-								class="mycred-badge-image badge-levelnone" title="Tiểu Tháp" alt="Tiểu Tháp" width="100"
-								height="100"></div>
-						<div class="the-badge"><img
-								src="https://hoathinh3d.io/wp-content/uploads/2023/12/huyet-kiem.gif"
-								class="mycred-badge-image badge-levelnone" title="Huyết Kiếm" alt="Huyết Kiếm"
-								width="100" height="100"></div>
-						<div class="the-badge"><img
-								src="https://hoathinh3d.io/wp-content/uploads/2024/01/ma-van-dang-tptk.gif"
-								class="mycred-badge-image badge-levelnone" title="Ma Vân Đằng" alt="Ma Vân Đằng"
-								width="100" height="100"></div>
-						<div class="the-badge"><img src="https://hoathinh3d.io/wp-content/uploads/2024/01/to-phu.gif"
-								class="mycred-badge-image badge-levelnone" title="Thôn Phệ Tổ Phù" alt="Thôn Phệ Tổ Phù"
-								width="100" height="100"></div>
-						<div class="the-badge"><img src="https://hoathinh3d.io/wp-content/uploads/2024/02/icon-tet.gif"
-								class="mycred-badge-image badge-levelnone" title="Tết Nguyên Đán 2024"
-								alt="Tết Nguyên Đán 2024" width="100" height="100"></div>
+						<div class="the-badge" th:each="list : ${listImgBadges}"><img th:src="${list}"
+								class="mycred-badge-image badge-level3" width="100" height="100"></div>
 					</div>
 					<span class="level__myAccount">Hoàng Thiên Cảnh</span>
 					<blockquote style="width: 100%">
 						<p class="text-muted maxim" th:text="${userDetails.getMaxim}"></p>
 					</blockquote>
 					<div class="button-group">
-						<a href="/my-account/diem-danh" class="btn btn-danger"><i class="fa fa-calendar"></i> Điểm Danh</a>
+						<a href="/my-account/diem-danh" class="btn btn-danger"><i class="fa fa-calendar"></i> Điểm
+							Danh</a>
+						<a href="/tu-bao-cac" class="btn btn-danger"><i class="fa fa-calendar"></i> Tụ Bảo Các</a>
 						<a href="/bang-xep-hang-tu-vi" class="btn btn-danger"><i class="fa fa-star"></i> BXH Tu Vi</a>
 						<a href="/phong-chat-version-2-0" class="btn btn-danger"><i class="fa fa-comments"></i>Phòng
 							Chat</a>
@@ -196,7 +171,7 @@
 					// Hiển thị URL của ảnh đã tải lên
 					updateAvatar(parseInt(document.querySelector(".idUserLogin").innerHTML), imageUrl);
 					document.querySelector(".img__myAccount").src = imageUrl;
-					document.querySelector(".imgUser").src = imageUrl;					
+					document.querySelector(".imgUser").src = imageUrl;
 				})
 				.catch(error => {
 					console.error('Error:', error);

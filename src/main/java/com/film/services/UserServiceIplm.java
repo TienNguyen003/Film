@@ -1,5 +1,7 @@
 package com.film.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +92,37 @@ public class UserServiceIplm implements UserService {
 	@Override
 	public int findByEmailRtId(String email) {
 		return this.userRP.findByEmailRtId(email);
+	}
+
+	@Override
+	public Object[][] queryAttendanceById(int id) {
+		try {
+			return this.userRP.queryAttendanceById(id);			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	@Override
+	public Boolean updateIsAttendance(String attendance_day, String attendance, int point, int id) {
+		try {
+			this.userRP.updateIsAttendance(attendance_day, attendance, point, id);
+			return true;
+		} catch (Exception e) {
+			System.out.println("loi roi");
+		}
+		return false;
+	}
+
+	@Override
+	public String findBadgesById(int id) {
+		try {
+			return this.userRP.findBadgesById(id);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 }

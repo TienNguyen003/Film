@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.film.models.Badges;
 import com.film.models.UserModel;
+import com.film.services.BadgesService;
 import com.film.services.FavMovieService;
 import com.film.services.UserService;
 
@@ -24,7 +26,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private FavMovieService favMovieService;	
+	private FavMovieService favMovieService;
+	@Autowired
+	private BadgesService badgesService;
 	
 	private UserController(LoadController loadController) {
 		this.loadController = loadController;
@@ -86,6 +90,15 @@ public class UserController {
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
 		return "categories";
+	}
+	
+	@GetMapping("/tu-bao-cac")
+	public String shop(Model model) {
+		loadController.categoryShow(model);
+		loadController.genresShow(model);
+		List<Badges> badges = badgesService.getAll();
+		model.addAttribute("listBadges", badges);
+		return "tu-bao-cac";
 	}	
 	
 	@GetMapping("/signup")

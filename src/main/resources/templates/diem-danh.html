@@ -36,6 +36,9 @@
 	<div th:replace="header :: content"></div>
 	<!-- Header End -->
 
+	<div th:utext="${attendance}" class="attendance" id="attendance"></div>
+	<div th:utext="${attendance_day}" class="attendance day"></div>
+
 	<div class="updateDisplayName spad" style="padding-top: 100px">
 		<div class="container" style="background-color: #070720b8;border-radius: 10px;">
 			<div class="row">
@@ -62,11 +65,9 @@
 							</div>
 							<div class="day-ddanh" id="day-6">
 								<div class="color-number">6</div>
-								<img class="img-dd" src="https://i.pinimg.com/originals/c8/a0/7d/c8a07da11ebadf86f488b4bff6f570f4.gif" />
 							</div>
 							<div class="day-ddanh" id="day-7">
 								<div class="special-day">7</div>
-								<img class="img-dd" src="https://i.pinimg.com/originals/c8/a0/7d/c8a07da11ebadf86f488b4bff6f570f4.gif" />
 							</div>
 							<div class="day-ddanh" id="day-8">
 								<div class="color-number">8</div>
@@ -113,15 +114,36 @@
 						</div>
 					</div>
 					<center><button style="margin-top: 20px" id="checkInButton" class="flambutt-on btn btn-dark"
-							data-streak="19" disabled="">Điểm Danh</button></center>
+							data-streak="19">Điểm Danh</button></center>
 					<div class="thong-bao-diem-danh">
 						<p>- Đạo hữu cần điểm danh liên tiếp mỗi ngày nếu không sẽ bị reset.</p>
 						<p>- Đạo hữu có <strong>1</strong> lần bỏ lỡ duy nhất trong <strong>21</strong> ngày không bị
 							reset.</p>
-						<p>- Tổng tu vi nhận được nếu điểm danh đầy đủ là : <strong>2100</strong>.</p>
+						<p>- Tổng tu vi nhận được nếu điểm danh đầy đủ là : <strong>1470</strong>.</p>
 						<p>- Các mốc <strong>7, 14, 21</strong> ngày sẽ thưởng thêm Tinh Thạch tương ứng là: <strong>20
 								- 60 - 120</strong>.</p>
 						<p>- Hoạt động vĩnh viễn, hết 21 ngày quay về ngày đầu và cứ thế.</p>
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="infoUser" style="margin-bottom: 50px">
+						<div>
+							<div class="anime__details__form">
+								<form class="formNoClick">
+									<textarea placeholder="Your Comment" id="contentCm"></textarea>
+									<button type="submit" onclick="addCommentAjax()"><i
+											class="fa fa-location-arrow"></i>
+										Bình Luận</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-12">
+					<div class="comments" id="comments">
+						
 					</div>
 				</div>
 			</div>
@@ -145,6 +167,65 @@
 	<script src="/js/jquery.slicknav.js"></script>
 	<script src="/js/owl.carousel.min.js"></script>
 	<script src="/js/main.js"></script>
+	<script src="/myJs/main.js"></script>
 </body>
+<script th:inline="javascript">
+	var attendance_day = /*[[${attendance_day}]]*/ '';
+	var attendance = /*[[${attendance}]]*/ '';
+	const date = new Date();
+	const day = date.getDate();
+	const btnAttendance = document.querySelector("#checkInButton");
+	const dayDd = document.querySelectorAll(".day-ddanh");
+	const idUserCmt = document.querySelector(".idUserCmt");
+	const idUserPoint = document.querySelector(".idUserPoint");
+	var img = document.createElement("img");
+	img.classList.add("img-dd");
+	img.src = "https://i.pinimg.com/originals/c8/a0/7d/c8a07da11ebadf86f488b4bff6f570f4.gif";
+	for (let i = 0; i < attendance; i++) {
+		dayDd[i].appendChild(img.cloneNode(true));
+	}
+	if (attendance_day < day) {
+		btnAttendance.onclick = () => {
+			btnAttendance.setAttribute("disabled", "true");
+			btnAttendance.innerHTML = "Đã Điểm Danh";
+			if (attendance == 21 || day - attendance_day > 1) attendance = 0;
+			let pointP = (+attendance + 1 + 3) * 5 + +idUserPoint.innerHTML;
+			diemDanh(day, +attendance + 1, pointP)
+		}
+	} else if (attendance_day == day) {
+		btnAttendance.setAttribute("disabled", "true");
+		btnAttendance.innerHTML = "Đã Điểm Danh";
+	}
+
+	function diemDanh(attendance_day, attendance, point) {
+		$.ajax({
+			type: "POST",
+			url: "/my-account/diem-danh",
+			data: {
+				attendance_day: attendance_day,
+				attendance: attendance,
+				point: point
+			},
+			dataType: 'html',
+			timeout: 100000,
+			success: function (data) {
+				for (var i = 0; i < dayDd.length; i++) {
+					var dayDdItem = dayDd[i];
+
+					var imgs = dayDdItem.getElementsByTagName("img");
+					for (var j = 0; j < imgs.length; j++) {
+						dayDdItem.removeChild(imgs[j]);
+					}
+				}
+				for (let i = 0; i < attendance; i++) {
+					dayDd[i].appendChild(img.cloneNode(true));
+				}
+			},
+			error: function (e) {
+				console.log("ERROR: ", e);
+			}
+		})
+	}
+</script>
 
 </html>

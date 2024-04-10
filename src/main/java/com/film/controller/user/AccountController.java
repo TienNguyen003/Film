@@ -1,5 +1,6 @@
 package com.film.controller.user;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.film.services.BadgesService;
 import com.film.services.CommentService;
 import com.film.services.UserService;
 
@@ -23,6 +25,8 @@ public class AccountController {
 	private UserService userService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private BadgesService badgesService;
 	
 	private AccountController(LoadController loadController) {
         this.loadController = loadController;
@@ -30,8 +34,12 @@ public class AccountController {
 	
 	@GetMapping("/my-account")
 	public String myAccount(Model model, RedirectAttributes redirectAttributes) {
+		int idUser = loadController.getUserIdFromUserDetails().intValue();
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
+		String user_badges = userService.findBadgesById(idUser);
+		List<String> list = badgesService.findImageById(user_badges);
+        model.addAttribute("listImgBadges", list);
 		if(redirectAttributes.getAttribute("notification") != null)
 			model.addAttribute("notification", redirectAttributes.getAttribute("notification"));
 		return "myAccount";
@@ -39,9 +47,23 @@ public class AccountController {
 	
 	@GetMapping("/my-account/diem-danh")
 	public String diemDanh(Model model) {
+		int idUser = loadController.getUserIdFromUserDetails().intValue();
+		Object[][] userModel = userService.queryAttendanceById(idUser);
+		model.addAttribute("attendance", userModel[0][0]);
+		model.addAttribute("attendance_day", userModel[0][1]);
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
 		return "diem-danh";
+	}	
+	@PostMapping("/my-account/diem-danh")
+	public ResponseEntity<String> diemDanhPost(
+			@RequestParam(required = false, defaultValue = "") String attendance_day,
+			@RequestParam(required = false, defaultValue = "") String attendance,
+			@RequestParam(required = false, defaultValue = "") int point) {
+		int idUser = loadController.getUserIdFromUserDetails().intValue();
+		userService.updateIsAttendance(attendance_day, attendance, point, idUser);
+		loadController.csUser().getUser().setPoint(point);
+		return ResponseEntity.ok("Tien dz");
 	}
 	
 	@PostMapping("/my-account/upload-image")
@@ -80,6 +102,7 @@ public class AccountController {
 			else {
 				if(!userModel[0][1].equals(display_name)) {
 					userService.updateFullName(display_name, (point - 50), idUser);
+					commentService.updateNameUser(display_name, idUser);
 					loadController.csUser().getUser().setFullName(display_name);
 					loadController.csUser().getUser().setPoint(point-50);
 					redirectAttributes.addFlashAttribute("notification", "");
@@ -87,7 +110,7 @@ public class AccountController {
 					redirectAttributes.addFlashAttribute("notification", "Biệt danh mới trùng với biệt danh hiện tại");
 			}
 		}
-		return "redirect:/cap-nhat-biet-danh";
+		return "redirect:/my-account/cap-nhat-biet-danh";
 	}
 	
 	@PostMapping("/my-account/update-maxim")

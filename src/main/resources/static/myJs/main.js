@@ -2,52 +2,55 @@
 
 // fetch api comment
 let currentURLS = window.location.href;
-let slugFilmS = "";
+let slugFilmS = "1";
 if (currentURLS.includes("detail-film")) {
 	slugFilmS = currentURLS.replace("http://localhost:8081/detail-film?slug=", "");
 } else if (currentURLS.includes("watch-film")) {
 	slugFilmS = (currentURLS.substring((currentURLS.indexOf("?slug=") + 6), currentURLS.indexOf("&episodes=")));
 }
+let idUserLogin = document.querySelector(".idUserLogin");
 
 const comments = document.querySelector(".comments");
 if (comments != null) {
 	const idUserCmt = document.querySelector(".idUserCmt");
 	let idUser = -1;
-	if (idUserCmt != null) idUser = parseInt(idUserCmt.innerHTML);
+	if(idUserLogin != null) idUser = idUserLogin.innerHTML
+	if (idUserCmt != null || idUser == null) idUser = parseInt(idUserCmt.innerHTML);
 	fetch(`http://localhost:8081/api/comment/${slugFilmS}`)
 		.then(res => res.json())
 		.then((data) => {
 			let html = "";
 			data.map(item => {
+				let imgBadges = "";
+				let image = item.images;
+                image.map(item => {
+                    imgBadges += `<img alt="" src="${item}">`                    
+                })
 				html += `<div class="anime__details__review">
                                 <div class="anime__review__item">
                                     <div class="anime__review__item__pic">
-                                        <img src=${item.image} alt="">
-                                        <img src="img/avatar/khung.gif" alt="" class="frame_avatar">
+                                        <img src=${item.comment.image} alt="">
+                                        <img src="/img/avatar/khung.gif" alt="" class="frame_avatar">
                                     </div>
                                     <div class="anime__review__item__text">
                                         <div class="comment_header">
-                                            <div class="comment_author">
-                                                <span class="pbbm" data-tooltip="Đạo Tông"><img
-                                                        src="https://hoathinh3d.io/wp-content/uploads/2024/02/dao-tong.gif"
-                                                        class="pbbm" alt="Đạo Tông" width="30px"></span>
-                                                ${item.name}
-                                                <span class="clan" data-tooltip="Đệ Tử">🏯Tiêu Dao⚔︎</span>
+                                            <div class="comment_author"">
+                                                ${item.comment.name}
                                             </div>
-                                            <div class="mycred-wrap">
-                                                <img alt="" src="img/avatar/vo-thien-tan.webp">
+                                            <div class="mycred-wrap" style="margin-right:10px">
+                                                ${imgBadges}
                                             </div>
                                             <span class="displayTime" style="color: #fff"></span>
-                                            <input value='${item.createAt}' type="hidden" class="hiddenTime">
+                                            <input value='${item.comment.createAt}' type="hidden" class="hiddenTime">
                                         </div>
-                                        <input class="contentComment" value='${item.content}' readonly>
+                                        <input class="contentComment" value='${item.comment.content}' readonly>
                                         <div class="updateCm">
                                         <button type="submit" class="btnUpdate">Lưu</button>
                                         <button type="submit" class="btnClose">Hủy</button></div>
-                                        ${item.idUser == idUser ? `<span class="settingComment"><i class="fa fa-cog"></i><ul class="list-group listSettingCm">  
-                                        	<li class="list-group-item clickEditComment" id="${item.id}">Chỉnh sửa</li>
-                                        	<li class="list-group-item clickDeleteComment" id="${item.id}">Xóa</li></ul></span>` : ''}
-                                        ${item.edit_comment == "1" ? '<div class="isCheckEditCM" style="color: #fff; font-size: 10px"><i class="fa fa-pencil-square-o"></i> Đã chỉnh sửa</div>' : ''}
+                                        ${item.comment.idUser == idUser ? `<span class="settingComment"><i class="fa fa-cog"></i><ul class="list-group listSettingCm">  
+                                        	<li class="list-group-item clickEditComment" id="${item.comment.id}">Chỉnh sửa</li>
+                                        	<li class="list-group-item clickDeleteComment" id="${item.comment.id}">Xóa</li></ul></span>` : ''}
+                                        ${item.comment.edit_comment == "1" ? '<div class="isCheckEditCM" style="color: #fff; font-size: 10px"><i class="fa fa-pencil-square-o"></i> Đã chỉnh sửa</div>' : ''}
                                     </div>
                                 </div>
                             </div>`
@@ -82,7 +85,7 @@ if (comments != null) {
 					}
 				}
 			}
-			
+
 			const clickDeleteComment = document.querySelectorAll(".clickDeleteComment");
 			for (let i = 0; i < clickDeleteComment.length; i++) {
 				clickDeleteComment[i].onclick = (e) => {
@@ -177,28 +180,26 @@ function addCommentAjax() {
 			const idUserCmt = document.querySelector(".idUserCmt");
 			let idUser = -1;
 			if (idUserCmt != null) idUser = parseInt(idUserCmt.innerHTML);
-			
-	        // Xóa bình luận cuối cùng để giữ cho chỉ hiển thị 6 bình luận
+
+			// Xóa bình luận cuối cùng để giữ cho chỉ hiển thị 6 bình luận
 			const currentCommentsCount = document.querySelectorAll(".anime__details__review").length;
-		    if (currentCommentsCount >= 6) {
-		        document.querySelector(".anime__details__review:last-child").remove();
-		    }
-		    
+			if (currentCommentsCount >= 6) {
+				document.querySelector(".anime__details__review:last-child").remove();
+			}
+
 			var result = '<div class="anime__details__review">'
 				+ '<div class="anime__review__item">'
 				+ '<div class="anime__review__item__pic">'
 				+ '<img src="' + commentsArray.image + '" alt="">'
-				+ '<img src="img/avatar/khung.gif" alt="" class="frame_avatar">'
+				+ '<img src="/img/avatar/khung.gif" alt="" class="frame_avatar">'
 				+ '</div>'
 				+ '<div class="anime__review__item__text">'
 				+ '<div class="comment_header">'
 				+ '<div class="comment_author">'
-				+ '<span class="pbbm" data-tooltip="Đạo Tông"><img src="https://hoathinh3d.io/wp-content/uploads/2024/02/dao-tong.gif" class="pbbm" alt="Đạo Tông" width="30px"></span>'
 				+ commentsArray.name
-				+ '<span class="clan" data-tooltip="Đệ Tử">🏯Tiêu Dao⚔︎</span>'
 				+ '</div>'
 				+ '<div class="mycred-wrap">'
-				+ '<img alt="" src="img/avatar/vo-thien-tan.webp">'
+				+ '<img alt="" src="/img/avatar/vo-thien-tan.webp">'
 				+ '</div>'
 				+ '<span style="color: #fff">' + tinhKhoangCach(chuyenDoiDinhDangThoiGian(commentsArray.createAt), chuyenDoiThoiGian(new Date())) + '</span>'
 				+ '</div>'
@@ -213,7 +214,7 @@ function addCommentAjax() {
 				+ '</div>'
 				+ '</div>'
 				+ '</div>'
-			$("#comments").get(0).insertAdjacentHTML('afterbegin', result);			
+			$("#comments").get(0).insertAdjacentHTML('afterbegin', result);
 			const clickEditComment = document.querySelector(".clickEditComment");
 			clickEditComment.onclick = () => {
 				const content = clickEditComment.parentElement.parentElement.parentElement;
@@ -234,9 +235,9 @@ function addCommentAjax() {
 					contentComment.readOnly = true;
 				}
 			}
-			
+
 			document.querySelector(".clickDeleteComment").onclick = (e) => {
-					deleteComment(e.target.getAttribute("id"));
+				deleteComment(e.target.getAttribute("id"));
 			}
 
 			document.querySelector("#contentCm").value = "";
@@ -312,7 +313,7 @@ function deleteComment(idCm) {
 		success: function(data) {
 			const clickDeleteComment = document.querySelectorAll(".clickDeleteComment");
 			for (let i = 0; i < clickDeleteComment.length; i++) {
-				if(clickDeleteComment[i].getAttribute("id") == data){
+				if (clickDeleteComment[i].getAttribute("id") == data) {
 					clickDeleteComment[i].parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
 				}
 			}

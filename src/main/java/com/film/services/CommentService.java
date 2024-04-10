@@ -10,4 +10,5 @@ public interface CommentService {
 	Boolean save(Comments comments);
 	Boolean delete(int id);
 	Boolean updateImage(String image, int id);
+	Boolean updateNameUser(String name, int id);
 }
