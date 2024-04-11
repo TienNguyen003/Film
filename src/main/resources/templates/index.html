@@ -39,12 +39,14 @@
 
 	<!-- Hero Section Begin -->
 	<section class="hero">
-		<marquee class="marqueeNoti" onmouseover="this.stop()" onmouseout="this.start()" hspace="40px">Chúc mừng cường giả 
-			<span style="font-weight: bolder;text-shadow: 2px 2px 3px #d73d3d;">Vương Lâm</span> tấn cấp thành công tiến đến
+		<marquee class="marqueeNoti" onmouseover="this.stop()" onmouseout="this.start()" hspace="40px">Chúc mừng cường
+			giả
+			<span style="font-weight: bolder;text-shadow: 2px 2px 3px #d73d3d;">Vương Lâm</span> tấn cấp thành công tiến
+			đến
 			<span style="font-weight: bolder;text-shadow: 2px 2px 3px #d73d3d;">Hoàng Thiên Cảnh</span>
 		</marquee>
 		<div class="container">
-			<div class="hero__slider owl-carousel">
+			<div class="hero__slider owl-carousel owl-loaded">
 				<div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
 					<div class="row">
 						<div class="col-lg-6">
@@ -227,7 +229,7 @@
 <script th:inline="javascript">
 	var genersP = /*[[${geners}]]*/ '';
 	var geners = "/the-loai/" + /*[[${geners}]]*/ '';
-	if(genersP == null) geners = "/danh-sach/phim-moi";
+	if (genersP == null) geners = "danh-sach/phim-moi";
 	let arr = [];
 	let arrTitle = [];
 	fetch(`https://ophim1.com/v1/api/${geners}`)
@@ -243,7 +245,9 @@
 									<div class="product__item">
 										<a href="/detail-film?slug=${item.slug}">
 											<div class="product__item__pic set-bg" style="background-image:url(https://img.ophim10.cc/uploads/movies/${item.thumb_url})">
-												<div class="ep">${item.episode_current}</div>											
+												<div class="ep">${item.episode_current}</div>
+												<div class="comment">${item.year}</div>
+												<div class="view">${item.quality}</div>											
 											</div>
 										</a>
 										<div class="product__item__text">

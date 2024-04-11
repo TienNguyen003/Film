@@ -7,6 +7,7 @@ import com.film.models.Comments;
 public interface CommentService {
 	List<Comments> findBySlug(String slug);
 	String findCreateById(String slug, int id);
+	int findAllCmt(String slug);
 	Boolean save(Comments comments);
 	Boolean delete(int id);
 	Boolean updateImage(String image, int id);

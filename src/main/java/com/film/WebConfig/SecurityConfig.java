@@ -33,6 +33,7 @@ public class SecurityConfig {
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests((auth) -> auth.
 				requestMatchers("/my-account/**").authenticated().
+				requestMatchers("/tu-bao-cac").authenticated().
 				requestMatchers("/*").permitAll().
 				requestMatchers("/api/comment/**").permitAll().
 				requestMatchers("/admin/**").hasAuthority("ADMIN").

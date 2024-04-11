@@ -63,7 +63,7 @@ public class AccountController {
 		int idUser = loadController.getUserIdFromUserDetails().intValue();
 		userService.updateIsAttendance(attendance_day, attendance, point, idUser);
 		loadController.csUser().getUser().setPoint(point);
-		return ResponseEntity.ok("Tien dz");
+		return ResponseEntity.ok(String.valueOf(point));
 	}
 	
 	@PostMapping("/my-account/upload-image")

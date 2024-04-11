@@ -18,6 +18,9 @@ public interface CommentsRespository extends JpaRepository<Comments, Integer>{
 	@Query(value = "SELECT create_at FROM comments WHERE slug_film = :slug AND id = :id", nativeQuery = true)
 	String findCreateById(@Param("slug") String slug, @Param("id") int id);
 	
+	@Query(value = "SELECT count(*) FROM comments WHERE slug_film = :slug", nativeQuery = true)
+	int findAllCmt(@Param("slug") String slug);
+	
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE comments SET image = :image WHERE id_user = :id", nativeQuery = true)

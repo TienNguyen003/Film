@@ -74,7 +74,7 @@
 								th:text="'Lần trước bạn xem đến tập ' + ${history_watch.episode}"></h5>
 						</div>
 						<div class="section-title">
-							<h5>Bình luận</h5>
+							<h5 class="totalCmt">Bình luận</h5>
 						</div>
 						<div class="comments" id="comments"></div>
 					</div>
@@ -88,7 +88,7 @@
 								<form class="formNoClick">
 									<textarea placeholder="Your Comment" id="contentCm"></textarea>
 									<button type="submit" onclick="addCommentAjax()"><i
-											class="fa fa-location-arrow"></i> Bình Luận</button>
+											class="fa fa-location-arrow"></i> Bình luận</button>
 								</form>
 							</div>
 						</div>
@@ -127,6 +127,7 @@
 			</div>
 		</div>
 	</section>
+
 	<!-- Anime Section End -->
 
 	<!-- Footer Section Begin -->
@@ -171,15 +172,16 @@
 	fetch(`https://ophim1.com/phim/${slugFilm}`)
 		.then(res => res.json())
 		.then(data => {
-			data = (data.movie);			
+			data = (data.movie);
+			data.thumb_url = data.thumb_url.replace("ophim14", "ophim10")
 
 			document.querySelector(".filmName").innerHTML = data.name;
 			document.querySelector(".anime__details__content").innerHTML = `
 			<div class="row">
 					<div class="categoryMv" style="display: none">${data.category.map(item => item.slug)}</div>
                     <div class="col-lg-3">
-                        <div class="anime__details__pic set-bg" style="background-image:url(${data.thumb_url})">
-                            <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                        <div class="anime__details__pic set-bg" style="background-image:url(${data.thumb_url})">     
+                        	<div class="comment"><i class="fa fa-globe"></i> ${data.lang}</div>                       
                             <div class="view"><i class="fa fa-eye"></i> ${data.view}</div>
                         </div>
                     </div>
@@ -198,8 +200,8 @@
                                     <a href="#"><i class="fa fa-star-half-o"></i></a>
                                 </div>
                                 <span>1.029 Votes</span>
-                            </div>
-                            <p>${data.content}</p>
+                            </div>                            
+                            <div><p>${data.content}</p></div>
                             <div class="anime__details__widget">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
@@ -233,9 +235,12 @@
 									value="${(checkFav != null && checkFav.innerHTML == 'Thêm thành công') || checkMsFav.value == 'Đã có' ? 'Hủy Theo Dõi 🤍' : 'Theo Dõi 🤍'}">
                             		
                             	</form>
+                            	${data.trailer_url != "" ? `<a href="${data.trailer_url}" target="blank" class="watch-btn" style="margin-right: 10px">
+                                	<span>Xem Trailer</span>
+                                </a>` : ""}                            	
                                 <a href="/watch-film?slug=${data.slug}&episodes=${watched_episode}" class="watch-btn">
                                 	<span>Xem Ngay</span> <i class="fa fa-angle-right"></i>
-                                </a>
+                                </a> 
                             </div>
                         </div>
                     </div>
@@ -244,7 +249,7 @@
 				event.preventDefault();
 			});
 		})
-		
+
 </script>
 
 </html>

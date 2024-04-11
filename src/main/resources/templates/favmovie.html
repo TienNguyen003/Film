@@ -86,32 +86,38 @@
 							</div>
 						</div>
 						<div class="row genres">
+
+
+
 							<div class="col-lg-3 col-md-6 col-sm-6" th:each="list : ${listFavMovie}">
 								<div class="product__item">
-									<div class="product__item__pic"
-										th:style="'background: url(\'' + ${list.img_movie} + '\') no-repeat; background-size:cover'">
-										<div class="ep" th:text="${list.episode}"></div>
-										<div class="comment"><i class="fa fa-comments"></i></div>
-										<div class="view" th:text="${list.view_movie}"><i class="fa fa-eye"></i></div>
-									</div>
-									<div class="product__item__text">
-										<h5><a th:href="@{/detail-film(slug=${list.slug})}"
-												th:text="${list.name_movie}"></a></h5>
-									</div>
+									<a th:href="@{/detail-film(slug=${list.slug})}">
+										<div class="product__item__pic"
+											th:style="'background: url(\'' + ${list.img_movie} + '\') no-repeat; background-size:cover'">
+											<div class="ep" th:text="${list.episode}"></div>
+											<div class="comment"><i class="fa fa-comments"></i></div>
+											<div class="view" th:text="${list.view_movie}"><i class="fa fa-eye"></i>
+											</div>
+										</div>
+										<div class="product__item__text">
+											<h5><a th:href="@{/detail-film(slug=${list.slug})}" th:text="${list.name_movie}"></a></h5>
+										</div>
 								</div>
-								<a th:href="@{'/favmovie/delete/'+${list.id}}" class="deleteHsFilm"><i class="fa fa-times-circle fa-2x"></i></i></a>
+								</a>
+								<a th:href="@{'/favmovie/delete/'+${list.id}}" class="deleteHsFilm"><i
+										class="fa fa-times-circle fa-2x"></i></i></a>
 							</div>
 						</div>
 					</div>
 					<div class="product__pagination" th:if="${totalPage>0}">
-						<th:block th:if="${currentPage > 1}">	
+						<th:block th:if="${currentPage > 1}">
 							<a th:href="@{?page=1}"><i class="fa fa-angle-double-left"></i></a>
 							<a th:href="@{'?page='+${currentPage-1}}"><i class="fa fa-angle-left"></i></a>
 						</th:block>
 						<a th:each="i : ${#numbers.sequence(1, totalPage)}"
 							th:classappend="${currentPage==i?'current-page':''}" th:href="@{'?page='+${i}}"
 							th:text="${i}"></a>
-						<th:block th:if="${currentPage < totalPage}">					
+						<th:block th:if="${currentPage < totalPage}">
 							<a th:href="@{'?page='+${currentPage+1}}"><i class="fa fa-angle-right"></i></a>
 							<a th:href="@{'?page='+${totalPage}}"><i class="fa fa-angle-double-right"></i></a>
 						</th:block>

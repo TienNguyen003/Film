@@ -127,6 +127,9 @@
 				</div>
 
 				<div class="col-lg-12">
+					<div class="section-title">
+						<h5 class="totalCmt">Bình luận</h5>
+					</div>
 					<div class="infoUser" style="margin-bottom: 50px">
 						<div>
 							<div class="anime__details__form">
@@ -191,6 +194,7 @@
 			if (attendance == 21 || day - attendance_day > 1) attendance = 0;
 			let pointP = (+attendance + 1 + 3) * 5 + +idUserPoint.innerHTML;
 			diemDanh(day, +attendance + 1, pointP)
+			alert("Bạn nhận được " + (+attendance + 1 + 3) * 5 + " tu vi");
 		}
 	} else if (attendance_day == day) {
 		btnAttendance.setAttribute("disabled", "true");

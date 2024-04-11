@@ -15,6 +15,7 @@ import com.film.services.UserService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,10 +95,20 @@ public class UserController {
 	
 	@GetMapping("/tu-bao-cac")
 	public String shop(Model model) {
+		int idUser = loadController.getUserIdFromUserDetails().intValue();
+		String user_badges = userService.findBadgesById(idUser);
+		List<Badges> badges = badgesService.getAll();
+		List<Integer> integerList = new ArrayList<>();       
+        String[] stringArray = user_badges.split(",");
+        for (String str : stringArray) {
+            integerList.add(Integer.parseInt(str.trim()));
+        }
+        
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
-		List<Badges> badges = badgesService.getAll();
+		
 		model.addAttribute("listBadges", badges);
+		model.addAttribute("user_badges", integerList);
 		return "tu-bao-cac";
 	}	
 	

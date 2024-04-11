@@ -68,4 +68,14 @@ public class CommentServiceIplm implements CommentService{
 		}
 		return false;
 	}
+
+	@Override
+	public int findAllCmt(String slug) {
+		try {
+			return this.commentsRespository.findAllCmt(slug);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

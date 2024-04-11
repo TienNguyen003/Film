@@ -2,12 +2,17 @@
 
 // fetch api comment
 let currentURLS = window.location.href;
-let slugFilmS = "1";
+let slugFilmS = "";
 if (currentURLS.includes("detail-film")) {
 	slugFilmS = currentURLS.replace("http://localhost:8081/detail-film?slug=", "");
 } else if (currentURLS.includes("watch-film")) {
 	slugFilmS = (currentURLS.substring((currentURLS.indexOf("?slug=") + 6), currentURLS.indexOf("&episodes=")));
+} else if (currentURLS.includes("/my-account/diem-danh")) {
+	slugFilmS = "diem-danh";
+} else if (currentURLS.includes("/tu-bao-cac")) {
+	slugFilmS = "tu-bao-cac";
 }
+
 let idUserLogin = document.querySelector(".idUserLogin");
 
 const comments = document.querySelector(".comments");
@@ -19,6 +24,7 @@ if (comments != null) {
 	fetch(`http://localhost:8081/api/comment/${slugFilmS}`)
 		.then(res => res.json())
 		.then((data) => {
+			document.querySelector(".totalCmt").innerHTML =	(data.length > 0 ? data[0].quantity : "") + " Bình Luận";
 			let html = "";
 			data.map(item => {
 				let imgBadges = "";
