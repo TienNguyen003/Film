@@ -136,6 +136,7 @@ public class UserController {
 			userService.updateBadgesById(infoUser[0][2] + ", " + badges, id, (int)infoUser[0][0] + point, crystal - price);
 			message = "Mua thành công";
 			loadController.csUser().getUser().setCrystal(crystal - price);
+			loadController.csUser().getUser().setPoint((int)infoUser[0][0] + point);
 		}
 		return ResponseEntity.ok(String.valueOf(message));
 	}

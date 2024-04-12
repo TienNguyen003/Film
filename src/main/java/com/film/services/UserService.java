@@ -1,7 +1,5 @@
 package com.film.services;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.film.models.UserModel;
@@ -20,7 +18,7 @@ public interface UserService {
 	Boolean updateFullName(String display_name, int point, int id);
 	Boolean updateMaxim(String maxim, int id);
 	Boolean updateIsActivity(int isActivity, String lastActive, int id);
-	Boolean updateIsAttendance(String attendance_day, String attendance, int point, int id);
+	Boolean updateIsAttendance(String attendance_day, String attendance, int point, int id, int crystal);
 	Boolean updateAvatar(String img, int id);
 	Boolean updateBadgesById(String img, int id, int point, int crytal);
 }

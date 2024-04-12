@@ -38,6 +38,9 @@ public class AccountController {
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
 		String user_badges = userService.findBadgesById(idUser);
+		if (user_badges != null && user_badges.startsWith(",")) {
+        	user_badges = user_badges.substring(1);
+        }
 		List<String> list = badgesService.findImageById(user_badges);
         model.addAttribute("listImgBadges", list);
 		if(redirectAttributes.getAttribute("notification") != null)
@@ -61,7 +64,10 @@ public class AccountController {
 			@RequestParam(required = false, defaultValue = "") String attendance,
 			@RequestParam(required = false, defaultValue = "") int point) {
 		int idUser = loadController.getUserIdFromUserDetails().intValue();
-		userService.updateIsAttendance(attendance_day, attendance, point, idUser);
+		Object[][] infoUser = userService.queryPointCrytalById(idUser);
+		int crystal = (int) infoUser[0][1] + 100;
+		System.out.println(attendance);
+		userService.updateIsAttendance(attendance_day, attendance, point, idUser, crystal);
 		loadController.csUser().getUser().setPoint(point);
 		return ResponseEntity.ok(String.valueOf(point));
 	}

@@ -38,6 +38,7 @@
 						    <div href="/" th:if="${userDetails != 'anonymousUser'}">
 						    	<p style="display:none" class="idUserPoint" th:text="${userDetails.getPoint()}"></p>
 						    	<p style="display:none" class="idUserLogin" th:text="${userDetails.getId()}"></p>
+						    	<p style="display:none" class="idUserCrystal" th:text="${userDetails.getCrystal()}"></p>
 						    	<p style="display:none" class="idUserActivity" th:text="${userDetails.getIsActivity()}"></p>
 						    	<div class="basicInfo">
 						    		<a href="#"><span class="icon_profile"></span></a>

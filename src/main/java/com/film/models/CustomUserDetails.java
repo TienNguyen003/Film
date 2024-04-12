@@ -117,7 +117,7 @@ public class CustomUserDetails implements UserDetails{
 	}
 
 	public int getCrystal() {
-		return crystal;
+		return user.getCrystal();
 	}
 
 	public void setCrystal(int crystal) {

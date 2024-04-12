@@ -1,7 +1,5 @@
 package com.film.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,9 +103,9 @@ public class UserServiceIplm implements UserService {
 	}
 
 	@Override
-	public Boolean updateIsAttendance(String attendance_day, String attendance, int point, int id) {
+	public Boolean updateIsAttendance(String attendance_day, String attendance, int point, int id, int crystal) {
 		try {
-			this.userRP.updateIsAttendance(attendance_day, attendance, point, id);
+			this.userRP.updateIsAttendance(attendance_day, attendance, point, id, crystal);
 			return true;
 		} catch (Exception e) {
 			System.out.println("loi roi");

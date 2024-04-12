@@ -19,21 +19,21 @@ const comments = document.querySelector(".comments");
 if (comments != null) {
 	const idUserCmt = document.querySelector(".idUserCmt");
 	let idUser = -1;
-	if(idUserLogin != null) idUser = idUserLogin.innerHTML
+	if (idUserLogin != null) idUser = idUserLogin.innerHTML
 	if (idUserCmt != null || idUser == null) idUser = parseInt(idUserCmt.innerHTML);
 	fetch(`http://localhost:8081/api/comment/${slugFilmS}`)
 		.then(res => res.json())
 		.then((data) => {
-			document.querySelector(".totalCmt").innerHTML =	(data.length > 0 ? data[0].quantity : "") + " Bình Luận";
+			document.querySelector(".totalCmt").innerHTML = (data.length > 0 ? data[0].quantity : "") + " Bình Luận";
 			let html = "";
 			data.map(item => {
 				let imgBadges = "";
 				let image = item.images;
-				if(image != null){
-	                image.map(item => {
-	                    imgBadges += `<img alt="" src="${item}">`                    
-	                })
-                }
+				if (image != null) {
+					image.map(item => {
+						imgBadges += `<img alt="" src="${item}">`
+					})
+				}
 				html += `<div class="anime__details__review">
                                 <div class="anime__review__item">
                                     <div class="anime__review__item__pic">
@@ -346,14 +346,18 @@ function byBadgesAjax(e) {
 		timeout: 100000,
 		success: function(data) {
 			alert(data);
-			e.target.innerHTML = "Đã Mua";			
-			e.target.classList.remove("buyBadgeBtn");
-			e.target.classList.remove("btn-primary");
-			e.target.classList.remove("btn");
-			e.target.classList.add("noClick");
-			e.target.classList.add("btn");
-			e.target.classList.add("btn-dark");
-			e.target.onclick = null;
+			if(data == "Mua thành công"){
+				e.target.innerHTML = "Đã Mua";
+				e.target.classList.remove("buyBadgeBtn");
+				e.target.classList.remove("btn-primary");
+				e.target.classList.remove("btn");
+				e.target.classList.add("noClick");
+				e.target.classList.add("btn");
+				e.target.classList.add("btn-dark");
+				e.target.onclick = null;
+				let totalCrystal = document.querySelector(".totalCrystal").innerHTML;
+				totalCrystal = totalCrystal - e.target.parentElement.querySelector(".priceBadges").innerHTML
+			}
 		},
 		error: function(e) {
 			console.log("ERROR: ", e);

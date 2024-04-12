@@ -120,8 +120,7 @@
 						<p>- Đạo hữu có <strong>1</strong> lần bỏ lỡ duy nhất trong <strong>21</strong> ngày không bị
 							reset.</p>
 						<p>- Tổng tu vi nhận được nếu điểm danh đầy đủ là : <strong>1470</strong>.</p>
-						<p>- Các mốc <strong>7, 14, 21</strong> ngày sẽ thưởng thêm Tinh Thạch tương ứng là: <strong>20
-								- 60 - 120</strong>.</p>
+						<p>- Tổng tinh thạch nhận được nếu điểm danh đầy đủ là : <strong>2100</strong>.</p>
 						<p>- Hoạt động vĩnh viễn, hết 21 ngày quay về ngày đầu và cứ thế.</p>
 					</div>
 				</div>
@@ -191,15 +190,15 @@
 		btnAttendance.onclick = () => {
 			btnAttendance.setAttribute("disabled", "true");
 			btnAttendance.innerHTML = "Đã Điểm Danh";
-			if (attendance == 21 || day - attendance_day > 1) attendance = 0;
-			let pointP = (+attendance + 1 + 3) * 5 + +idUserPoint.innerHTML;
-			diemDanh(day, +attendance + 1, pointP)
-			alert("Bạn nhận được " + (+attendance + 1 + 3) * 5 + " tu vi");
+			if (attendance == 21 || day - attendance_day > 1) attendance = -1;
+			let pointP = (+attendance + 1 + 3) * 5 + +idUserPoint.innerHTML;			
+			diemDanh(day, +attendance + 1, pointP)			
+			alert("Bạn nhận được " + (+attendance + 1 + 3) * 5 + " tu vi và 100 tinh thạch");
 		}
 	} else if (attendance_day == day) {
 		btnAttendance.setAttribute("disabled", "true");
 		btnAttendance.innerHTML = "Đã Điểm Danh";
-	}
+	}	
 
 	function diemDanh(attendance_day, attendance, point) {
 		$.ajax({
@@ -212,7 +211,7 @@
 			},
 			dataType: 'html',
 			timeout: 100000,
-			success: function (data) {
+			success: function (data) {			
 				for (var i = 0; i < dayDd.length; i++) {
 					var dayDdItem = dayDd[i];
 

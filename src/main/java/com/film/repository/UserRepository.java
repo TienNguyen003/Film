@@ -1,8 +1,5 @@
 package com.film.repository;
 
-
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -55,8 +52,8 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	
 	@Modifying
 	@Transactional
-	@Query(value = "UPDATE users SET attendance_day = :attendance_day, attendance = :attendance, point = :point WHERE id = :id", nativeQuery = true)
-	public void updateIsAttendance(@Param("attendance_day") String attendance_day, @Param("attendance") String attendance, @Param("point") int point, @Param("id") int id);
+	@Query(value = "UPDATE users SET attendance_day = :attendance_day, attendance = :attendance, point = :point, crystal = :crystal WHERE id = :id", nativeQuery = true)
+	public void updateIsAttendance(@Param("attendance_day") String attendance_day, @Param("attendance") String attendance, @Param("point") int point, @Param("id") int id, @Param("crystal") int crystal);
 	
 	@Modifying
 	@Transactional
