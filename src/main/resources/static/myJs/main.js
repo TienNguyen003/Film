@@ -29,9 +29,11 @@ if (comments != null) {
 			data.map(item => {
 				let imgBadges = "";
 				let image = item.images;
-                image.map(item => {
-                    imgBadges += `<img alt="" src="${item}">`                    
-                })
+				if(image != null){
+	                image.map(item => {
+	                    imgBadges += `<img alt="" src="${item}">`                    
+	                })
+                }
 				html += `<div class="anime__details__review">
                                 <div class="anime__review__item">
                                     <div class="anime__review__item__pic">
@@ -323,6 +325,35 @@ function deleteComment(idCm) {
 					clickDeleteComment[i].parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
 				}
 			}
+		},
+		error: function(e) {
+			console.log("ERROR: ", e);
+		}
+	})
+}
+
+function byBadgesAjax(e) {
+	$.ajax({
+		type: "POST",
+		url: "/tu-bao-cac",
+		data: {
+			id: idUserLogin.innerHTML,
+			badges: e.target.getAttribute("data-item-id"),
+			point: e.target.parentElement.querySelector(".pointBadges").innerHTML,
+			price: e.target.parentElement.querySelector(".priceBadges").innerHTML
+		},
+		dataType: 'html',
+		timeout: 100000,
+		success: function(data) {
+			alert(data);
+			e.target.innerHTML = "Đã Mua";			
+			e.target.classList.remove("buyBadgeBtn");
+			e.target.classList.remove("btn-primary");
+			e.target.classList.remove("btn");
+			e.target.classList.add("noClick");
+			e.target.classList.add("btn");
+			e.target.classList.add("btn-dark");
+			e.target.onclick = null;
 		},
 		error: function(e) {
 			console.log("ERROR: ", e);

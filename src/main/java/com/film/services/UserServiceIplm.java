@@ -124,5 +124,21 @@ public class UserServiceIplm implements UserService {
 		}
 		return null;
 	}
+
+	@Override
+	public Object[][] queryPointCrytalById(int id) {
+		return this.userRP.queryPointCrytalById(id);
+	}
+
+	@Override
+	public Boolean updateBadgesById(String img, int id, int point, int crytal) {
+		try {
+			this.userRP.updateBadgesById(img, id, point, crytal);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 	
 }

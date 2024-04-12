@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.film.models.Comments;
-import com.film.models.FilmModel;
 import com.film.services.BadgesService;
 import com.film.services.CommentService;
-import com.film.services.FilmService;
 import com.film.services.UserService;
 
 import org.springframework.ui.Model;
@@ -38,8 +36,6 @@ public class CommentController {
 	private CommentService commentService;
 	@Autowired
 	private BadgesService badgesService;
-	@Autowired
-	private FilmService filmService;
 
 	@GetMapping("/{slug}")
 	public List<Map<String, Object>> getCommentsSlug(@PathVariable String slug, Model model) {	    
@@ -48,6 +44,9 @@ public class CommentController {
 	    List<Comments> comments = commentService.findBySlug(slug);
 	    for (Comments comment : comments) {
 	        String user_badges = userService.findBadgesById(comment.getIdUser());
+	        if (user_badges.startsWith(",")) {
+	        	user_badges = user_badges.substring(1);
+	        }
 	        List<String> images = badgesService.findImageById(user_badges);
 	        
 	        Map<String, Object> commentData = new HashMap<>();
@@ -103,11 +102,5 @@ public class CommentController {
 			 return ResponseEntity.ok(id);
 		 }
 		 return null;
-	 }
-	 
-	 @GetMapping("/film-banner")
-	 public List<FilmModel> adminFilm(Model model) {
-	     List<FilmModel> list = this.filmService.getAll();
-	     return list;
 	 }
 }

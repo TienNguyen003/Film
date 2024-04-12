@@ -26,7 +26,16 @@
 	<link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
 	<link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
-
+<style>
+	.hero__text .contents{
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		color: #666666;
+	}
+</style>
 <body>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -47,38 +56,17 @@
 		</marquee>
 		<div class="container">
 			<div class="hero__slider owl-carousel owl-loaded">
-				<div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
+				<div class="hero__items set-bg" style="height: 600px" th:each="list: ${listBanner}"
+					th:data-setbg="${list.poster_url}">
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="hero__text">
-								<div class="label">Adventure</div>
-								<h2>Fate / Stay Night: Unlimited Blade Works</h2>
-								<p>After 30 days of travel across the world...</p>
-								<a href="#"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="hero__text">
-								<div class="label">Adventure</div>
-								<h2>Fate / Stay Night: Unlimited Blade Works</h2>
-								<p>After 30 days of travel across the world...</p>
-								<a href="#"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="hero__text">
-								<div class="label">Adventure</div>
-								<h2>Fate / Stay Night: Unlimited Blade Works</h2>
-								<p>After 30 days of travel across the world...</p>
-								<a href="#"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
+								<div class="label" th:text="${list.episode_current}"></div>
+								<h2 style="color: #fff;
+    								text-shadow: 0px 0px 0px #abc7b9, 0 0 4px #0eff8b, 0px 0px 4px #0eff8b;" th:text="${list.name}"></h2>
+								<p class="contents" th:text=${list.content}></p>
+								<a th:href="'http://localhost:8081/detail-film?slug=' + ${list.slug}"><span>Watch
+										Now</span> <i class="fa fa-angle-right"></i></a>
 							</div>
 						</div>
 					</div>

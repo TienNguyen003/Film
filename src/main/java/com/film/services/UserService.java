@@ -14,6 +14,7 @@ public interface UserService {
 	int findByEmailRtId(String email);
 	String findBadgesById(int id);
 	Object[][] queryByPoint(int id);
+	Object[][] queryPointCrytalById(int id);
 	Object[][] queryAttendanceById(int id);
 	Boolean save(UserModel userModel);
 	Boolean updateFullName(String display_name, int point, int id);
@@ -21,4 +22,5 @@ public interface UserService {
 	Boolean updateIsActivity(int isActivity, String lastActive, int id);
 	Boolean updateIsAttendance(String attendance_day, String attendance, int point, int id);
 	Boolean updateAvatar(String img, int id);
+	Boolean updateBadgesById(String img, int id, int point, int crytal);
 }

@@ -31,6 +31,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	@Query(value = "SELECT point, fullname, maxim FROM users u WHERE u.id = :point", nativeQuery = true)
 	Object[][] queryByPoint(@Param("point") int point);
 	
+	@Query(value = "SELECT point, crystal, users_badges FROM users u WHERE u.id = :id", nativeQuery = true)
+	Object[][] queryPointCrytalById(@Param("id") int id);
+	
 	@Query(value = "SELECT attendance, attendance_day FROM users u WHERE u.id = :id", nativeQuery = true)
 	Object[][] queryAttendanceById(@Param("id") int id);
 	
@@ -59,4 +62,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	@Transactional
 	@Query(value = "UPDATE users SET image = :image WHERE id = :id", nativeQuery = true)
 	public void updateAvatar(@Param("image") String image, @Param("id") int id);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE users SET point = :point, crystal = :crystal, users_badges = :users_badges WHERE id = :id", nativeQuery = true)
+	public void updateBadgesById(@Param("users_badges") String users_badges, @Param("id") int id, @Param("point") int point, @Param("crystal") int crystal);
 }

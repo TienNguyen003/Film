@@ -50,8 +50,18 @@ public class FilmServiceIplm implements FilmService{
 	@Override
 	public FilmModel getById(int id) {
 		try {
-			return this.filmRepository.findById(id).get();
-			
+			return this.filmRepository.findById(id).get();			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("lỗi");
+		}
+		return null;
+	}
+
+	@Override
+	public List<FilmModel> findRandAll() {
+		try {
+			return this.filmRepository.findRandAll();			
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("lỗi");

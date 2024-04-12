@@ -2863,7 +2863,7 @@ button.flambutt-on:hover {
 
 .clan {
 	color: #fff;
-	background: url(https://hoathinh3d.io/wp-content/themes/halimmovies-child/assets/image/gif/top1-tong.gif);
+	background: url(https://hoathinh3d.fan/wp-content/themes/halimmovies-child/assets/image/gif/top1-tong.gif);
 	font-weight: bold;
 	border-radius: 3px;
 	padding: 0px 2px;
@@ -2917,4 +2917,26 @@ button.flambutt-on:hover {
 
 .price-text{
 	color: #fff;
+}
+
+.noClick {
+	all: unset;
+    cursor: not-allowed !important;
+    background-color: #343a40;
+    padding: .375rem .75rem;
+}
+
+.tinh-thach-btn {
+    background-color: #dd3333;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50px;
+    position: relative;
 }

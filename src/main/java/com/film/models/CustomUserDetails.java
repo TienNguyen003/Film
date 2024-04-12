@@ -9,7 +9,7 @@ public class CustomUserDetails implements UserDetails{
 	private UserModel user;
 	private Collection<? extends GrantedAuthority> authorities;
 	String userImg, fullName, maxim, birthday, createAt, email, attendance_day;
-	int point, isActivity;	
+	int point, isActivity, crystal;	
 	
 	public CustomUserDetails() {
 		// TODO Auto-generated constructor stub
@@ -114,6 +114,14 @@ public class CustomUserDetails implements UserDetails{
 
 	public void setAttendance_day(String attendance_day) {
 		this.attendance_day = attendance_day;
+	}
+
+	public int getCrystal() {
+		return crystal;
+	}
+
+	public void setCrystal(int crystal) {
+		this.crystal = crystal;
 	}
 
 	@Override

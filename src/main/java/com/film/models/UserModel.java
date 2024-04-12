@@ -50,6 +50,8 @@ public class UserModel {
 	private String users_badges;
 	@Column(name = "attendance_day")
 	private String attendance_day;
+	@Column(name = "crystal")
+	private int crystal;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<User_Role> userRoles;
@@ -61,7 +63,8 @@ public class UserModel {
 
 	public UserModel(Long id, String userName, String passWord, Boolean enabled, String fullName, Boolean gender,
 			String birthday, String email, String maxim, String img, String createAt, int point, int is_activity,
-			String last_active, String attendance, String users_badges, Set<User_Role> userRoles, String attendance_day) {
+			String last_active, String attendance, String users_badges, Set<User_Role> userRoles, String attendance_day,
+			int crystal) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -81,6 +84,7 @@ public class UserModel {
 		this.users_badges = users_badges;
 		this.userRoles = userRoles;
 		this.attendance_day = attendance_day;
+		this.crystal = crystal;
 	}
 
 	public Long getId() {
@@ -241,6 +245,13 @@ public class UserModel {
 
 	public void setAttendance_day(String attendance_day) {
 		this.attendance_day = attendance_day;
-	}	
-	
+	}
+
+	public int getCrystal() {
+		return crystal;
+	}
+
+	public void setCrystal(int crystal) {
+		this.crystal = crystal;
+	}		
 }

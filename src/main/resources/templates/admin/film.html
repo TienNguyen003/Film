@@ -85,7 +85,7 @@
 										<td><img style="width: 100px" th:src="${film.thumb_url}"></td>
 										<td th:text="${film.time}"></td>
 										<td th:text="${film.episode_current}"></td>
-										<td th:text="${film.genres}"></td>
+										<td style=" width: 150px;" th:text="${film.genres}"></td>
 										<td th:text="${film.country}"></td>
 										<td>
 											<a th:href="@{'/admin/edit-film/'+${film.id}}"><button type="button" class="btn btn-warning">Edit</button></a>
