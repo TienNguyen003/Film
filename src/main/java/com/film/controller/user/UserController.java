@@ -107,13 +107,13 @@ public class UserController {
 		List<Badges> badges = badgesService.getAll();
 		List<Integer> integerList = new ArrayList<>();       
         
-        if(user_badges != null) {
+        if(user_badges != null && !user_badges.equals("null")) {
         	String[] stringArray = user_badges.split(",");
 	        for (String str : stringArray) {  
 	        	if(str != null && !str.isEmpty() && !str.equals("null"))
 	        		integerList.add(Integer.parseInt(str.trim()));
 	        }
-	    }
+	    } else user_badges = "0";
         
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
@@ -131,9 +131,12 @@ public class UserController {
 		String message = "";
 		Object[][] infoUser = userService.queryPointCrytalById(id);
 		int crystal = (int) infoUser[0][1];
+		String userBadges = "";
+		if (infoUser[0][2] == null) userBadges = badges;
+		else userBadges = infoUser[0][2] + ", " + badges;
 		if(crystal < price) message = "Không đủ tinh thạch";
 		else {
-			userService.updateBadgesById(infoUser[0][2] + ", " + badges, id, (int)infoUser[0][0] + point, crystal - price);
+			userService.updateBadgesById(userBadges, id, (int)infoUser[0][0] + point, crystal - price);
 			message = "Mua thành công";
 			loadController.csUser().getUser().setCrystal(crystal - price);
 			loadController.csUser().getUser().setPoint((int)infoUser[0][0] + point);

@@ -190,7 +190,7 @@
 		btnAttendance.onclick = () => {
 			btnAttendance.setAttribute("disabled", "true");
 			btnAttendance.innerHTML = "Đã Điểm Danh";
-			if (attendance == 21 || day - attendance_day > 1) attendance = -1;
+			if (attendance == 21 || day - attendance_day > 1) attendance = 0;
 			let pointP = (+attendance + 1 + 3) * 5 + +idUserPoint.innerHTML;			
 			diemDanh(day, +attendance + 1, pointP)			
 			alert("Bạn nhận được " + (+attendance + 1 + 3) * 5 + " tu vi và 100 tinh thạch");

@@ -355,8 +355,7 @@ function byBadgesAjax(e) {
 				e.target.classList.add("btn");
 				e.target.classList.add("btn-dark");
 				e.target.onclick = null;
-				let totalCrystal = document.querySelector(".totalCrystal").innerHTML;
-				totalCrystal = totalCrystal - e.target.parentElement.querySelector(".priceBadges").innerHTML
+				document.querySelector(".totalCrystal").innerHTML -= e.target.parentElement.querySelector(".priceBadges").innerHTML
 			}
 		},
 		error: function(e) {

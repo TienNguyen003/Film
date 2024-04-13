@@ -44,9 +44,6 @@ public class CommentController {
 	    List<Comments> comments = commentService.findBySlug(slug);
 	    for (Comments comment : comments) {
 	        String user_badges = userService.findBadgesById(comment.getIdUser());
-	        if (user_badges != null && user_badges.startsWith(",")) {
-	        	user_badges = user_badges.substring(1);
-	        }
 	        List<String> images = badgesService.findImageById(user_badges);
 	        
 	        Map<String, Object> commentData = new HashMap<>();
