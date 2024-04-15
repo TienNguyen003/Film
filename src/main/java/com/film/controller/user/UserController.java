@@ -75,7 +75,9 @@ public class UserController {
 	        }
 		}
 		List<FilmModel> list = this.filmService.findRandAll();
+		List<FilmModel> listView = this.filmService.findAllByView();
 		model.addAttribute("listBanner", list);
+		model.addAttribute("listView", listView);
 		return "index";
 	}	
 	

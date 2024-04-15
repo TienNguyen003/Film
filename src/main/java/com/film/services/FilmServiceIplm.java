@@ -69,4 +69,14 @@ public class FilmServiceIplm implements FilmService{
 		return null;
 	}
 
+	@Override
+	public List<FilmModel> findAllByView() {
+		try {
+			return this.filmRepository.findAllByView();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
 }

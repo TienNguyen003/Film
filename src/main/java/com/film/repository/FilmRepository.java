@@ -11,4 +11,8 @@ public interface FilmRepository extends JpaRepository<FilmModel, Integer>{
 	
 	@Query(value = "SELECT * FROM film ORDER BY RAND() LIMIT 5", nativeQuery = true)
 	List<FilmModel> findRandAll();
+	
+	@Query(value = "SELECT * FROM webfilm.film ORDER BY view DESC LIMIT 5", nativeQuery = true)
+	List<FilmModel> findAllByView();
+	
 }
