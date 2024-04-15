@@ -10,6 +10,7 @@ public interface UserService {
 	int findByUser(String name);
 	int findByEmail(String email);
 	int findByEmailRtId(String email);
+	int getEnabledById(int id);
 	String findBadgesById(int id);
 	Object[][] queryByPoint(int id);
 	Object[][] queryPointCrytalById(int id);

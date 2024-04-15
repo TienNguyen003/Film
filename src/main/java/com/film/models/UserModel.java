@@ -10,9 +10,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 public class UserModel {
 	@Id
 	@Column(name = "id")
@@ -23,13 +27,13 @@ public class UserModel {
 	@Column(name = "password")
 	private String passWord;
 	@Column(name = "enabled")
-	private Boolean enabled;
+	private int enabled;
 	@Column(name = "fullname")
 	private String fullName;
 	@Column(name = "gender")
 	private Boolean gender;
-	@Column(name = "birthday")
-	private String birthday;
+	@Column(name = "activation_code")
+	private String activation_code;
 	@Column(name = "email")
 	private String email;
 	@Column(name = "maxim")
@@ -61,8 +65,8 @@ public class UserModel {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserModel(Long id, String userName, String passWord, Boolean enabled, String fullName, Boolean gender,
-			String birthday, String email, String maxim, String img, String createAt, int point, int is_activity,
+	public UserModel(Long id, String userName, String passWord, int enabled, String fullName, Boolean gender,
+			String activation_code, String email, String maxim, String img, String createAt, int point, int is_activity,
 			String last_active, String attendance, String users_badges, Set<User_Role> userRoles, String attendance_day,
 			int crystal) {
 		super();
@@ -72,7 +76,7 @@ public class UserModel {
 		this.enabled = enabled;
 		this.fullName = fullName;
 		this.gender = gender;
-		this.birthday = birthday;
+		this.activation_code = activation_code;
 		this.email = email;
 		this.maxim = maxim;
 		this.img = img;
@@ -111,11 +115,11 @@ public class UserModel {
 		this.passWord = passWord;
 	}
 
-	public Boolean getEnabled() {
+	public int getEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(Boolean enabled) {
+	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
 
@@ -135,12 +139,12 @@ public class UserModel {
 		this.gender = gender;
 	}
 
-	public String getBirthday() {
-		return birthday;
+	public String getActivationCode() {
+		return activation_code;
 	}
 
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public void setActivationCode(String activation_code) {
+		this.activation_code = activation_code;
 	}
 
 	public String getEmail() {

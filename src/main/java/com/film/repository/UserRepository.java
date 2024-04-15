@@ -22,6 +22,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	@Query(value = "SELECT id FROM users u WHERE u.email = :email", nativeQuery = true)
 	int findByEmailRtId(@Param("email") String email);
 	
+	@Query(value = "SELECT enabled FROM users u WHERE u.id = :id", nativeQuery = true)
+	int getEnabledById(@Param("id") int id);
+	
 	@Query(value = "SELECT users_badges FROM users WHERE id = :id", nativeQuery = true)
 	String findBadgesById(@Param("id") int id);
 	

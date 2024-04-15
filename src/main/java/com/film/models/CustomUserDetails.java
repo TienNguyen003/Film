@@ -2,23 +2,30 @@ package com.film.models;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.film.services.UserService;
+
 public class CustomUserDetails implements UserDetails{
+	@Autowired
+	private UserService userService;
+	
 	private UserModel user;
 	private Collection<? extends GrantedAuthority> authorities;
-	String userImg, fullName, maxim, birthday, createAt, email, attendance_day;
+	String userImg, fullName, maxim, createAt, email, attendance_day;
 	int point, isActivity, crystal;	
 	
 	public CustomUserDetails() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CustomUserDetails(UserModel user, Collection<? extends GrantedAuthority> authorities) {
+	public CustomUserDetails(UserModel user, Collection<? extends GrantedAuthority> authorities, UserService service) {
 		super();
 		this.user = user;
 		this.authorities = authorities;
+		this.userService = service;
 	}
 
 	@Override
@@ -65,14 +72,6 @@ public class CustomUserDetails implements UserDetails{
 
 	public void setMaxim(String maxim) {
 		this.maxim = maxim;
-	}
-
-	public String getBirthday() {
-		return user.getBirthday();
-	}
-
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
 	}
 
 	public String getCreateAt() {
@@ -144,8 +143,10 @@ public class CustomUserDetails implements UserDetails{
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+		boolean isEnabled = false;
+		int enabled = userService.getEnabledById((user.getId()).intValue());
+		if(enabled == 1) isEnabled = true;
+		return isEnabled;
 	}
 
 	public UserModel getUser() {

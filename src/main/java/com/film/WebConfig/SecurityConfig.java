@@ -3,6 +3,7 @@ package com.film.WebConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -12,6 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.film.controller.user.LoadController;
 import com.film.models.CustomUserDetails;
 import com.film.services.UserService;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +41,19 @@ public class SecurityConfig {
 				requestMatchers("/*").permitAll().
 				requestMatchers("/api/comment/**").permitAll().
 				requestMatchers("/admin/**").hasAuthority("ADMIN").
-				anyRequest().authenticated())
+				requestMatchers(request -> {
+                    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                    if (authentication == null || !authentication.isAuthenticated()) {
+                        return false;
+                    }
+                    Object principal = authentication.getPrincipal();
+                    if (principal instanceof CustomUserDetails) {
+                        CustomUserDetails userDetails = (CustomUserDetails) principal;
+                        return userDetails.isEnabled();
+                    }
+                    return false;
+                }).authenticated()
+				.anyRequest().authenticated())			
 			.formLogin(login -> login
 				.loginPage("/login")
 				.successHandler((request, response, authentication) -> {
@@ -46,10 +62,16 @@ public class SecurityConfig {
 					int id = customUserDetails.getId().intValue();
 					userService.updateIsActivity(1, "", id);
 				})
-                .failureHandler((request, response, exception) -> response.sendRedirect("/login?error=true"))
+				.failureHandler((request, response, exception) -> {
+			        String redirectUrl = "/login?error=true";
+			        if (exception instanceof DisabledException) {
+			            redirectUrl = "/login?message=Your account is not activated.";
+			        }
+			        response.sendRedirect(redirectUrl);
+			    })
 				.usernameParameter("username")
-				.passwordParameter("password")).
-			logout(logout -> logout
+				.passwordParameter("password"))
+			.logout(logout -> logout
 					.logoutUrl("/logout")
 					.logoutSuccessHandler((request, response, authentication) -> {
 						CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -58,8 +80,7 @@ public class SecurityConfig {
 			            response.sendRedirect("/login");
 			        }))
 			.exceptionHandling(exceptionHandling -> exceptionHandling
-				.accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect("/"))								
-			)		
+		            .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect("/")))	
 			.oauth2Login(oauth2Customize->oauth2Customize
 				.loginPage("/"))
 		;

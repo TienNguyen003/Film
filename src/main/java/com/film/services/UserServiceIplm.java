@@ -138,5 +138,15 @@ public class UserServiceIplm implements UserService {
 		}
 		return null;
 	}
+
+	@Override
+	public int getEnabledById(int id) {
+		try {
+			return this.userRP.getEnabledById(id);
+		} catch (Exception e) {
+			System.out.println("lỗi");
+		}
+		return 0;
+	}
 	
 }

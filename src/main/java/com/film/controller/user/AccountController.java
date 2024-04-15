@@ -102,7 +102,7 @@ public class AccountController {
 			if((int) userModel[0][0] < 50)
 				redirectAttributes.addFlashAttribute("notification", "Tu vi không đủ để thực hiện");
 			else {
-				if(!userModel[0][1].equals(display_name)) {
+				if(userModel[0][1] == null || !userModel[0][1].equals(display_name)) {
 					userService.updateFullName(display_name, (point - 50), idUser);
 					commentService.updateNameUser(display_name, idUser);
 					loadController.csUser().getUser().setFullName(display_name);

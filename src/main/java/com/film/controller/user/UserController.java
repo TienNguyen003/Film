@@ -14,14 +14,17 @@ import com.film.models.UserModel;
 import com.film.services.BadgesService;
 import com.film.services.FavMovieService;
 import com.film.services.FilmService;
+import com.film.services.MailService;
 import com.film.services.UserService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Controller
 public class UserController {
@@ -35,6 +38,8 @@ public class UserController {
 	private BadgesService badgesService;
 	@Autowired
 	private FilmService filmService;
+	@Autowired
+	private MailService mailService;
 	
 	private UserController(LoadController loadController) {
 		this.loadController = loadController;
@@ -178,8 +183,23 @@ public class UserController {
 			LocalDate now = LocalDate.now();
 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	        user.setCreateAt(now.format(formatter));
+	        user.setEnabled(0);
 	        
-			userService.save(user);
+	        Random random = new Random();
+	        int randomNumber = random.nextInt(9000) + 1000;
+	        user.setActivationCode(String.valueOf(randomNumber));
+	        
+	        try {
+				String htmlContent = mailService.getHtmlContentFromFile("templates/send-email.html");
+				htmlContent = htmlContent.replace("name", user.getUserName());
+	            htmlContent = htmlContent.replace("content", "Mã xác minh của bạn là: " + randomNumber);
+	            System.out.println(htmlContent);
+				mailService.sendEmail(user.getEmail(), "Xác nhận địa chỉ Email", htmlContent);
+			} catch (IOException e) {
+				System.out.println("Lỗi");
+			}
+	        
+			//userService.save(user);
 		}
 		return "redirect:/login";
 	}

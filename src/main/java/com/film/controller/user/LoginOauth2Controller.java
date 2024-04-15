@@ -27,7 +27,7 @@ public class LoginOauth2Controller {
 			UserModel userModel = new UserModel();
 			userModel.setEmail(userGoogle.getEmail());
 			userModel.setUserName(userGoogle.getUserName());
-			userModel.setEnabled(true);
+			userModel.setEnabled(1);
 			userModel.setImg(userGoogle.getImg());
 			LocalDate now = LocalDate.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -48,7 +48,7 @@ public class LoginOauth2Controller {
 		userGoogle.setEmail((String) map.get("email"));
 		userGoogle.setUserName((String) map.get("name"));
 		userGoogle.setImg((String) map.get("picture"));
-		userGoogle.setEnabled((Boolean) map.get("email_verified"));
+		userGoogle.setEnabled((int) map.get("email_verified"));
 		return userGoogle;
 	}
 }

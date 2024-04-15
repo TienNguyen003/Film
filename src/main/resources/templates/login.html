@@ -28,6 +28,9 @@
     <script th:if="${param.error}">
         alert("Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập và mật khẩu.");
     </script>
+    <script th:if="${param.message}">
+        alert("Vui lòng kích hoạt tài khoản để được sử dụng");
+    </script>
 </head>
 
 <body>
