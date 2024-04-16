@@ -193,13 +193,12 @@ public class UserController {
 				String htmlContent = mailService.getHtmlContentFromFile("templates/send-email.html");
 				htmlContent = htmlContent.replace("name", user.getUserName());
 	            htmlContent = htmlContent.replace("content", "Mã xác minh của bạn là: " + randomNumber);
-	            System.out.println(htmlContent);
 				mailService.sendEmail(user.getEmail(), "Xác nhận địa chỉ Email", htmlContent);
 			} catch (IOException e) {
 				System.out.println("Lỗi");
 			}
 	        
-			//userService.save(user);
+			userService.save(user);
 		}
 		return "redirect:/login";
 	}

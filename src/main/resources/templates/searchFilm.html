@@ -132,27 +132,26 @@
 			
 			let htmlPanigation = "";
 			let currentPage = data.params.pagination.currentPage;
-			let breakpointPage = currentPage + 5;
 			let lastPage = Math.ceil(data.params.pagination.totalItems/24);
-			
-			if(lastPage != 0) {
-				if (currentPage >= lastPage-4) {
+			let breakpointPage = currentPage + 5;
+			if(lastPage < 5) breakpointPage = lastPage+1;
+			else if (currentPage >= lastPage-4) {
 				if (currentPage == lastPage) breakpointPage -= 4;
 				else breakpointPage -= 3;
-					currentPage -= 4;
-				}			
-				if(indexOfFilm > lastPage) {
-					indexOfFilm = lastPage;
-					breakpointPage = lastPage + 1;
-					currentPage = breakpointPage - 4;
-					document.querySelector(".search-film").innerHTML = '<div class="alert alert-danger">Mọe tìm vừa thôi chứ</div>';
-				}
-				if (currentPage != 1) currentPage = currentPage-1;
-				for (let i = currentPage; i < breakpointPage; i++){
-					htmlPanigation += `<a href="${currentURL}&page=${i}"
-										class=${(indexOfFilm == i) ? "current-page" : ""}>${i}</a>`
-				}
-			}			
+				currentPage -= 4;
+			}
+			if(indexOfFilm > lastPage) {
+				indexOfFilm = lastPage;
+				breakpointPage = lastPage + 1;
+				currentPage = breakpointPage - 4;
+				document.querySelector(".genres").innerHTML = '<div class="alert alert-danger">Mọe tìm vừa thôi chứ</div>';
+			}
+			if (currentPage != 1) currentPage = currentPage-1;
+			for (let i = currentPage; i < breakpointPage; i++){
+				if(i < 0) i = Math.abs(i);
+				htmlPanigation += `<a href="${currentURL}&page=${i}"
+									class=${(indexOfFilm == i) ? "current-page" : ""}>${i}</a>`
+			}
 			document.querySelector('.product__pagination').innerHTML = 
 				`${(indexOfFilm!=1 && indexOfFilm != "")?`<a href='${currentURL}&page=${1}'><i class='fa fa-angle-double-left'></i></a>`+
 								  `<a href='${currentURL}&page=${indexOfFilm-1}'><i class='fa fa-angle-left'></i></a>`:""}`

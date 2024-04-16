@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Anime Template">
+	<meta name="keywords" content="Anime, unica, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Phim 24</title>
+	<link rel="shortcut icon" href="img/bg.jfif" type="image/x-icon">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+
+	<!-- Css Styles -->
+	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+	<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+	<link rel="stylesheet" href="css/plyr.css" type="text/css">
+	<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+	<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+	<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+	<div class="search-model"></div>
+
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header Section Begin -->
+	<div th:replace="header :: content"></div>
+	<!-- Header End -->
+
+	<!-- Breadcrumb Begin -->
+	<div class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__links">
+						<a href="/"><i class="fa fa-home"></i> Trang chủ</a>
+						<span class="filmName"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<!-- Anime Section Begin -->
+	<section class="anime-details spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="anime__video__player" style="width:1140px;height:660px">
+						<div id="dplayer" style="height:100%;object-fit:cover"></div>
+						<a href="#" id="iconFilm" class="prevEps"><i class="fa fa-angle-double-left"></i> Tập trước</a>
+						<a href="#" id="iconFilm" class="nextEsp">Tập tiếp theo <i
+								class="fa fa-angle-double-right"></i></a>
+						<a id="iconFilm" class="lightToggle"><i class="fa fa-eye"></i>Tắt đèn</a>
+					</div>
+					<div class="section-title">
+						<h5>Nếu phim load chậm vui lòng tải lại trang</h5>
+					</div>
+					<div class="anime__details__episodes">
+						<div class="section-title">
+							<h5>Tập</h5>
+						</div>
+						<div class="episodes"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="section-title">
+						<h5 class="totalCmt">Bình luận</h5>
+					</div>
+					<div class="comments" id="comments" style="margin-bottom: 50px"></div>
+					<div th:with="userDetails=${#authentication.getPrincipal()}" class="infoUser">
+						<div th:if="${userDetails != 'anonymousUser'}">
+							<p style="display:none" class="idUserCmt" th:text="${userDetails.id}"></p>
+							<div class="anime__details__form">
+								<div class="section-title">
+									<h5>Your Comment</h5>
+								</div>
+								<form class="formNoClick">
+									<textarea placeholder="Your Comment" id="contentCm"></textarea>
+									<button type="submit" onclick="addCommentAjax()"><i
+											class="fa fa-location-arrow"></i> Bình Luận</button>
+								</form>
+							</div>
+						</div>
+						<div th:if="${userDetails == 'anonymousUser'}" class="anime__details__btn">
+							<a href="/login" class="watch-btn"><span style="border-radius: 4px">Đăng nhập</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Anime Section End -->
+
+	<!-- Footer Section Begin -->
+	<div th:replace="footer :: content"></div>
+	<!-- Footer Section End -->
+
+	<!-- Search model Begin -->
+	<div th:replace="search :: content"></div>
+	<!-- Search model end -->
+
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/player.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/mixitup.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="myJs/main.js"></script>
+
+	<script src="js/hls.min.js"></script>
+	<script src="js/DPlayer.min.js"></script>
+	<script src="js/artplayer.js"></script>
+</body>
+<script>
+	function playM3u8(video, url, art) {
+		if (Hls.isSupported()) {
+			if (art.hls) art.hls.destroy();
+			const hls = new Hls();
+			hls.loadSource(url);
+			hls.attachMedia(video);
+			art.hls = hls;
+			art.on('destroy', () => hls.destroy());
+		} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+			video.src = url;
+		} else {
+			art.notice.show = 'Unsupported playback format: m3u8';
+		}
+	}
+
+	let currentURL = window.location.href;
+	let slugFilm = "";
+	let indexOfFilm = 1;
+	if (currentURL.includes("#")) currentURL = currentURL.replace("#", "");
+	let urlPresent = currentURL.substring(currentURL.indexOf("&episodes="))
+	indexOfFilm = urlPresent.replace("&episodes=", "");
+	slugFilm = (currentURL.substring((currentURL.indexOf("?slug=") + 6), currentURL.indexOf("&episodes=")));
+	currentURL = currentURL.substring(0, currentURL.indexOf("&episodes="));
+
+	fetch(`https://ophim1.com/phim/${slugFilm}`)
+		.then(res => res.json())
+		.then(data => {
+			episodes = data.episodes[0].server_data;
+			if (episodes[0].name != 1) {
+				episodes.sort(function (a, b) {
+					return parseInt(a.name) - parseInt(b.name);
+				});
+			}	
+			data = data.movie;
+			if (data.status == "trailer") {
+				alert("Phim mới chỉ có trailer");
+				window.open(`${data.trailer_url}`, 'popup', 'width=600,height=400');
+			}
+			if (parseInt(episodes[episodes.length-1].name) < indexOfFilm) {
+				indexOfFilm = episodes.length;
+				alert(`Phim có ${episodes[episodes.length-1].name} tập thôi bớt nghịch lại`);
+			}
+			var art = new Artplayer({
+				container: '#dplayer',
+				url: `${episodes[indexOfFilm - 1].link_m3u8}`,
+				type: 'm3u8',
+				customType: {
+					m3u8: playM3u8,
+				},
+				poster: `${data.thumb_url}`,
+				volume: 0.5,
+				isLive: false,
+				muted: false,
+				autoplay: false,
+				pip: true,
+				autoSize: true,
+				autoMini: true,
+				screenshot: true,
+				setting: true,
+				loop: true,
+				flip: true,
+				playbackRate: true,
+				aspectRatio: true,
+				fullscreen: true,
+				fullscreenWeb: true,
+				subtitleOffset: true,
+				miniProgressBar: true,
+				mutex: true,
+				backdrop: true,
+				playsInline: true,
+				autoPlayback: true,
+				airplay: true,
+				theme: '#23ade5',
+				lang: navigator.language.toLowerCase(),
+				moreVideoAttr: {
+					crossOrigin: 'anonymous',
+				},
+				settings: [
+					{
+						width: 200,
+						html: 'Subtitle',
+						tooltip: 'Bilingual',
+						icon: '<img width="22" heigth="22" src="https://artplayer.org/assets/img/subtitle.svg">',
+						selector: [
+							{
+								html: 'Display',
+								tooltip: 'Show',
+								switch: true,
+								onSwitch: function (item) {
+									item.tooltip = item.switch ? 'Hide' : 'Show';
+									art.subtitle.show = !item.switch;
+									return !item.switch;
+								},
+							},
+						],
+						onSelect: function (item) {
+							art.subtitle.switch(item.url, {
+								name: item.html,
+							});
+							return item.html;
+						},
+					},
+				],
+				layers: [
+					{
+						html: '<img width="40" src="img/bg.jfif">',
+						click: function () {
+							window.open('https://www.tiktok.com/@candyy1703');
+							console.info('You clicked on the custom layer');
+						},
+						style: {
+							position: 'absolute',
+							top: '20px',
+							right: '20px',
+							opacity: '.9',
+						},
+					},
+				],
+				/*quality: [
+					{
+						default: true,
+						html: '360',
+						url: "https://www097.vipanicdn.net/streamhls/4f762bd70a47a42d9d61cc4816e19295/ep.24.1703913656.360.m3u8",
+					},
+					{
+						html: '1080',
+						url: "https://www097.vipanicdn.net/streamhls/4f762bd70a47a42d9d61cc4816e19295/ep.24.1703913656.1080.m3u8",
+					},
+				],*/
+				icons: {
+					loading: '<img src="https://artplayer.org/assets/img/ploading.gif">',
+					state: '<img width="150" heigth="150" src="https://artplayer.org/assets/img/state.svg">',
+					indicator: '<img width="16" heigth="16" src="https://artplayer.org/assets/img/indicator.svg">',
+				},
+			});
+
+			document.querySelector(".filmName").innerHTML = data.name;
+
+			episodes.map(item => {
+				episodesCurent = (item.slug != "" ? item.name.replace(/\b0+(\d+)\b/g, '$1') : item.slug)
+				if(episodesCurent.includes("tap-")) episodesCurent = episodesCurent.replace("tap-", "")
+				if (episodesCurent == "Full" || episodesCurent == "full") episodesCurent = "1";
+				document.querySelector(".episodes").innerHTML += `
+					<a style=${indexOfFilm == episodesCurent ? "background-color:orange" : "background-color:none"} 
+						href="${currentURL}&episodes=${episodesCurent}">
+						${episodesCurent}</a>`
+			});
+
+			document.querySelector(".prevEps").href = `${currentURL}&episodes=${(indexOfFilm == 1) ? indexOfFilm : indexOfFilm - 1}`;
+			document.querySelector(".nextEsp").href = `${currentURL}&episodes=${(indexOfFilm > episodes.length - 1 || indexOfFilm == episodes.length - 1) ? episodes.length : +indexOfFilm + 1}`;
+		})
+
+	document.querySelector(".lightToggle").onclick = () => {
+		document.querySelector(".search-model").classList.toggle("unHiddenEl");
+		document.querySelector(".anime__video__player").style.zIndex = 999;
+		document.querySelector(".anime__video__player").style.position = "relative";
+	}
+</script>
+
+</html>

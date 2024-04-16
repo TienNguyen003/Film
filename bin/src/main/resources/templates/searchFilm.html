@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Anime Template">
+    <meta name="keywords" content="Anime, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Phim 24</title>
+	<link rel="shortcut icon" href="img/bg.jfif" type="image/x-icon">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/plyr.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <div th:replace="header :: content"></div>
+    <!-- Header End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <a href="#" class="titlePage"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Product Section Begin -->
+    <section class="product-page spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product__page__content">                        
+                        <div class="row search-film">
+                            
+                        </div>
+                    </div>
+                    <div class="product__pagination"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+    <!-- Footer Section Begin -->
+	<div th:replace="footer :: content"></div>
+    <!-- Footer Section End -->
+
+    <!-- Search model Begin -->
+    <div th:replace="search :: content"></div>
+    <!-- Search model end -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+<script type="text/javascript">
+	let currentURL = window.location.href;
+	let slugFilm = "";
+	let indexOfFilm = "1";
+	if (currentURL.includes("&page=")) {
+		if(currentURL.includes("#")) currentURL = currentURL.replace("#", "");
+		let urlPresent = currentURL.substring(currentURL.indexOf("&page"))
+		indexOfFilm = urlPresent.replace("&page=", "");
+		slugFilm = (currentURL.substring((currentURL.indexOf("?") + 1), currentURL.indexOf("&page="))).replace("nameFilm=", "");
+		currentURL = currentURL.substring(0, currentURL.indexOf("&page="));
+	}
+	else slugFilm = currentURL.replace("http://localhost:8081/search-film?nameFilm=", "");
+	fetch(`https://ophim1.com/v1/api/tim-kiem?keyword=${slugFilm}&page=${indexOfFilm}`)
+		.then(res => res.json())
+		.then(data => {
+			data = data.data;			
+			let html = "";
+			data.items.map(item => {
+				let arrCategory = [];
+				item.category.map(items => {
+					arrCategory += `<li>${items.name}</li><span style="display:inline-block;width:5px"></span>`;
+				})
+				html += `<div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                	<a href="/detail-film?slug=${item.slug}">
+                                    	<div class="product__item__pic set-bg" style="background-image:url(https://img.ophim10.cc/uploads/movies/${item.thumb_url})">
+                                        	<div class="ep">${item.episode_current}</div>
+                                    	</div>
+                                    </a>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            ${arrCategory}
+                                        </ul>
+                                        <h5><a href="/detail-film?slug=${item.slug}">${item.name}</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+			})
+			document.querySelector(".search-film").innerHTML = html;
+			document.querySelector(".titlePage").innerHTML = data.titlePage;
+			
+			let htmlPanigation = "";
+			let currentPage = data.params.pagination.currentPage;
+			let breakpointPage = currentPage + 5;
+			let lastPage = Math.ceil(data.params.pagination.totalItems/24);
+			
+			if(lastPage != 0) {
+				if (currentPage >= lastPage-4) {
+				if (currentPage == lastPage) breakpointPage -= 4;
+				else breakpointPage -= 3;
+					currentPage -= 4;
+				}			
+				if(indexOfFilm > lastPage) {
+					indexOfFilm = lastPage;
+					breakpointPage = lastPage + 1;
+					currentPage = breakpointPage - 4;
+					document.querySelector(".search-film").innerHTML = '<div class="alert alert-danger">Mọe tìm vừa thôi chứ</div>';
+				}
+				if (currentPage != 1) currentPage = currentPage-1;
+				for (let i = currentPage; i < breakpointPage; i++){
+					htmlPanigation += `<a href="${currentURL}&page=${i}"
+										class=${(indexOfFilm == i) ? "current-page" : ""}>${i}</a>`
+				}
+			}			
+			document.querySelector('.product__pagination').innerHTML = 
+				`${(indexOfFilm!=1 && indexOfFilm != "")?`<a href='${currentURL}&page=${1}'><i class='fa fa-angle-double-left'></i></a>`+
+								  `<a href='${currentURL}&page=${indexOfFilm-1}'><i class='fa fa-angle-left'></i></a>`:""}`
+						+htmlPanigation+
+				`${indexOfFilm<lastPage?`<a href='${currentURL}&page=${+indexOfFilm+1}'><i class='fa fa-angle-right'></i></a>`+
+								  `<a href='${currentURL}&page=${lastPage}'><i class='fa fa-angle-double-right'></i></a>`:""}`
+			if (data.items.length == 0){
+				document.querySelector(".search-film").innerHTML = '<div class="alert alert-danger">Không có phim phù hợp</div>';
+			}
+		})
+</script>
+</html>

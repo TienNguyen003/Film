@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Anime Template">
+	<meta name="keywords" content="Anime, unica, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Phim 24</title>
+	<link rel="shortcut icon" href="img/bg.jfif" type="image/x-icon">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+
+	<!-- Css Styles -->
+	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+	<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+	<link rel="stylesheet" href="css/plyr.css" type="text/css">
+	<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+	<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+	<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script th:inline="javascript" th:if="${successMessageFav}">
+		setTimeout(function () {
+			document.getElementById('successMessage').style.display = 'none';
+		}, 2000);
+	</script>
+</head>
+
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header Section Begin -->
+	<div th:replace="header :: content"></div>
+	<!-- Header End -->
+
+	<!-- Breadcrumb Begin -->
+	<div class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__links">
+						<a href="/"><i class="fa fa-home"></i> Trang chủ</a>
+						<span class="filmName"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<input type="hidden" th:value="${checkMessageFav}" class="checkMsFav">
+
+	<!-- Anime Section Begin -->
+	<section class="anime-details spad">
+		<div class="container">
+			<div class="anime__details__content">
+
+			</div>
+			<div class="row">
+				<div class="col-lg-8 col-md-8">
+					<div class="anime__details__review">
+						<div class="section-title">
+							<h5 class="watched_episode" th:each="history_watch: ${history}"
+								th:text="'Lần trước bạn xem đến tập ' + ${history_watch.episode}"></h5>
+						</div>
+						<div class="section-title">
+							<h5 class="totalCmt">Bình luận</h5>
+						</div>
+						<div class="comments" id="comments"></div>
+					</div>
+					<div th:with="userDetails=${#authentication.getPrincipal()}" class="infoUser">
+						<div th:if="${userDetails != 'anonymousUser'}">
+							<p style="display:none" class="idUserCmt" th:text="${userDetails.id}"></p>
+							<div class="anime__details__form">
+								<div class="section-title">
+									<h5>Your Comment</h5>
+								</div>
+								<form class="formNoClick">
+									<textarea placeholder="Your Comment" id="contentCm"></textarea>
+									<button type="submit" onclick="addCommentAjax()"><i
+											class="fa fa-location-arrow"></i> Bình luận</button>
+								</form>
+							</div>
+						</div>
+						<div th:if="${userDetails == 'anonymousUser'}" class="anime__details__btn">
+							<a href="/login" class="watch-btn"><span style="border-radius: 4px">Đăng nhập</span></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4">
+					<div class="anime__details__sidebar">
+						<div class="section-title">
+							<h5>you might like...</h5>
+						</div>
+						<div class="product__sidebar__view__item set-bg" data-setbg="img/sidebar/tv-1.jpg">
+							<div class="ep">18 / ?</div>
+							<div class="view"><i class="fa fa-eye"></i> 9141</div>
+							<h5><a href="#">Boruto: Naruto next generations</a></h5>
+						</div>
+						<div class="product__sidebar__view__item set-bg" data-setbg="img/sidebar/tv-2.jpg">
+							<div class="ep">18 / ?</div>
+							<div class="view"><i class="fa fa-eye"></i> 9141</div>
+							<h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
+						</div>
+						<div class="product__sidebar__view__item set-bg" data-setbg="img/sidebar/tv-3.jpg">
+							<div class="ep">18 / ?</div>
+							<div class="view"><i class="fa fa-eye"></i> 9141</div>
+							<h5><a href="#">Sword art online alicization war of underworld</a></h5>
+						</div>
+						<div class="product__sidebar__view__item set-bg" data-setbg="img/sidebar/tv-4.jpg">
+							<div class="ep">18 / ?</div>
+							<div class="view"><i class="fa fa-eye"></i> 9141</div>
+							<h5><a href="#">Fate/stay night: Heaven's Feel I. presage flower</a></h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Anime Section End -->
+
+	<!-- Footer Section Begin -->
+	<div th:replace="footer :: content"></div>
+	<!-- Footer Section End -->
+
+	<!-- Search model Begin -->
+	<div th:replace="search :: content"></div>
+	<!-- Search model end -->
+
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/player.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/mixitup.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+
+	<script src="js/hls.min.js"></script>
+	<script src="js/DPlayer.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="myJs/main.js"></script>
+</body>
+<script>
+	function convertDate(date) {
+		var isoTime = date;
+		var date = new Date(isoTime);
+		var options = {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'};
+		var formattedDate = date.toLocaleString('en-US', options);
+		return formattedDate;
+	}
+	let checkMsFav = document.querySelector(".checkMsFav");
+	let checkFav = document.querySelector("#successMessage");
+	let currentURL = window.location.href;
+	let slugFilm = currentURL.replace("http://localhost:8081/detail-film?slug=", "");
+	let watched_episode = document.querySelector(".watched_episode");
+	if (watched_episode == null) watched_episode = 1;
+	else watched_episode = watched_episode.innerHTML.replace("Lần trước bạn xem đến tập ", "")
+
+	fetch(`https://ophim1.com/phim/${slugFilm}`)
+		.then(res => res.json())
+		.then(data => {
+			data = (data.movie);
+			data.thumb_url = data.thumb_url.replace("ophim14", "ophim10")
+
+			document.querySelector(".filmName").innerHTML = data.name;
+			document.querySelector(".anime__details__content").innerHTML = `
+			<div class="row">
+					<div class="categoryMv" style="display: none">${data.category.map(item => item.slug)}</div>
+                    <div class="col-lg-3">
+                        <div class="anime__details__pic set-bg" style="background-image:url(${data.thumb_url})">     
+                        	<div class="comment"><i class="fa fa-globe"></i> ${data.lang}</div>                       
+                            <div class="view"><i class="fa fa-eye"></i> ${data.view}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="anime__details__text">
+                            <div class="anime__details__title">
+                                <h3>${data.name}</h3>
+                                <span>${data.origin_name}</span>
+                            </div>
+                            <div class="anime__details__rating">
+                                <div class="rating">
+                                    <a href="#"><i class="fa fa-star"></i></a>
+                                    <a href="#"><i class="fa fa-star"></i></a>
+                                    <a href="#"><i class="fa fa-star"></i></a>
+                                    <a href="#"><i class="fa fa-star"></i></a>
+                                    <a href="#"><i class="fa fa-star-half-o"></i></a>
+                                </div>
+                                <span>1.029 Votes</span>
+                            </div>                            
+                            <div><p>${data.content}</p></div>
+                            <div class="anime__details__widget">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <ul>
+                                            <li><span>Type:</span> ${data.type}</li>
+                                            <li><span>Produced:</span> ${data.year}</li>
+                                            <li><span>Date update:</span> ${convertDate(data.modified.time)}</li>
+                                            <li><span>Status:</span> ${data.status}</li>
+                                            <li><span>Genre:</span> ${data.category.map(item => `<button style="padding: 3px 10px" type="button" class="btn btn-secondary">${item.name}</button>&nbsp;`).join('')}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <ul>
+                                            <li><span>Country:</span> ${data.country[0].name}</li>
+                                            <li><span>Episode:</span> ${data.episode_current}</li>
+                                            <li><span>Duration:</span> ${data.time}</li>
+                                            <li><span>Quality:</span> ${data.quality}</li>
+                                            <li><span>Views:</span> ${data.view}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="anime__details__btn" style="display:flex">
+                            	<form class="formNoClickFav">
+                            		<input type="hidden" class="name_movie" value="${data.name}">
+                            		<input type="hidden" class="img_movie" value="${data.thumb_url}">
+                            		<input type="hidden" class="episode" value="${data.episode_current}">
+                            		<input type="hidden" class="view_movie" value="${data.view}">
+                            		
+									<input style="height:48.5px" type="submit" onclick="addFavMove()" class="follow-btn showFl" 
+									value="${(checkFav != null && checkFav.innerHTML == 'Thêm thành công') || checkMsFav.value == 'Đã có' ? 'Hủy Theo Dõi 🤍' : 'Theo Dõi 🤍'}">
+                            		
+                            	</form>
+                            	${data.trailer_url != "" ? `<a href="${data.trailer_url}" target="blank" class="watch-btn" style="margin-right: 10px">
+                                	<span>Xem Trailer</span>
+                                </a>` : ""}                            	
+                                <a href="/watch-film?slug=${data.slug}&episodes=${watched_episode}" class="watch-btn">
+                                	<span>Xem Ngay</span> <i class="fa fa-angle-right"></i>
+                                </a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+			document.querySelector(".formNoClickFav").addEventListener("submit", function (event) {
+				event.preventDefault();
+			});
+		})
+
+</script>
+
+</html>

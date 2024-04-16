@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Admin | Category</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/AdminLTE.css">
+	<link rel="stylesheet" href="/css/_all-skins.min.css">
+	<link rel="stylesheet" href="/css/jquery-ui.css">
+	<link rel="stylesheet" href="/css/style.css" />
+	<script src="/js/angular.min.js"></script>
+	<script src="/js/app.js"></script>
+	<link rel="shortcut icon" href="/img/bg.jfif" type="image/x-icon">
+</head>
+<style>
+	.table td{
+		vertical-align: middle;
+		padding: 0;
+	}
+	.table .contents{
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 6;
+		-webkit-box-orient: vertical;
+	}
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<div th:replace="admin/header :: content"></div>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Category</h1>				
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<a th:href="@{add-film}" class="btn btn-success">+ New</a>
+							<div class="box-tools">
+								<div class="input-group input-group-sm" style="width: 150px;">
+									<input type="text" name="table_search" class="form-control pull-right"
+										placeholder="Search">
+
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-default"><i
+												class="fa fa-search"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body table-responsive no-padding">
+							<table class="table table-hover" style="text-align:center">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Content</th>
+										<th>Thumb Url</th>
+										<th>Time</th>
+										<th>Episode Current</th>
+										<th>Genres</th>
+										<th>Country</th>
+									</tr>
+								</thead>
+								<tbody>									
+									<tr th:each="film: ${list}">
+										<td style="width: 200px" th:text="${film.name}"></td>
+										<td class="contents" style="width: 200px" th:text="${film.content}"></td>
+										<td><img style="width: 100px" th:src="${film.thumb_url}"></td>
+										<td th:text="${film.time}"></td>
+										<td th:text="${film.episode_current}"></td>
+										<td style=" width: 150px;" th:text="${film.genres}"></td>
+										<td th:text="${film.country}"></td>
+										<td>
+											<a th:href="@{'/admin/edit-film/'+${film.id}}"><button type="button" class="btn btn-warning">Edit</button></a>
+											<a th:href="@{'/admin/deleteFilm/'+${film.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery-ui.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/adminlte.min.js"></script>
+	<script src="/js/dashboard.js"></script>
+	<script src="/js/function.js"></script>
+</body>
+</html>

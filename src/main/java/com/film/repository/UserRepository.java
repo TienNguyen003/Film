@@ -23,7 +23,10 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	int findByEmailRtId(@Param("email") String email);
 	
 	@Query(value = "SELECT enabled FROM users u WHERE u.id = :id", nativeQuery = true)
-	int getEnabledById(@Param("id") int id);
+	int getEnabled(@Param("id") int id);
+	
+	@Query(value = "SELECT activation_code FROM users u WHERE u.username = :name", nativeQuery = true)
+	int getActivityCode(@Param("name") String name);
 	
 	@Query(value = "SELECT users_badges FROM users WHERE id = :id", nativeQuery = true)
 	String findBadgesById(@Param("id") int id);
@@ -67,4 +70,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	@Transactional
 	@Query(value = "UPDATE users SET point = :point, crystal = :crystal, users_badges = :users_badges WHERE id = :id", nativeQuery = true)
 	public void updateBadgesById(@Param("users_badges") String users_badges, @Param("id") int id, @Param("point") int point, @Param("crystal") int crystal);
+
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE users SET enabled = 1, activation_code = '' WHERE username = :name", nativeQuery = true)
+	public void updateEnabled(@Param("name") String name);
 }

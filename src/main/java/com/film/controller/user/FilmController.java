@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.film.models.FavMovie;
 import com.film.models.HistoryWatch;
 import com.film.services.FavMovieService;
+import com.film.services.FilmService;
 import com.film.services.HistoryWatchService;
 
 import jakarta.servlet.http.Cookie;
@@ -29,6 +30,8 @@ public class FilmController {
 	private HistoryWatchService historyWatchService;
 	@Autowired
 	private FavMovieService favMovieService;
+	@Autowired
+	private FilmService filmService;
 	
 	private FilmController(LoadController loadController) {
 		this.loadController = loadController;
@@ -68,6 +71,18 @@ public class FilmController {
 			if(watch != null) {historyWatch.setId(watch.getId());}
 			historyWatchService.update(historyWatch);
 		}
+		
+		if (!slug.equals(request.getSession().getAttribute("currentSlug"))) {
+			List<String> listSlug = filmService.findSlugFilm();
+			for (String string : listSlug) {
+				if(string.equals(slug)) {
+					int view = filmService.findViewBySlug(slug);
+					filmService.updateViewBySlug(string, view + 1);
+					request.getSession().setAttribute("currentSlug", slug);
+				}
+			}
+		}
+		
 		return "anime-watching";
 	}
 	

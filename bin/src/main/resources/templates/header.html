@@ -1,0 +1,65 @@
+<header th:fragment="content" class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="/">
+                            <img src="/img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li><a href="/">Trang chủ</a></li>
+                                <li><a href="/categories">Loại phim <span class="arrow_carrot-down"></span></a>
+                                	<ul class="dropdown" style="width:160px; z-index:100">
+										<li style="padding: 3px 10px" th:each="category: ${list}" ><a style="padding: 0 0 5px " th:text="${category.title}" th:href="'genres?' + ${category.slug}"></a></li>
+									</ul>                                	
+                                </li>
+                                <li><a href="#">Thể loại <span class="arrow_carrot-down"></span></a>
+                                	<ul class="dropdown" style="width:160px;height:300px;overflow-y: scroll;z-index:100">
+										<li style="padding: 3px 10px" th:each="genres: ${listGenres}"><a style="padding: 0 0 5px " th:text="${genres.title}" th:href="'genres?' + ${genres.slug}"></a></li>
+									</ul>                                	
+                                </li>
+                                <li><a href="/our-blog">Bài viết</a></li>
+                                <li><a href="#">Liên hệ</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="header__right">
+                        <a href="/historyFilm" title="Lịch sử"><i class="fa fa-clock-o" aria-hidden="true"></i></a>
+                    	<a href="/favmovie" title="Yêu thích"><i class="fa fa-bookmark"></i></a>
+                        <a href="#" title="Tìm kiếm" class="search-switch"><span class="icon_search"></span></a>  
+                        <div th:with="userDetails=${#authentication.getPrincipal()}" class="infoUser">
+						    <div href="/" th:if="${userDetails != 'anonymousUser'}">
+						    	<p style="display:none" class="idUserPoint" th:text="${userDetails.getPoint()}"></p>
+						    	<p style="display:none" class="idUserLogin" th:text="${userDetails.getId()}"></p>
+						    	<p style="display:none" class="idUserCrystal" th:text="${userDetails.getCrystal()}"></p>
+						    	<p style="display:none" class="idUserActivity" th:text="${userDetails.getIsActivity()}"></p>
+						    	<div class="basicInfo">
+						    		<a href="#"><span class="icon_profile"></span></a>
+						    	</div>
+						    	<div class="logoutUser">
+							    	<img th:src="${userDetails.getImg() != null ? userDetails.getImg() : 'https://i.pinimg.com/564x/a2/2d/1d/a22d1d8a789a904187dba0f5240a5907.jpg'}" class="imgUser">		
+							    	<div th:text="${userDetails.getFullName() != null ? userDetails.getFullName() : userDetails.username}" class="comment_author"></div>
+							    	<ul class="listFcInfo">
+							    		<li><i class="fa fa-info-circle"></i><a href="/my-account">Thông tin</a></li>
+							    		<li><i class="fa fa-calendar-o"></i><a href="/my-account/diem-danh">Điểm Danh</a></li>
+							    		<li><i class="fa fa-commenting"></i><a href="#">Thông báo</a></li>
+							    		<li><i class="fa fa-sign-out"></i><a href="/logout">Logout</a></li>
+							    	</ul>						    		
+						    	</div>
+						    </div>
+						    <a href="/login" th:if="${userDetails == 'anonymousUser'}"><span class="icon_profile"></span></a>
+						</div>             
+                        
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>

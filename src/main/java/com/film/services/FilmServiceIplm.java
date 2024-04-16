@@ -19,7 +19,6 @@ public class FilmServiceIplm implements FilmService{
 			return this.filmRepository.findAll();
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println("lỗi");
 		}
 		return null;
@@ -42,7 +41,7 @@ public class FilmServiceIplm implements FilmService{
 			this.filmRepository.deleteById(id);
 			return true;			
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("Lỗi");
 		}
 		return false;
 	}
@@ -52,7 +51,6 @@ public class FilmServiceIplm implements FilmService{
 		try {
 			return this.filmRepository.findById(id).get();			
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println("lỗi");
 		}
 		return null;
@@ -62,8 +60,7 @@ public class FilmServiceIplm implements FilmService{
 	public List<FilmModel> findRandAll() {
 		try {
 			return this.filmRepository.findRandAll();			
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {			
 			System.out.println("lỗi");
 		}
 		return null;
@@ -74,7 +71,33 @@ public class FilmServiceIplm implements FilmService{
 		try {
 			return this.filmRepository.findAllByView();
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("Lỗi");
+		}
+		return null;
+	}
+
+	@Override
+	public int findViewBySlug(String slug) {
+		return this.filmRepository.findViewBySlug(slug);
+	}
+
+	@Override
+	public List<String> findSlugFilm() {
+		try {
+			return this.filmRepository.findSlugFilm();
+		} catch (Exception e) {
+			System.out.println("Lỗi");
+		}
+		return null;
+	}
+
+	@Override
+	public Boolean updateViewBySlug(String slug, int view) {
+		try {
+			this.filmRepository.updateViewBySlug(slug, view);
+			return true;
+		} catch (Exception e) {
+			System.out.println("Lỗi");
 		}
 		return null;
 	}

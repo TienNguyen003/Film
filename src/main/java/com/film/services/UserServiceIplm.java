@@ -140,11 +140,27 @@ public class UserServiceIplm implements UserService {
 	}
 
 	@Override
-	public int getEnabledById(int id) {
+	public int getActivityCode(String name) {
+		return this.userRP.getActivityCode(name);
+	}
+
+	@Override
+	public Boolean updateEnabled(String name) {
 		try {
-			return this.userRP.getEnabledById(id);
+			this.userRP.updateEnabled(name);
+			return true;
 		} catch (Exception e) {
-			System.out.println("lỗi");
+			System.out.println("Lỗi");
+		}
+		return false;
+	}
+
+	@Override
+	public int getEnabled(int id) {
+		try {
+			return this.userRP.getEnabled(id);
+		} catch (Exception e) {
+			System.out.println("Lỗi");
 		}
 		return 0;
 	}

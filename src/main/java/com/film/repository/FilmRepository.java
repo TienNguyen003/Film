@@ -3,9 +3,13 @@ package com.film.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.film.models.FilmModel;
+
+import jakarta.transaction.Transactional;
 
 public interface FilmRepository extends JpaRepository<FilmModel, Integer>{
 	
@@ -15,4 +19,14 @@ public interface FilmRepository extends JpaRepository<FilmModel, Integer>{
 	@Query(value = "SELECT * FROM webfilm.film ORDER BY view DESC LIMIT 5", nativeQuery = true)
 	List<FilmModel> findAllByView();
 	
+	@Query(value = "SELECT view FROM webfilm.film WHERE slug = :slug", nativeQuery = true)
+	int findViewBySlug(@Param("slug") String slug);
+	
+	@Query(value = "SELECT slug FROM webfilm.film", nativeQuery = true)
+	List<String> findSlugFilm();
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE film SET view = :view WHERE slug = :slug", nativeQuery = true)
+	public void updateViewBySlug(@Param("slug") String slug, @Param("view") int view);	
 }

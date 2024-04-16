@@ -144,7 +144,7 @@ public class CustomUserDetails implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		boolean isEnabled = false;
-		int enabled = userService.getEnabledById((user.getId()).intValue());
+		int enabled = userService.getEnabled((user.getId()).intValue());
 		if(enabled == 1) isEnabled = true;
 		return isEnabled;
 	}

@@ -129,6 +129,19 @@ public class AccountController {
 		return "redirect:/my-account";
 	}
 	
+	@PostMapping("/activated-account")
+	public ResponseEntity<String> activatedAcc(
+			@RequestParam(required = false, defaultValue = "") String username,
+			@RequestParam(required = false, defaultValue = "") String password,
+			@RequestParam(required = false, defaultValue = "") int activatedCode) {
+		String message = "";
+		if(userService.getActivityCode(username) == activatedCode) {
+			userService.updateEnabled(username);
+			message = "Kích hoạt thành công";
+		} else message = "Mã kích hoạt bạn nhập chưa đúng";
+		return ResponseEntity.ok(message);
+	}
+	
 	@PostMapping("/updateIsActivity")
     public ResponseEntity<?> updateIsActivity(@RequestBody Map<String, Integer> requestBody) {
 		int userId = requestBody.get("id");
