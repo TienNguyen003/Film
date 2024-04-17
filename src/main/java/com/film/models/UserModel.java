@@ -2,6 +2,8 @@ package com.film.models;
 
 import java.util.Set;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +12,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,38 +28,61 @@ public class UserModel {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(name = "username")
+	@Length(min = 6, max = 200, message = "Độ dài tối thiểu tài khoản là 6 kí tự")
+	@Pattern(regexp = "[a-zA-Z]+", message = "Tài khoản không được phép chứa các kí tự đặc biệt")
+	@NotEmpty(message = "Thiếu Tên Đăng Nhập")
 	private String userName;
+	
 	@Column(name = "password")
+	@NotEmpty(message = "Thiếu Mật Khẩu")
+	@Length(min = 6, max = 200, message = "Password phải từ 6 kí tự trở lên")
 	private String passWord;
+	
 	@Column(name = "enabled")
 	private int enabled;
+	
 	@Column(name = "fullname")
 	private String fullName;
+	
 	@Column(name = "gender")
 	private Boolean gender;
+	
 	@Column(name = "activation_code")
 	private String activation_code;
+	
 	@Column(name = "email")
+	@Email(message = "Email không hợp lệ")
 	private String email;
+	
 	@Column(name = "maxim")
 	private String maxim;
+	
 	@Column(name = "image")
 	private String img;
+	
 	@Column(name = "create_at")
 	private String createAt;
+	
 	@Column(name = "point")
 	private int point;
+	
 	@Column(name = "is_activity")
 	private int is_activity;
+	
 	@Column(name = "last_active")
 	private String last_active;
+	
 	@Column(name = "attendance")
 	private String attendance;
+	
 	@Column(name = "users_badges")
 	private String users_badges;
+	
 	@Column(name = "attendance_day")
 	private String attendance_day;
+	
 	@Column(name = "crystal")
 	private int crystal;
 	

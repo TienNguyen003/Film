@@ -70,7 +70,7 @@
 				<div class="col-lg-6">
 					<div class="login__form">
 						<h3>Login</h3>
-						<form th:action="@{/login}" method="post">
+						<form th:action="@{/login}" method="post" class="formLogin">
 							<div class="input__item">
 								<input class="username" type="text" placeholder="Username" name="username">
 								<span class="icon_mail"></span>
@@ -143,6 +143,9 @@
 <script th:if="${param.message}">
 	alert("Vui lòng kích hoạt tài khoản để được sử dụng");
 	document.querySelector(".form_activated").style.display = "block";
+	
+	const savedUsername = localStorage.getItem('rememberedUsername');
+	document.querySelector('.username').value = savedUsername;
 
 	function activatedAcc() {
 		const username = document.querySelector('.username').value;
@@ -169,5 +172,9 @@
 		})
 	}
 </script>
-
+<script type="text/javascript">	
+        document.querySelector(".formLogin").addEventListener('submit', function(event) {           
+             localStorage.setItem('rememberedUsername', document.querySelector('.username').value);
+        });
+</script>
 </html>

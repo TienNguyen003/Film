@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.film.models.Badges;
@@ -16,6 +18,8 @@ import com.film.services.FavMovieService;
 import com.film.services.FilmService;
 import com.film.services.MailService;
 import com.film.services.UserService;
+
+import jakarta.validation.Valid;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -160,46 +164,55 @@ public class UserController {
 		return "signup";
 	}	
 	@PostMapping("/signup")
-	public String signupUser(@ModelAttribute("user") UserModel user, RedirectAttributes redirectAttributes) {	
-		if(userService.findByUser(user.getUserName()) > 0) {
-			redirectAttributes.addFlashAttribute("notification", "*Tên tài khoản đã được đăng ký*");
-			return "redirect:/signup";
-		} else if(userService.findByEmail(user.getEmail()) > 0) {
-			redirectAttributes.addFlashAttribute("notification", "*Email đã được đăng ký*");
-			return "redirect:/signup";
-		} else if(user.getUserName() == "") {
-			redirectAttributes.addFlashAttribute("notification", "*Tên tài khoản không được để trống*");
-			return "redirect:/signup";
-		} else if(user.getEmail() == "") {
-			redirectAttributes.addFlashAttribute("notification", "*Email không được để trống*");
-			return "redirect:/signup";
-		} else {
-			// mã hóa mk
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	    	String hashedPassword = encoder.encode(user.getPassWord());
-			user.setPassWord(hashedPassword);
+	public ModelAndView signupUser(@ModelAttribute("user") @Valid UserModel user, BindingResult bindingResult) {
+	    ModelAndView modelAndView = new ModelAndView();
+	    if (bindingResult.hasErrors()) {
+	        Map<String, String> errors = new HashMap<>();
+	        bindingResult.getFieldErrors().forEach(
+	                error -> errors.put(error.getField(), error.getDefaultMessage())
+	        );
+	        String errorMsg = "";
+	        for (String key : errors.keySet()) {
+	            errorMsg += errors.get(key) + "<br>";
+	        }
+	        modelAndView.addObject("notification", errorMsg);
+	        modelAndView.setViewName("signup");
+	    } else {
+	    	if(userService.findByUser(user.getUserName()) > 0) {
+	    		modelAndView.addObject("notification", "Tên tài khoản đã được đăng ký");
+	    		modelAndView.setViewName("signup");
+			} else if(userService.findByEmail(user.getEmail()) > 0) {
+				modelAndView.addObject("notification", "Email đã được đăng ký");
+				modelAndView.setViewName("signup");
+			} else {
+				// mã hóa mk
+				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		    	String hashedPassword = encoder.encode(user.getPassWord());
+				user.setPassWord(hashedPassword);
 
-	        // Định dạng ngày theo chuẩn "dd/MM/yyyy"
-			LocalDate now = LocalDate.now();
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	        user.setCreateAt(now.format(formatter));
-	        user.setEnabled(0);
-	        
-	        Random random = new Random();
-	        int randomNumber = random.nextInt(9000) + 1000;
-	        user.setActivationCode(String.valueOf(randomNumber));
-	        
-	        try {
-				String htmlContent = mailService.getHtmlContentFromFile("templates/send-email.html");
-				htmlContent = htmlContent.replace("name", user.getUserName());
-	            htmlContent = htmlContent.replace("content", "Mã xác minh của bạn là: " + randomNumber);
-				mailService.sendEmail(user.getEmail(), "Xác nhận địa chỉ Email", htmlContent);
-			} catch (IOException e) {
-				System.out.println("Lỗi");
+		        // Định dạng ngày theo chuẩn "dd/MM/yyyy"
+				LocalDate now = LocalDate.now();
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		        user.setCreateAt(now.format(formatter));
+		        user.setEnabled(0);
+		        
+		        Random random = new Random();
+		        int randomNumber = random.nextInt(9000) + 1000;
+		        user.setActivationCode(String.valueOf(randomNumber));
+		        
+		        try {
+					String htmlContent = mailService.getHtmlContentFromFile("templates/send-email.html");
+					htmlContent = htmlContent.replace("name", user.getUserName());
+		            htmlContent = htmlContent.replace("content", "Mã xác minh của bạn là: " + randomNumber);
+					mailService.sendEmail(user.getEmail(), "Xác nhận địa chỉ Email", htmlContent);
+				} catch (IOException e) {
+					System.out.println("Lỗi");
+				}
+		        
+				userService.save(user);
+				modelAndView.setViewName("redirect:/login");
 			}
-	        
-			userService.save(user);
-		}
-		return "redirect:/login";
+	    }
+	    return modelAndView;
 	}
 }
