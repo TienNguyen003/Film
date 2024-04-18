@@ -87,7 +87,7 @@ public class FilmController {
 	}
 	
 	@GetMapping("/detail-film")
-	public String detailFilm(Model model, @RequestParam(name = "slug") String slug) {
+	public String detailFilm(Model model, @RequestParam(name = "slug") String slug, HttpServletRequest request) {
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
 		Long idWatch = loadController.getUserIdFromUserDetails();
@@ -97,6 +97,7 @@ public class FilmController {
     		HistoryWatch watch = historyWatchService.findByUser_watchAndSlug(idWatch, slug);
     		model.addAttribute("history", watch);
 		}
+		request.getSession().setAttribute("currentSlug", "");
 		return "anime-details";
 	}
 	

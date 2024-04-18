@@ -64,7 +64,9 @@ public class CommentController {
 		 if(idUser > 0) {
 			 String img = loadController.csUser().getUser().getImg();
 				if(img == null) img = "https://i.pinimg.com/564x/a2/2d/1d/a22d1d8a789a904187dba0f5240a5907.jpg";
-				String name = loadController.csUser().getUser().getFullName();
+				String name = "";
+				if(loadController.csUser().getUser().getFullName() != null) name = loadController.csUser().getUser().getFullName();
+				else name = loadController.csUser().getUser().getUserName();
 				String createAt = loadController.dateTime();
 				Comments newComments = new Comments();
 				if(!contentCm.equals("")) {

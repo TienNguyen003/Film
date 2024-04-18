@@ -50,11 +50,14 @@ public class BadgesServiceIplm implements BadgesService{
 	@Override
 	public List<String> findImageById(String id) {
 		try {
-			List<Integer> idList = Arrays.asList(id.split(",")).stream()
-                    .map(String::trim)
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-			return this.badgesRepository.findImageById(idList);
+			if(id!=null) {
+				List<Integer> idList = Arrays.asList(id.split(",")).stream()
+	                    .map(String::trim)
+	                    .map(Integer::parseInt)
+	                    .collect(Collectors.toList());
+				return this.badgesRepository.findImageById(idList);
+			}
+			return null;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
