@@ -12,18 +12,20 @@ import com.film.models.FilmModel;
 import jakarta.transaction.Transactional;
 
 public interface FilmRepository extends JpaRepository<FilmModel, Integer>{
+	@Query(value = "SELECT slug FROM webfilm.film", nativeQuery = true)
+	List<String> findSlugFilm();
 	
+	@Query(value = "SELECT view FROM webfilm.film WHERE slug = :slug", nativeQuery = true)
+	int findViewBySlug(@Param("slug") String slug);
+
 	@Query(value = "SELECT * FROM film ORDER BY RAND() LIMIT 5", nativeQuery = true)
 	List<FilmModel> findRandAll();
 	
 	@Query(value = "SELECT * FROM webfilm.film ORDER BY view DESC LIMIT 5", nativeQuery = true)
 	List<FilmModel> findAllByView();
 	
-	@Query(value = "SELECT view FROM webfilm.film WHERE slug = :slug", nativeQuery = true)
-	int findViewBySlug(@Param("slug") String slug);
-	
-	@Query(value = "SELECT slug FROM webfilm.film", nativeQuery = true)
-	List<String> findSlugFilm();
+	@Query(value = "SELECT * FROM webfilm.film WHERE type = :type AND id_genres REGEXP :genres", nativeQuery = true)
+	List<FilmModel> findByTypeGenres(@Param("type") String type, @Param("genres") String genres);
 	
 	@Modifying
 	@Transactional

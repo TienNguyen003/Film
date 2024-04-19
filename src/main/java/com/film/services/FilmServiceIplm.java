@@ -102,4 +102,14 @@ public class FilmServiceIplm implements FilmService{
 		return null;
 	}
 
+	@Override
+	public List<FilmModel> findByTypeGenres(String type, String genres) {
+		try {
+			return this.filmRepository.findByTypeGenres(type, genres);
+		} catch (Exception e) {
+			System.out.println("Lỗi");
+		}
+		return null;
+	}
+
 }
