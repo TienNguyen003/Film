@@ -102,10 +102,7 @@
 						<div class="section-title">
 							<h5>you might like...</h5>
 						</div>
-						<div class="product__sidebar__view__item set-bg">
-							<div class="ep"></div>
-							<div class="view"><i class="fa fa-eye"></i></div>
-							<h5><a></a></h5>
+						<div class="anime__details__sidebar__item">
 						</div>
 					</div>
 				</div>
@@ -164,11 +161,6 @@
 			document.cookie = "view_movie=" + data.view + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
 			document.cookie = "img_movie=" + data.thumb_url + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
 
-			var category_cookie = [];
-			data.category.map(item => category_cookie.push(item.name))
-			document.cookie = "category_movie=" + btoa(encodeURIComponent(category_cookie.join("|"))) + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
-			document.cookie = "type_movie=" + data.type + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
-
 
 			document.querySelector(".filmName").innerHTML = data.name;
 			document.querySelector(".anime__details__content").innerHTML = `
@@ -201,11 +193,11 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
                                         <ul>
-                                            <li><span>Type:</span> ${data.type}</li>
+                                            <li><span>Type:</span> <span class="typePost">${data.type}</span></li>
                                             <li><span>Produced:</span> ${data.year}</li>
                                             <li><span>Date update:</span> ${convertDate(data.modified.time)}</li>
                                             <li><span>Status:</span> ${data.status}</li>
-                                            <li><span>Genre:</span> ${data.category.map(item => `<button style="padding: 3px 10px" type="button" class="btn btn-secondary">${item.name}</button>&nbsp;`).join('')}</li>
+                                            <li><span>Genre:</span> ${data.category.map(item => `<button style="padding: 3px 10px" type="button" class="btn btn-secondary categoryItem">${item.name}</button>&nbsp;`).join('')}</li>
                                         </ul>
                                     </div>
                                     <div class="col-lg-6 col-md-6">
@@ -240,6 +232,23 @@
                         </div>
                     </div>
                 </div>`
+			const catePost = document.querySelectorAll(".categoryItem");
+			var category_cookie = [];
+			for (i = 0; i < catePost.length; i++) category_cookie.push(catePost[i].innerHTML)
+			const type = document.querySelector(".typePost").innerHTML;
+			fetch(`http://localhost:8081/api/comment/might-like?slug=${data.slug}&genres=${btoa(encodeURIComponent(category_cookie.join("|")))}&type=${type}`)
+				.then(res => res.json())
+				.then(data => {
+					let htmlMigth = "";
+					data.map(item => {
+						htmlMigth += `<div class="product__sidebar__view__item set-bg" style="background-image:url(${item.poster_url})">
+							<div class="ep">${item.episode_current} / ${item.episode_total}</div>
+							<div class="view"><i class="fa fa-eye"></i> ${item.view}</div>
+							<h5><a href="http://localhost:8081/detail-film?slug=${item.slug}">${item.name}</a></h5>
+                            </div>`;
+					})
+				document.querySelector(".anime__details__sidebar__item").innerHTML = data.length != 0 ? htmlMigth : "<div style='color:#fff'>Chưa có phim phù hợp</div>"
+				})
 			document.querySelector(".formNoClickFav").addEventListener("submit", function (event) {
 				event.preventDefault();
 			});

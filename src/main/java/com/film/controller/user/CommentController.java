@@ -1,5 +1,7 @@
 package com.film.controller.user;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.film.models.Comments;
+import com.film.models.FilmModel;
 import com.film.services.BadgesService;
 import com.film.services.CommentService;
+import com.film.services.FilmService;
 import com.film.services.UserService;
 
 import org.springframework.ui.Model;
@@ -36,6 +40,8 @@ public class CommentController {
 	private CommentService commentService;
 	@Autowired
 	private BadgesService badgesService;
+	@Autowired
+	private FilmService filmService;
 
 	@GetMapping("/{slug}")
 	public List<Map<String, Object>> getCommentsSlug(@PathVariable String slug, Model model) {	    
@@ -102,4 +108,17 @@ public class CommentController {
 		 }
 		 return null;
 	 }
+	 
+	 @GetMapping("/might-like")
+		public List<FilmModel> mightLike(@RequestParam String slug, @RequestParam String genres, @RequestParam String type){
+			String decodedBase64String = LoadController.decodeBase64(genres);
+	        String decodedString = null;
+			try {
+				decodedString = URLDecoder.decode(decodedBase64String, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return (filmService.findByTypeGenres(type, decodedString, slug));
+		}
 }
