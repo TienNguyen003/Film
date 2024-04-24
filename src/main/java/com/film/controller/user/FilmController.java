@@ -21,6 +21,7 @@ import com.film.services.HistoryWatchService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class FilmController {
@@ -87,7 +88,7 @@ public class FilmController {
 	}
 	
 	@GetMapping("/detail-film")
-	public String detailFilm(Model model, @RequestParam(name = "slug") String slug, HttpServletRequest request) {
+	public String detailFilm(Model model, @RequestParam(name = "slug") String slug, HttpServletRequest request, HttpServletResponse response) {
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
 		Long idWatch = loadController.getUserIdFromUserDetails();
@@ -97,7 +98,7 @@ public class FilmController {
     		HistoryWatch watch = historyWatchService.findByUser_watchAndSlug(idWatch, slug);
     		model.addAttribute("history", watch);
 		}
-		request.getSession().setAttribute("currentSlug", "");
+		request.getSession().setAttribute("currentSlug", "");		
 		return "anime-details";
 	}
 	

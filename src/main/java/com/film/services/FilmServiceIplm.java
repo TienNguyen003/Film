@@ -19,7 +19,7 @@ public class FilmServiceIplm implements FilmService{
 			return this.filmRepository.findAll();
 			
 		} catch (Exception e) {
-			System.out.println("lỗi");
+			System.out.println("lỗi getAll film");
 		}
 		return null;
 	}
@@ -30,7 +30,7 @@ public class FilmServiceIplm implements FilmService{
 			this.filmRepository.save(filmModel);
 			return true;			
 		} catch (Exception e) {
-			System.out.println("lỗi");
+			System.out.println("lỗi save film");
 		}
 		return false;
 	}
@@ -41,7 +41,7 @@ public class FilmServiceIplm implements FilmService{
 			this.filmRepository.deleteById(id);
 			return true;			
 		} catch (Exception e) {
-			System.out.println("Lỗi");
+			System.out.println("Lỗi delete film");
 		}
 		return false;
 	}
@@ -51,7 +51,7 @@ public class FilmServiceIplm implements FilmService{
 		try {
 			return this.filmRepository.findById(id).get();			
 		} catch (Exception e) {
-			System.out.println("lỗi");
+			System.out.println("lỗi getById");
 		}
 		return null;
 	}
@@ -60,8 +60,8 @@ public class FilmServiceIplm implements FilmService{
 	public List<FilmModel> findRandAll() {
 		try {
 			return this.filmRepository.findRandAll();			
-		} catch (Exception e) {			
-			System.out.println("lỗi");
+		} catch (Exception e) {		 	
+			System.out.println("lỗi findRandAll");
 		}
 		return null;
 	}
@@ -71,7 +71,7 @@ public class FilmServiceIplm implements FilmService{
 		try {
 			return this.filmRepository.findAllByView();
 		} catch (Exception e) {
-			System.out.println("Lỗi");
+			System.out.println("Lỗi findAllByView");
 		}
 		return null;
 	}
@@ -86,7 +86,7 @@ public class FilmServiceIplm implements FilmService{
 		try {
 			return this.filmRepository.findSlugFilm();
 		} catch (Exception e) {
-			System.out.println("Lỗi");
+			System.out.println("Lỗi findSlugFilm");
 		}
 		return null;
 	}
@@ -97,17 +97,17 @@ public class FilmServiceIplm implements FilmService{
 			this.filmRepository.updateViewBySlug(slug, view);
 			return true;
 		} catch (Exception e) {
-			System.out.println("Lỗi");
+			System.out.println("Lỗi updateViewBySlug");
 		}
 		return null;
 	}
 
 	@Override
-	public List<FilmModel> findByTypeGenres(String type, String genres) {
+	public List<FilmModel> findByTypeGenres(String type, String genres, String slug) {
 		try {
-			return this.filmRepository.findByTypeGenres(type, genres);
+			return this.filmRepository.findByTypeGenres(type, genres, slug);
 		} catch (Exception e) {
-			System.out.println("Lỗi");
+			System.out.println("Lỗi ở findByTypeGenres");
 		}
 		return null;
 	}

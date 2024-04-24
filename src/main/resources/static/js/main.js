@@ -100,7 +100,6 @@ console.warn("Đăng nhập 2 lớp, Làm chức năng bài viết, đề xuất
 		}
 	});
 
-
 })(jQuery);
 
 

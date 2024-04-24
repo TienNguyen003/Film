@@ -102,25 +102,10 @@
 						<div class="section-title">
 							<h5>you might like...</h5>
 						</div>
-						<div class="product__sidebar__view__item set-bg" data-setbg="img/sidebar/tv-1.jpg">
-							<div class="ep">18 / ?</div>
-							<div class="view"><i class="fa fa-eye"></i> 9141</div>
-							<h5><a href="#">Boruto: Naruto next generations</a></h5>
-						</div>
-						<div class="product__sidebar__view__item set-bg" data-setbg="img/sidebar/tv-2.jpg">
-							<div class="ep">18 / ?</div>
-							<div class="view"><i class="fa fa-eye"></i> 9141</div>
-							<h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
-						</div>
-						<div class="product__sidebar__view__item set-bg" data-setbg="img/sidebar/tv-3.jpg">
-							<div class="ep">18 / ?</div>
-							<div class="view"><i class="fa fa-eye"></i> 9141</div>
-							<h5><a href="#">Sword art online alicization war of underworld</a></h5>
-						</div>
-						<div class="product__sidebar__view__item set-bg" data-setbg="img/sidebar/tv-4.jpg">
-							<div class="ep">18 / ?</div>
-							<div class="view"><i class="fa fa-eye"></i> 9141</div>
-							<h5><a href="#">Fate/stay night: Heaven's Feel I. presage flower</a></h5>
+						<div class="product__sidebar__view__item set-bg">
+							<div class="ep"></div>
+							<div class="view"><i class="fa fa-eye"></i></div>
+							<h5><a></a></h5>
 						</div>
 					</div>
 				</div>
@@ -174,10 +159,16 @@
 		.then(data => {
 			data = (data.movie);
 			data.thumb_url = data.thumb_url.replace("ophim14", "ophim10")
-			
+
 			document.cookie = "name_movie=" + btoa(encodeURIComponent(data.name)) + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
 			document.cookie = "view_movie=" + data.view + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
 			document.cookie = "img_movie=" + data.thumb_url + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
+
+			var category_cookie = [];
+			data.category.map(item => category_cookie.push(item.name))
+			document.cookie = "category_movie=" + btoa(encodeURIComponent(category_cookie.join("|"))) + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
+			document.cookie = "type_movie=" + data.type + "; expires=Fri, 31 Dec 2025 23:59:59 GMT";
+
 
 			document.querySelector(".filmName").innerHTML = data.name;
 			document.querySelector(".anime__details__content").innerHTML = `

@@ -15,7 +15,7 @@ public interface FilmService {
 	
 	List<FilmModel> findAllByView();
 	
-	List<FilmModel> findByTypeGenres(String type, String genres);
+	List<FilmModel> findByTypeGenres(String type, String genres, String slug);
 	
 	Boolean updateViewBySlug(String slug, int view);
 	
