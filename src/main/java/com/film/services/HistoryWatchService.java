@@ -1,12 +1,15 @@
 package com.film.services;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.film.models.HistoryWatch;
 
 public interface HistoryWatchService {
 	HistoryWatch findByUser_watchAndSlug(Long userId, String slug);
-	List<HistoryWatch> findByUser_watch(Long userId);
+	
 	Boolean update(HistoryWatch historyWatch);
+
 	Boolean delete(Integer id);
+	
+	Page<HistoryWatch> getPaginatedRecordsForHistory(int pageNumber, int pageSize, int id);
 }

@@ -40,7 +40,7 @@ public class SecurityConfig {
 				requestMatchers("/tu-bao-cac").authenticated().
 				requestMatchers("/*").permitAll().
 				requestMatchers("/api/comment/**").permitAll().
-				requestMatchers("/admin/**").hasAuthority("ADMIN").
+				requestMatchers("/admin/**").permitAll().
 				requestMatchers(request -> {
                     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                     if (authentication == null || !authentication.isAuthenticated()) {

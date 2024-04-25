@@ -8,9 +8,13 @@ import com.film.models.FavMovie;
 
 public interface FavMovieService {
 	List<FavMovie> findByUserFav(int id);	
+	
 	Boolean update(FavMovie favMovie);
+	
 	FavMovie findBySlugAndUser_fav(String slug, int id);
+	
 	Boolean delete(int id);
+	
 	List<String> findCategoryById(int user_fav);
 	
 	Page<FavMovie> getPaginatedRecordsForUser(int pageNumber, int pageSize, int id);

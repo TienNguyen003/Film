@@ -17,7 +17,7 @@ public class HistoryWatch {
 	@Column(name = "episode")
 	private int episode;
 	@Column(name = "user_watch")
-	private int user_watch;
+	private int user;
 	@Column(name = "slug")
 	private String slug;
 	@Column(name = "name_movie")
@@ -36,7 +36,7 @@ public class HistoryWatch {
 		super();
 		this.id = id;
 		this.episode = episode;
-		this.user_watch = user_watch;
+		this.user = user_watch;
 		this.slug = slug;
 		this.name_movie = name_movie;
 		this.img_movie = img_movie;
@@ -60,11 +60,11 @@ public class HistoryWatch {
 	}
 
 	public int getUser_watch() {
-		return user_watch;
+		return user;
 	}
 
 	public void setUser_watch(int user_watch) {
-		this.user_watch = user_watch;
+		this.user = user_watch;
 	}
 
 	public String getSlug() {

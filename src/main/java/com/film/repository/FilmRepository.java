@@ -24,7 +24,7 @@ public interface FilmRepository extends JpaRepository<FilmModel, Integer>{
 	@Query(value = "SELECT * FROM webfilm.film ORDER BY view DESC LIMIT 5", nativeQuery = true)
 	List<FilmModel> findAllByView();
 	
-	@Query(value = "SELECT * FROM webfilm.film WHERE type = :type AND id_genres REGEXP :genres AND slug NOT LIKE :slug LIMIT 5", nativeQuery = true)
+	@Query(value = "SELECT * FROM webfilm.film WHERE type = :type AND id_genres REGEXP :genres AND slug NOT LIKE :slug ORDER BY RAND() LIMIT 5", nativeQuery = true)
 	List<FilmModel> findByTypeGenres(@Param("type") String type, @Param("genres") String genres, @Param("slug") String slug);
 	
 	@Modifying

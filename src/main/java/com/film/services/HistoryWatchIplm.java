@@ -1,8 +1,9 @@
 package com.film.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.film.models.HistoryWatch;
@@ -40,9 +41,10 @@ public class HistoryWatchIplm implements HistoryWatchService{
 		return false;
 	}
 
+
 	@Override
-	public List<HistoryWatch> findByUser_watch(Long userId) {
-		// TODO Auto-generated method stub
-		return this.historyWatchRepository.findByUser_watch(userId);
+	public Page<HistoryWatch> getPaginatedRecordsForHistory(int pageNumber, int pageSize, int id) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		return this.historyWatchRepository.findHistoryByUser(id, pageable);
 	}
 }

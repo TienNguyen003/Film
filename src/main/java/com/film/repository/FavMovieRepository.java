@@ -16,7 +16,7 @@ public interface FavMovieRepository extends JpaRepository<FavMovie, Integer>{
 	@Query(value = "SELECT * FROM favmovie f WHERE f.slug = :slug and f.user_fav = :user_fav", nativeQuery = true)
 	FavMovie findBySlugAndUser_fav(@Param("slug") String slug, @Param("user_fav") Integer user_fav);
 	
-	@Query(value = "select * from favmovie f where f.user_fav = :user_fav", nativeQuery = true)
+	@Query(value = "select * from favmovie f where f.user_fav = :user_fav", nativeQuery = true)	
 	List<FavMovie> findByUserFav(@Param("user_fav") Integer user_fav);
 	
 	@Query(value = "SELECT category FROM favmovie where user_fav = :user_fav", nativeQuery = true)

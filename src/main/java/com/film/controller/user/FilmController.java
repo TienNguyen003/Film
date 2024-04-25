@@ -153,9 +153,12 @@ public class FilmController {
 		int idUser = loadController.getUserIdFromUserDetails().intValue();
 		if(idUser != 0) {
 			Page<FavMovie> list = favMovieService.getPaginatedRecordsForUser(page-1, 24, idUser);
-			model.addAttribute("listFavMovie", list);	
-			model.addAttribute("totalPage", list.getTotalPages());
-			model.addAttribute("currentPage", page);
+			if(list.getContent().size() <= 0) model.addAttribute("checkLogin", "Bạn chưa thích bộ phim nào");
+			else {
+				model.addAttribute("listFavMovie", list);	
+				model.addAttribute("totalPage", list.getTotalPages());
+				model.addAttribute("currentPage", page);
+			}
 		} else model.addAttribute("checkLogin", "Bạn cần phải <a href='/login'>đăng nhập</a> để có thể sử dụng tính năng này");
 		return "favmovie";
 	}
@@ -169,11 +172,15 @@ public class FilmController {
 	public String historyFilm(Model model, @RequestParam(name="page", defaultValue = "1") int page) {
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
-		Long idUser = loadController.getUserIdFromUserDetails();
+		int idUser = loadController.getUserIdFromUserDetails().intValue();
 		if(idUser > 0) {
-			List<HistoryWatch> watch = (List<HistoryWatch>) historyWatchService.findByUser_watch(idUser);
-			if(watch.size() <= 0) model.addAttribute("checkLogin", "Bạn chưa xem bộ phim nào");
-			else model.addAttribute("listHistoryWatch", watch);
+			Page<HistoryWatch> list = historyWatchService.getPaginatedRecordsForHistory(page-1, 24, idUser);			
+			if(list.getContent().size() <= 0) model.addAttribute("checkLogin", "Bạn chưa xem bộ phim nào");
+			else {
+				model.addAttribute("listHistoryWatch", list.getContent());
+				model.addAttribute("totalPage", list.getTotalPages());
+				model.addAttribute("currentPage", page);
+			}
 		} else model.addAttribute("checkLogin", "Bạn cần phải <a href='/login'>đăng nhập</a> để có thể sử dụng tính năng này");
 		return "historyWatch";
 	}

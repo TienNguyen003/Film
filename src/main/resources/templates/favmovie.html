@@ -78,7 +78,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-12 col-md-8 col-sm-6">
+							<div class="col-lg-12 col-md-8 col-sm-6" style="margin-bottom: 30px">
 								<div class="section-title">
 									<div th:if="${checkLogin}" class="alert alert-danger" th:utext="${checkLogin}">
 									</div>
@@ -86,9 +86,6 @@
 							</div>
 						</div>
 						<div class="row genres">
-
-
-
 							<div class="col-lg-3 col-md-6 col-sm-6" th:each="list : ${listFavMovie}">
 								<div class="product__item">
 									<a th:href="@{/detail-film(slug=${list.slug})}">

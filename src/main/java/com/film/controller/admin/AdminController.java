@@ -31,6 +31,7 @@ public class AdminController {
 	public String index() {
 		return "redirect:/admin";
 	}
+	
 	@GetMapping("/")
 	public String admin() {
 		return "admin/index";
@@ -41,6 +42,11 @@ public class AdminController {
 		List<FilmModel> list = this.filmService.getAll();
 		model.addAttribute("list", list);
 		return "admin/film";
+	}
+	
+	@GetMapping("/posts")
+	public String posts() {
+		return "admin/post";
 	}
 	
 	@GetMapping("/add-film")
