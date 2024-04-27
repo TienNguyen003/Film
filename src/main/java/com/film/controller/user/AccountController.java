@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,9 +83,35 @@ public class AccountController {
 	public String changePassword(Model model, RedirectAttributes redirectAttributes) {
 		loadController.categoryShow(model);
 		loadController.genresShow(model);
+		if(redirectAttributes.getAttribute("notification") != null) 
+			model.addAttribute("notification", redirectAttributes.getAttribute("notification"));
 		return "editPass";
 	}
-	
+	@PostMapping("/my-account/edit-pass")
+	public String changePass(
+			@RequestParam String display_oldpass, 
+			@RequestParam String display_anewpass, 
+			@RequestParam String display_newpass, 
+			RedirectAttributes redirectAttributes) {
+		int idUser = loadController.getUserIdFromUserDetails().intValue();
+		if(!loadController.BCryptPasswordEncoder(display_oldpass, userService.findPassByUser(idUser)))
+			redirectAttributes.addFlashAttribute("notification", "Mật khẩu cũ chưa chính xác");
+		else {
+			if(display_oldpass == display_newpass) 
+				redirectAttributes.addFlashAttribute("notification", "Mật khẩu mới không được trùng với mật khẩu trước đó");
+			else if(display_newpass.length() < 6)
+				redirectAttributes.addFlashAttribute("notification", "Mật khẩu mới phải nhiều hơn 6 ký tự");
+			else if(!display_newpass.equals(display_anewpass))
+				redirectAttributes.addFlashAttribute("notification", "Mật khẩu nhập lại không khớp");
+			else {
+				userService.updatePass(loadController.BCryptPassword(display_newpass), idUser);
+				return "redirect:/logout";
+			}
+			return "redirect:/my-account/edit-pass";
+		}
+		return "redirect:/my-account/edit-pass";
+	}	
+
 	@GetMapping("/my-account/cap-nhat-biet-danh")
 	public String udNName(Model model, RedirectAttributes redirectAttributes) {
 		loadController.categoryShow(model);
@@ -107,7 +134,7 @@ public class AccountController {
 					commentService.updateNameUser(display_name, idUser);
 					loadController.csUser().getUser().setFullName(display_name);
 					loadController.csUser().getUser().setPoint(point-50);
-					redirectAttributes.addFlashAttribute("notification", "");
+					redirectAttributes.addFlashAttribute("notification", "Cập nhật thành công");
 				} else 
 					redirectAttributes.addFlashAttribute("notification", "Biệt danh mới trùng với biệt danh hiện tại");
 			}

@@ -187,13 +187,16 @@ function addCommentAjax() {
 			var commentsArray = JSON.parse(data);
 			const idUserCmt = document.querySelector(".idUserCmt");
 			let idUser = -1;
-			if (idUserCmt != null) idUser = parseInt(idUserCmt.innerHTML);
+			if (idUserLogin != null) idUser = idUserLogin.innerHTML
+			if (idUserCmt != null || idUser == null) idUser = parseInt(idUserCmt.innerHTML);
 
 			// Xóa bình luận cuối cùng để giữ cho chỉ hiển thị 6 bình luận
 			const currentCommentsCount = document.querySelectorAll(".anime__details__review").length;
 			if (currentCommentsCount >= 6) {
 				document.querySelector(".anime__details__review:last-child").remove();
 			}
+
+			console.log(commentsArray.idUser, idUser)
 
 			var result = '<div class="anime__details__review">'
 				+ '<div class="anime__review__item">'
@@ -346,7 +349,7 @@ function byBadgesAjax(e) {
 		timeout: 100000,
 		success: function(data) {
 			alert(data);
-			if(data == "Mua thành công"){
+			if (data == "Mua thành công") {
 				e.target.innerHTML = "Đã Mua";
 				e.target.classList.remove("buyBadgeBtn");
 				e.target.classList.remove("btn-primary");

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Admin | New Post</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/AdminLTE.css">
+	<link rel="stylesheet" href="/css/_all-skins.min.css">
+	<link rel="stylesheet" href="/css/jquery-ui.css">
+	<link rel="stylesheet" href="/css/style.css" />
+	<script src="/js/angular.min.js"></script>
+	<script src="/js/app.js"></script>
+	<link rel="shortcut icon" href="/img/bg.jfif" type="image/x-icon">
+</head>
+<style>
+	#container {
+		width: 100%;
+		height: 50%;
+		margin: 70px auto 20px;
+	}
+
+	.ck-editor__editable[role="textbox"] {
+		min-height: 200px;
+	}
+
+	.ck-content .image {
+		max-width: 80%;
+		margin: 20px auto;
+	}
+</style>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<div th:replace="admin/header :: content"></div>
+		<div class="content-wrapper" style="min-height: 412px; padding: 1px 20px">
+			<div id="container">
+				<div id="editor"></div>
+			</div>
+			<button class="submit"><i class="fa fa-floppy-o"></i> Lưu</button>
+		</div>
+	</div>
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery-ui.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/adminlte.min.js"></script>
+	<script src="/js/dashboard.js"></script>
+	<script src="/js/function.js"></script>
+</body>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/super-build/ckeditor.js"></script>
+<script>
+	let editor;
+	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+		toolbar: {
+			items: [
+				'exportPDF', 'exportWord', '|',
+				'findAndReplace', 'selectAll', '|',
+				'heading', '|',
+				'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+				'bulletedList', 'numberedList', '|',
+				'outdent', 'indent', '|',
+				'undo', 'redo',
+				'-',
+				'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+				'alignment', '|',
+				'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+				'specialCharacters', 'horizontalLine', 'pageBreak', '|'
+			],
+			shouldNotGroupWhenFull: true
+		},
+		list: {
+			properties: {
+				styles: true,
+				startIndex: true,
+				reversed: true
+			}
+		},
+		heading: {
+			options: [
+				{model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph'},
+				{model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1'},
+				{model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2'},
+				{model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3'},
+				{model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4'},
+				{model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5'},
+				{model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6'}
+			]
+		},
+		placeholder: 'Welcome to Phim 24',
+		fontFamily: {
+			options: [
+				'default',
+				'Arial, Helvetica, sans-serif',
+				'Courier New, Courier, monospace',
+				'Georgia, serif',
+				'Lucida Sans Unicode, Lucida Grande, sans-serif',
+				'Tahoma, Geneva, sans-serif',
+				'Times New Roman, Times, serif',
+				'Trebuchet MS, Helvetica, sans-serif',
+				'Verdana, Geneva, sans-serif'
+			],
+			supportAllValues: true
+		},
+		fontSize: {
+			options: [10, 12, 14, 'default', 18, 20, 22],
+			supportAllValues: true
+		},
+		htmlSupport: {
+			allow: [
+				{
+					name: /.*/,
+					attributes: true,
+					classes: true,
+					styles: true
+				}
+			]
+		},
+		htmlEmbed: {
+			showPreviews: true
+		},
+		link: {
+			decorators: {
+				addTargetToExternalLinks: true,
+				defaultProtocol: 'https://',
+				toggleDownloadable: {
+					mode: 'manual',
+					label: 'Downloadable',
+					attributes: {
+						download: 'file'
+					}
+				}
+			}
+		},
+		removePlugins: [
+			'AIAssistant',
+			'CKBox',
+			'CKFinder',
+			'EasyImage',
+			'MultiLevelList',
+			'RealTimeCollaborativeComments',
+			'RealTimeCollaborativeTrackChanges',
+			'RealTimeCollaborativeRevisionHistory',
+			'PresenceList',
+			'Comments',
+			'TrackChanges',
+			'TrackChangesData',
+			'RevisionHistory',
+			'Pagination',
+			'WProofreader',
+			'MathType',
+			'SlashCommand',
+			'Template',
+			'DocumentOutline',
+			'FormatPainter',
+			'TableOfContents',
+			'PasteFromOfficeEnhanced',
+			'CaseChange'
+		]
+	})
+		.then(newEditor => {
+			editor = newEditor;
+		});
+
+	document.querySelector(".submit").onclick = () => {
+		const editorData = editor.getData();
+		console.log(editorData)
+	}
+</script>
+
+<script>
+	const cloudinaryUploadUrl = 'https://api.cloudinary.com/v1_1/dwn20guz0/image/upload';
+	const cloudinaryUploadPreset = 'ml_default';
+
+	editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+		return {
+			upload: function () {
+				return loader.file
+					.then(function (file) {
+						return new Promise(function (resolve, reject) {
+							const formData = new FormData();
+							formData.append('file', file);
+							formData.append('upload_preset', cloudinaryUploadPreset);
+
+							fetch(cloudinaryUploadUrl, {
+								method: 'POST',
+								body: formData
+							})
+								.then(response => response.json())
+								.then(data => {
+									// Nhận lại đường dẫn URL của hình ảnh đã tải lên từ Cloudinary
+									const uploadedUrl = data.secure_url;
+									resolve({default: uploadedUrl});
+								})
+								.catch(error => {
+									reject(error);
+								});
+						});
+					});
+			}
+		};
+	};
+</script>
+
+</html>

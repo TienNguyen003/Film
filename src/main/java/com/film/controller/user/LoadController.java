@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -69,4 +70,15 @@ public class LoadController {
         String formattedDateTime = currentDateTime.format(formatter);
         return formattedDateTime;
     }
+	
+	public String BCryptPassword(String pass) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(pass);
+	}
+	
+	public boolean BCryptPasswordEncoder(String inputPassword, String hashedPassword) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		if (passwordEncoder.matches(inputPassword, hashedPassword)) return true;
+        return false;
+	}
 }

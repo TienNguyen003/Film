@@ -8,6 +8,8 @@ import com.film.models.UserModel;
 public interface UserService {
 	UserModel findByUserName(String userName);
 	
+	String findPassByUser(int id);
+	
 	int findByUser(String name);
 	
 	int findByEmail(String email);
@@ -41,4 +43,6 @@ public interface UserService {
 	Boolean updateBadgesById(String img, int id, int point, int crytal);
 	
 	Boolean updateEnabled(String name);
+	
+	Boolean updatePass(String password, int id);
 }

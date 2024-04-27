@@ -13,6 +13,9 @@ import jakarta.transaction.Transactional;
 public interface UserRepository extends JpaRepository<UserModel, Long>{
 	UserModel findByUserName(String userName);
 	
+	@Query(value = "SELECT password FROM users u WHERE u.id = :id", nativeQuery = true)
+	String findPassByUser(@Param("id") int id);
+	
 	@Query(value = "SELECT count(*) FROM users u WHERE u.username = :name", nativeQuery = true)
 	int findByUser(@Param("name") String name);
 	
@@ -75,4 +78,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long>{
 	@Transactional
 	@Query(value = "UPDATE users SET enabled = 1, activation_code = '' WHERE username = :name", nativeQuery = true)
 	public void updateEnabled(@Param("name") String name);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE users SET password = :password WHERE id = :id", nativeQuery = true)
+	public void updatePass(@Param("password") String password, @Param("id") int id);
 }

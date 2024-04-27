@@ -2,6 +2,8 @@ package com.film.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.film.models.FilmModel;
 
 public interface FilmService {
@@ -24,4 +26,6 @@ public interface FilmService {
 	Boolean delete(int id);
 	
 	FilmModel getById(int id);
+	
+	Page<FilmModel> getPaginatedRecords(int pageNumber, int pageSize);
 }

@@ -1,7 +1,7 @@
 'use strict';
 
-console.warn("Đăng nhập 2 lớp, Làm chức năng bài viết, chức năng về tài khoản(-nạp tiền tăng tu vi???, bxh, góp ý, chatroom, đổi mật khẩu(xác nhận qua email), Phản hồi bình luận, Phát nhạc khi chưa xem phim có thể thêm nhạc để chạy)");
-console.error("Tăng lượt xem, đề xuất, có thể bạn cũng thích, tăng tu vi");
+console.warn("Đăng nhập 2 lớp, Làm chức năng bài viết, chức năng về tài khoản(-nạp tiền tăng tu vi???, bxh, góp ý, chatroom, Quên mật khẩu, Phản hồi bình luận, Phát nhạc khi chưa xem phim có thể thêm nhạc để chạy), Làm lại phần admin như trên yt");
+console.error("Tăng lượt xem, đề xuất, có thể bạn cũng thích, tăng tu vi, đổi mật khẩu");
 
 (function($) {
 

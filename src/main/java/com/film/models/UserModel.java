@@ -31,12 +31,13 @@ public class UserModel {
 	
 	@Column(name = "username")
 	@Length(min = 6, max = 200, message = "Độ dài tối thiểu tài khoản là 6 kí tự")
-	@Pattern(regexp = "[a-zA-Z]+", message = "Tài khoản không được phép chứa các kí tự đặc biệt")
+	@Pattern(regexp = "[a-zA-Z0-9]+", message = "Tài khoản không được phép chứa các kí tự đặc biệt")
 	@NotEmpty(message = "Thiếu Tên Đăng Nhập")
 	private String userName;
 	
 	@Column(name = "password")
 	@NotEmpty(message = "Thiếu Mật Khẩu")
+	@Pattern(regexp = "[a-zA-Z0-9]+", message = "Mật khẩu không được phép chứa các kí tự đặc biệt")
 	@Length(min = 6, max = 200, message = "Password phải từ 6 kí tự trở lên")
 	private String passWord;
 	

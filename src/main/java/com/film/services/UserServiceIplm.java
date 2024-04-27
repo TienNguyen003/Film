@@ -160,9 +160,30 @@ public class UserServiceIplm implements UserService {
 		try {
 			return this.userRP.getEnabled(id);
 		} catch (Exception e) {
-			System.out.println("Lỗi");
+			System.out.println("Lỗi getEnabled");
 		}
 		return 0;
+	}
+
+	@Override
+	public Boolean updatePass(String password, int id) {
+		try {
+			this.userRP.updatePass(password, id);
+			return true;
+		} catch (Exception e) {
+			System.out.println("Lỗi updatePass");
+		}
+		return false;
+	}
+
+	@Override
+	public String findPassByUser(int id) {
+		try {
+			return this.userRP.findPassByUser(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 	
 }

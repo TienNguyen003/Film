@@ -2,6 +2,8 @@ package com.film.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +33,7 @@ public interface FilmRepository extends JpaRepository<FilmModel, Integer>{
 	@Transactional
 	@Query(value = "UPDATE film SET view = :view WHERE slug = :slug", nativeQuery = true)
 	public void updateViewBySlug(@Param("slug") String slug, @Param("view") int view);	
+	
+	@Query("SELECT f FROM FilmModel f")
+	Page<FilmModel> findMovie(Pageable pageable);
 }

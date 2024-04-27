@@ -1,15 +1,15 @@
 package com.film.controller.admin;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.film.controller.user.LoadController;
 import com.film.models.FilmModel;
@@ -37,14 +37,24 @@ public class AdminController {
 		return "admin/index";
 	}
 	
+	@GetMapping("/add-post")
+	public String adminPost() {
+		return "admin/add-post";
+	}
+	
 	@GetMapping("/film")
-	public String adminFilm(Model model) {
-		List<FilmModel> list = this.filmService.getAll();
-		model.addAttribute("list", list);
+	public String adminFilm(Model model, @RequestParam(name="page", defaultValue = "1") int page) {
+		Page<FilmModel> list = filmService.getPaginatedRecords(page - 1, 6);
+		if(list.getContent().size() <= 0) model.addAttribute("checkLogin", "Chưa có bộ phim nào !!!");
+		else {
+			model.addAttribute("list", list);
+			model.addAttribute("totalPage", list.getTotalPages());
+			model.addAttribute("currentPage", page);
+		}		
 		return "admin/film";
 	}
 	
-	@GetMapping("/posts")
+	@GetMapping("/post")
 	public String posts() {
 		return "admin/post";
 	}
